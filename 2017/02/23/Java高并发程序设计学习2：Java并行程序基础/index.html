@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Java高并发程序设计学习2：Java并行程序基础 | Jalen</title>
+  <meta name="description" content="description" />
+  <meta name="keywords" content="A_KEYWORD,A_KEYWORD" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/images/avatar.jpg">
+  <link rel="alternate" href="/atom.xml" title="Jalen">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="线程的母亲：进程 进程：系统进行资源分配和调度的基本单位；操作系统结构的基础；是线程的容器；是程序的实体；例如：windows的.exe文件，点击运行便是一个进程">
+<meta name="keywords" content="A_KEYWORD,A_KEYWORD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java高并发程序设计学习2：Java并行程序基础">
+<meta property="og:url" content="http://ccfly.cc/2017/02/23/Java高并发程序设计学习2：Java并行程序基础/index.html">
+<meta property="og:site_name" content="Jalen">
+<meta property="og:description" content="线程的母亲：进程 进程：系统进行资源分配和调度的基本单位；操作系统结构的基础；是线程的容器；是程序的实体；例如：windows的.exe文件，点击运行便是一个进程">
+<meta property="og:updated_time" content="2017-05-08T18:44:04.140Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java高并发程序设计学习2：Java并行程序基础">
+<meta name="twitter:description" content="线程的母亲：进程 进程：系统进行资源分配和调度的基本单位；操作系统结构的基础；是线程的容器；是程序的实体；例如：windows的.exe文件，点击运行便是一个进程">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+		<div class="wrapper container">
+			<a class="logo flat-box" href='/' >
+				Jalen
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/archives'>
+								Archives
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-about' href='/about'>
+								About
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu"></span></a></li>
+			</ul>
+		</div>
+		<aside class="menu-phone">
+			<nav>
+				
+					<a href="/" class="nav-home nav">
+						Home
+					</a>
+				
+					<a href="/archives" class="nav-archives nav">
+						Archives
+					</a>
+				
+					<a href="/about" class="nav-about nav">
+						About
+					</a>
+				
+			</nav>
+		</aside>
+</header>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container'>
+      <div class='l_main'>
+        <article id="post-Java高并发程序设计学习2：Java并行程序基础"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/2017/02/23/Java高并发程序设计学习2：Java并行程序基础/">
+    	Java高并发程序设计学习2：Java并行程序基础
+    </a>
+  </h2>
+	<time>
+	  2月 23, 2017
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/categories/Java/">Java</a>
+    </div>
+
+	</section>
+	
+		<section class="tog"></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<ol>
+<li>线程的母亲：进程</li>
+<li>进程：<br>系统进行资源分配和调度的基本单位；<br>操作系统结构的基础；<br>是线程的容器；<br>是程序的实体；<br>例如：windows的.exe文件，点击运行便是一个进程<a id="more"></a></li>
+<li>线程<br>不可见，可使用工具查看；<br>轻量级进程，程序执行最小单位；<br>生命周期在Thread中State枚举中定义：<br> NEW，start()<br> RUNNABLE，<br> BLOCKED，synchronized<br> WAITING，进入无时间限制的等待<br> TIMED_WAITING，进入有时间限制的等待<br> TERMINATED，线程执行完毕</li>
+<li>新建线程<br> 继承Thread，注意启动线程用start(),不要直接调用run()；<br> 实现Runnable，较继承Thread要好；<br> 实现Callable<v>，Call()方法可返回值；</v></li>
+<li>终止线程<br>错误做法：stop()方法，暴力终止，释放所有锁，慎用，一旦出错不会返回任何错误信息，当前标识已废弃；<br>正确做法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public void stopMe()&#123;</div><div class="line">	stopme = true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当调用stopMe()方法获取stopme值为true时，跳出线程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if(stopme)&#123;</div><div class="line">	break;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>线程中断<br>线程中断并不会使线程立即退出，由目标线程自行决定，线程中断提供了3个方法：<br>public void Thread.interrupt():    //中断线程<br>public boolean Thread.isInterrupted();    //判断是否被中断<br>public static boolean Thread.interrupted()    //判断是否被中断，并清除当前中断状态<br>一下这段代码并未成功中断<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class ThreadInterrupt &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) throws InterruptedException&#123;</div><div class="line">		Thread t1 = new Thread()&#123;</div><div class="line">			@Override</div><div class="line">			public void run() &#123;</div><div class="line">				while(true)&#123;</div><div class="line">					Thread.yield();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		t1.start();</div><div class="line">		Thread.sleep(2000);</div><div class="line">		t1.interrupt();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>需要改成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class ThreadInterrupt &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) throws InterruptedException&#123;</div><div class="line">		Thread t1 = new Thread()&#123;</div><div class="line">			@Override</div><div class="line">			public void run() &#123;</div><div class="line">				while(true)&#123;</div><div class="line">					if(Thread.currentThread().interrupted())&#123;</div><div class="line">						System.out.println(&quot;Interrupt!&quot;);</div><div class="line">						break;</div><div class="line">					&#125;</div><div class="line">					Thread.yield();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		t1.start();</div><div class="line">		Thread.sleep(2000);</div><div class="line">		t1.interrupt();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这段代码类似上面的stopme中断，但要优于stopme。</p>
+<ol>
+<li><p>Thread.sleep()休眠中断会强制抛出异常：InterruptException，必须捕获并处理它</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public class ThreadInterrupt &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) throws InterruptedException&#123;</div><div class="line">		Thread t1 = new Thread()&#123;</div><div class="line">			@Override</div><div class="line">			public void run() &#123;</div><div class="line">				while(true)&#123;</div><div class="line">					if(Thread.currentThread().interrupted())&#123;</div><div class="line">						System.out.println(&quot;Interrupt!&quot;);</div><div class="line">						break;</div><div class="line">					&#125;</div><div class="line">					try &#123;</div><div class="line">						Thread.sleep(2000);</div><div class="line">					&#125; catch (InterruptedException e) &#123;</div><div class="line">						System.out.println(&quot;Interrupt when sleep!&quot;);</div><div class="line">						//设置中断状态,再次设置中断标记位，如果不加处理，下次循环开始时无法捕获这个中断</div><div class="line">						Thread.currentThread().interrupt();</div><div class="line">					&#125;</div><div class="line">					Thread.yield();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		t1.start();</div><div class="line">		Thread.sleep(2000);</div><div class="line">		t1.interrupt();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>object.wait()，线程进入object对象的等待队列，并不可以随便调用，必须包含在synchronized语句中，无论是wait()或者notify()都需要首先获得目标对象的一个监视器<br>当调用object.notify()，随机唤醒一个线程（注意是随机，并不一定是之前先等待的线程，这是不公平的）<br>当调用object.notifyAll()，唤醒所有等待线程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">public class WaitAndNotify &#123;</div><div class="line">	final static Object object = new Object();</div><div class="line">	public static class T1 extends Thread&#123;</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			synchronized (object) &#123;</div><div class="line">				System.out.println(System.currentTimeMillis()+&quot;:T1 start&quot;);</div><div class="line">				try &#123;</div><div class="line">					System.out.println(System.currentTimeMillis()+&quot;:T1 wait&quot;);</div><div class="line">					object.wait();</div><div class="line">				&#125; catch (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">				System.out.println(System.currentTimeMillis()+&quot;:T1 end&quot;);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static class T2 extends Thread&#123;</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			synchronized (object) &#123;</div><div class="line">				System.out.println(System.currentTimeMillis()+&quot;:T2 start&quot;);</div><div class="line">				object.notify();</div><div class="line">				try &#123;</div><div class="line">					Thread.sleep(2000);</div><div class="line">				&#125; catch (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">				System.out.println(System.currentTimeMillis()+&quot;:T2 end&quot;);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Thread t1 = new T1();</div><div class="line">		Thread t2 = new T2();</div><div class="line">		t1.start();</div><div class="line">		t2.start();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1487814788060:T1 start</div><div class="line">1487814788061:T1 wait</div><div class="line">1487814788063:T2 start</div><div class="line">1487814790063:T2 end</div><div class="line">1487814790064:T1 end</div></pre></td></tr></table></figure></p>
+<p>上面程序中T2通知T1后并不能立即执行T1，而是等待2秒中T2释放object的锁，可见wait()会释放锁，而sleep()不会释放锁。</p>
+<ol>
+<li><p>线程挂起：Thread.currentThread().suspend(),不释放任何锁资源<br>继续执行：Thread.resume()，与suspend相对，都已废弃。</p>
+</li>
+<li><p>等待线程结束join和谦让yield<br>join():<br>应用场景：一个线程的输入可能依赖于另外一个或者多个线程的输出，此时这个线程需要等待依赖的线程执行完毕<br>两个方法：<br> 无限等待<br> public final void join() throws InterruptException<br> 存在等待时间<br> public final synchronized void join(long millis) throws InterruptException</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 不适用join，主线程不等待AddThread线程，输出为0；</div><div class="line"> * 使用join，主线程等待AddThread线程执行完毕，输出位100000；</div><div class="line"> * */</div><div class="line">public class Join &#123;</div><div class="line">	//用volatile修饰的变量，线程在每次使用变量的时候，都会读取变量修改后的最的值。volatile很容易被误用，用来进行原子性操作。</div><div class="line">	public volatile static int i = 0;</div><div class="line">	</div><div class="line">	public static class AddThread extends Thread&#123;</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			for(i=0;i&lt;100000;i++);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">		AddThread at = new AddThread();</div><div class="line">		at.start();</div><div class="line">		at.join();</div><div class="line">		System.out.println(i);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>yield():<br>方法：public static native void yield()<br>场景：适用于优先级低的线程，一旦执行，让出CPU，但并不意味着不执行，还会与其他线程进行CPU的争夺</p>
+<ol>
+<li><p>volatile与java内存模型（JMM）<br>JMM：原子性，有序性，可见性<br>volatile：<br>场景：使用volatile声明的变量，说明它极有可能被其他线程修改，为保证所有线程能够看到这个修改的动作，它会通知其他线程，以保证可见性和有序性<br>注意：volatile并不能代替锁，也无法保证一些复合操作的原子性</p>
+</li>
+<li><p>线程组<br>相同功能的线程放置在一个线程组里</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class ThreadGroupName implements Runnable&#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void run() &#123;</div><div class="line">		String groupAndName = Thread.currentThread().getThreadGroup().getName() + &quot;-&quot; + Thread.currentThread().getName();</div><div class="line">		while(true)&#123;</div><div class="line">			System.out.println(&quot;I am &quot;+ groupAndName );</div><div class="line">			try &#123;</div><div class="line">				Thread.sleep(3000);</div><div class="line">			&#125; catch (InterruptedException e) &#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		ThreadGroup tg = new ThreadGroup(&quot;PrintGroup&quot;);</div><div class="line">		//使用Thread构造函数分配到线程组</div><div class="line">		Thread t1 = new Thread(tg,new ThreadGroupName(),&quot;T1&quot;);</div><div class="line">		Thread t2 = new Thread(tg,new ThreadGroupName(),&quot;T2&quot;);</div><div class="line">		t1.start();</div><div class="line">		t2.start();</div><div class="line">		//获得活动线程的总数，因为线程是动态的，所以这个值只是一个估计值，不精确</div><div class="line">		System.out.println(tg.activeCount());</div><div class="line">		//打印这个线程组里面所有线程信息</div><div class="line">		tg.list();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>线程组也可以使用stop()停止组内所有线程，但要谨慎使用</p>
+<ol>
+<li><p>守护线程：Daemon<br>例如：垃圾回收线程，JIT线程等，与之对应称用户线程<br>守护线程应该在start()之前设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 守护线程</div><div class="line"> * */</div><div class="line">public class DaemonThread &#123;</div><div class="line">	public static class DaemonT extends Thread&#123;</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			while(true)&#123;</div><div class="line">				System.out.println(&quot;I am alive!&quot;);</div><div class="line">				try &#123;</div><div class="line">					Thread.sleep(1000);</div><div class="line">				&#125; catch (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">		Thread t = new DaemonT();</div><div class="line">		t.setDaemon(true);</div><div class="line">		t.start();</div><div class="line">		</div><div class="line">		Thread.sleep(2000);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>线程优先级<br>描述：使用1-10标识线程的优先级,数字越大优先级越高<br>静态标量：<br>public final static int MIN_PRIORITY = 1;<br>public final static int NORM_PRIORITY = 5;<br>public final static int MAX_PRIORITY = 10;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 线程优先级</div><div class="line"> * */</div><div class="line">public class ThreadPriority &#123;</div><div class="line">	public static class HighPriority extends Thread&#123;</div><div class="line">		static int count = 0;</div><div class="line">		</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			while(true)&#123;</div><div class="line">				synchronized (ThreadPriority.class) &#123;</div><div class="line">					count++;</div><div class="line">					if(count&gt;100)&#123;</div><div class="line">						System.out.println(&quot;High priority thread break&quot;);</div><div class="line">						break;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static class LowPriority extends Thread&#123;</div><div class="line">		static int count = 0;</div><div class="line">		</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			while(true)&#123;</div><div class="line">				synchronized (ThreadPriority.class) &#123;</div><div class="line">					count++;</div><div class="line">					if(count&gt;100)&#123;</div><div class="line">						System.out.println(&quot;Low priority thread break&quot;);</div><div class="line">						break;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		Thread high = new HighPriority();</div><div class="line">		LowPriority low = new LowPriority();</div><div class="line">		high.setPriority(Thread.MAX_PRIORITY);</div><div class="line">		low.setPriority(Thread.MIN_PRIORITY);</div><div class="line">		//怎么是谁先start谁快呢</div><div class="line">		low.start();</div><div class="line">		high.start();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>线程安全与synchroized<br>线程不安全示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 两个线程写入i的值时候产生冲突，即当t1执行i++时，i的值为1，同一时间t2执行i++，因为没有读取已经改变的值，i++也会为1</div><div class="line"> * 冲突导致线程不安全，最终输出结果不一定是20000</div><div class="line"> * */</div><div class="line">public class ThreadUnsafe implements Runnable&#123;</div><div class="line"></div><div class="line">	static public ThreadUnsafe instance = new ThreadUnsafe();</div><div class="line">	static volatile int i = 0;</div><div class="line">	</div><div class="line">	public static void increase()&#123;</div><div class="line">		i ++;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	@Override</div><div class="line">	public void run() &#123;</div><div class="line">		for(int j=0;j&lt;10000;j++)&#123;</div><div class="line">			increase();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">		Thread t1 = new Thread(instance);</div><div class="line">		Thread t2 = new Thread(instance);</div><div class="line">		t1.start();t2.start();</div><div class="line">		t1.join();t2.join();</div><div class="line">		System.out.println(i);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>使用synchronized实现线程间同步<br>    指定加锁对象，进入同步代码前需要获得给定对象的锁<br>    直接作用于实例方法，当前实例加锁<br>    直接作用于静态方法，当前类加锁<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 为了线程安全，添加锁</div><div class="line"> * */</div><div class="line">public class ThreadSafe implements Runnable&#123;</div><div class="line"></div><div class="line">	static public ThreadUnsafe instance = new ThreadUnsafe();</div><div class="line">	//这里去掉volatile</div><div class="line">	static int i = 0;</div><div class="line">	</div><div class="line">	//方法一</div><div class="line">	/*public synchronized void increase()&#123;</div><div class="line">		i ++;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	@Override</div><div class="line">	public void run() &#123;</div><div class="line">		for(int j=0;j&lt;10000;j++)&#123;</div><div class="line">			increase();</div><div class="line">		&#125;</div><div class="line">	&#125;*/</div><div class="line">	</div><div class="line">	//方法二</div><div class="line">	@Override</div><div class="line">	public void run() &#123;</div><div class="line">		for(int j=0;j&lt;10000;j++)&#123;</div><div class="line">			synchronized(instance)&#123;</div><div class="line">				i++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">		//注意这里t1和t2指向同一个实例		</div><div class="line">		Thread t1 = new Thread(instance);</div><div class="line">		Thread t2 = new Thread(instance);</div><div class="line">		t1.start();t2.start();</div><div class="line">		t1.join();t2.join();</div><div class="line">		System.out.println(i);</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>注意程序是否有溢出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 输出：-894784850，为负数，因为int类型溢出</div><div class="line"> * */</div><div class="line">public class OutTo &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		int v1 = 1073741827;</div><div class="line">		int v2 = 1431655768;</div><div class="line">		int ave = (v1+v2)/2;</div><div class="line">		System.out.println(ave);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>并发下ArrayList注意</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line"></div><div class="line">/**</div><div class="line"> * ArrayList是一个线程不安全容器，多线程中使用易错但不易表现出来，多线程访问冲突</div><div class="line"> * 错误1：打印结果可能不是20000</div><div class="line"> * 错误2：抛出ArrayIndexOutOfBoundsException</div><div class="line"> * */</div><div class="line">public class ArrayListNotSafe &#123;</div><div class="line">	static ArrayList&lt;Integer&gt; a1 = new ArrayList&lt;Integer&gt;(10);</div><div class="line">	</div><div class="line">	public static class AddThread implements Runnable&#123;</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			for(int i = 0;i&lt;1000000;i++)&#123;</div><div class="line">				a1.add(i);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">		Thread t1 = new Thread(new AddThread());</div><div class="line">		Thread t2 = new Thread(new AddThread());</div><div class="line">		t1.start();</div><div class="line">		t2.start();</div><div class="line">		t1.join();t2.join();</div><div class="line">		System.out.println(a1.size());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>并发下HashMap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">import java.util.HashMap;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 情形1：为100000，正好</div><div class="line"> * 情形2：&lt;100000,</div><div class="line"> * 情形3：线程不会终止</div><div class="line"> * */</div><div class="line">public class HashMapNotSafe &#123;</div><div class="line">	static Map&lt;String,String&gt; map = new HashMap&lt;String,String&gt;();</div><div class="line">	</div><div class="line">	public static class AddThread implements Runnable&#123;</div><div class="line">		int start = 0;</div><div class="line">		</div><div class="line">		public AddThread(int start) &#123;</div><div class="line">			this.start = start;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		@Override</div><div class="line">		public void run() &#123;</div><div class="line">			for(int i = start;i&lt;100000;i=i+2)&#123;</div><div class="line">				map.put(Integer.toString(i), Integer.toBinaryString(i));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">		Thread t1 = new Thread(new HashMapNotSafe.AddThread(0));</div><div class="line">		Thread t2 = new Thread(new HashMapNotSafe.AddThread(1));</div><div class="line">		t1.start();</div><div class="line">		t2.start();</div><div class="line">		t1.join();t2.join();</div><div class="line">		System.out.println(map.size());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+  	</div>
+	  
+	</section>
+	
+		<section id="comments">
+		    <!-- 多说评论框 start -->
+		    <div class="ds-thread" data-thread-key="post-Java高并发程序设计学习2：Java并行程序基础" data-title="Java高并发程序设计学习2：Java并行程序基础" data-url="http://ccfly.cc/2017/02/23/Java高并发程序设计学习2：Java并行程序基础/"></div>
+		    <!-- 多说评论框 end -->
+		    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		    <script type="text/javascript">
+		    var duoshuoQuery = {short_name:'ccfly'};
+		      (function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		      })();
+		      </script>
+		    <!-- 多说公共JS代码 end -->
+		</section>
+	
+</article>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src='/images/avatar.jpg' />
+
+<div class='header'>Jalen</div>
+<div class='content'>
+<div></div>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/categories/Article/"><div class='name'>Article</div><div class='badget'>10</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Cache/"><div class='name'>Cache</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Database/"><div class='name'>Database</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Extjs/"><div class='name'>Extjs</div><div class='badget'>25</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Game/"><div class='name'>Game</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IDE/"><div class='name'>IDE</div><div class='badget'>5</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IT-Article/"><div class='name'>IT Article</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Java/"><div class='name'>Java</div><div class='badget'>21</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/JavaScript/"><div class='name'>JavaScript</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/LeapJs/"><div class='name'>LeapJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Life/"><div class='name'>Life</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Liferay/"><div class='name'>Liferay</div><div class='badget'>8</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Linux/"><div class='name'>Linux</div><div class='badget'>16</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Maven/"><div class='name'>Maven</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Mybatis/"><div class='name'>Mybatis</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/PostgreSQL/"><div class='name'>PostgreSQL</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Protocol/"><div class='name'>Protocol</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Research/"><div class='name'>Research</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SVG/"><div class='name'>SVG</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Servlet/"><div class='name'>Servlet</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Shell/"><div class='name'>Shell</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Spring/"><div class='name'>Spring</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Struts/"><div class='name'>Struts</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SweetAlertJs/"><div class='name'>SweetAlertJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Tomcat/"><div class='name'>Tomcat</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Video/"><div class='name'>Video</div><div class='badget'>12</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/WebService/"><div class='name'>WebService</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Website/"><div class='name'>Website</div><div class='badget'>5</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/tags/Article/" style="font-size: 14px; color: #808080">Article</a> <a href="/tags/Chrome-Apps/" style="font-size: 14px; color: #808080">Chrome Apps</a> <a href="/tags/Ubuntu/" style="font-size: 14px; color: #808080">Ubuntu</a> <a href="/tags/article/" style="font-size: 15.2px; color: #666">article</a> <a href="/tags/article-movies/" style="font-size: 14px; color: #808080">article movies</a> <a href="/tags/cache/" style="font-size: 14px; color: #808080">cache</a> <a href="/tags/cache-connectionpool/" style="font-size: 14px; color: #808080">cache connectionpool</a> <a href="/tags/cglib/" style="font-size: 14px; color: #808080">cglib</a> <a href="/tags/combobox/" style="font-size: 15.2px; color: #666">combobox</a> <a href="/tags/eclipse/" style="font-size: 15.2px; color: #666">eclipse</a> <a href="/tags/ehcache/" style="font-size: 14px; color: #808080">ehcache</a> <a href="/tags/extjs/" style="font-size: 14px; color: #808080">extjs</a> <a href="/tags/game/" style="font-size: 14px; color: #808080">game</a> <a href="/tags/guestbook/" style="font-size: 14px; color: #808080">guestbook</a> <a href="/tags/jasypt/" style="font-size: 14px; color: #808080">jasypt</a> <a href="/tags/java/" style="font-size: 15.2px; color: #666">java</a> <a href="/tags/jdbc/" style="font-size: 14px; color: #808080">jdbc</a> <a href="/tags/jdbctemplate/" style="font-size: 14px; color: #808080">jdbctemplate</a> <a href="/tags/leap-motion/" style="font-size: 14px; color: #808080">leap-motion</a> <a href="/tags/lftp/" style="font-size: 14px; color: #808080">lftp</a> <a href="/tags/liferay/" style="font-size: 14px; color: #808080">liferay</a> <a href="/tags/log4j/" style="font-size: 14px; color: #808080">log4j</a> <a href="/tags/movie/" style="font-size: 14px; color: #808080">movie</a> <a href="/tags/net/" style="font-size: 14px; color: #808080">net</a> <a href="/tags/ppt/" style="font-size: 14px; color: #808080">ppt</a> <a href="/tags/proxy/" style="font-size: 14px; color: #808080">proxy</a> <a href="/tags/rpm/" style="font-size: 14px; color: #808080">rpm</a> <a href="/tags/sencha/" style="font-size: 18.8px; color: #1a1a1a">sencha</a> <a href="/tags/servlet/" style="font-size: 15.2px; color: #666">servlet</a> <a href="/tags/story/" style="font-size: 16.4px; color: #4d4d4d">story</a> <a href="/tags/system-bashrc-environment/" style="font-size: 14px; color: #808080">system bashrc environment</a> <a href="/tags/testng/" style="font-size: 14px; color: #808080">testng</a> <a href="/tags/tomcat/" style="font-size: 14px; color: #808080">tomcat</a> <a href="/tags/ubuntu/" style="font-size: 17.6px; color: #333">ubuntu</a> <a href="/tags/ubuntu-javac/" style="font-size: 14px; color: #808080">ubuntu javac</a> <a href="/tags/ubuntu-postgresql/" style="font-size: 14px; color: #808080">ubuntu postgresql</a> <a href="/tags/ubuntu-proxy/" style="font-size: 14px; color: #808080">ubuntu proxy</a> <a href="/tags/ubuntu-sougou/" style="font-size: 14px; color: #808080">ubuntu sougou</a> <a href="/tags/ubuntu-tomcat/" style="font-size: 14px; color: #808080">ubuntu tomcat</a> <a href="/tags/video/" style="font-size: 20px; color: #000">video</a> <a href="/tags/webservice/" style="font-size: 14px; color: #808080">webservice</a> <a href="/tags/website/" style="font-size: 15.2px; color: #666">website</a> <a href="/tags/website-JS/" style="font-size: 14px; color: #808080">website JS</a> <a href="/tags/新建-模板-小书匠/" style="font-size: 14px; color: #808080">新建,模板,小书匠</a>
+    </div>
+</div>
+
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/xxxx" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="https://twitter.com/xxxx" class="social twitter"
+          target="_blank" rel="external">
+          <span class="icon icon-twitter"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a> designed by <a href="http://keyin.me/" target="_blank">Kevin Tan</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<script src="/js/jquery.fitvids.js"></script>
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

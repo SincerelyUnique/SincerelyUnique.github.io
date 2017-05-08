@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jalen</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://ccfly.cc/"/>
+  <updated>2017-05-08T18:44:04.152Z</updated>
+  <id>http://ccfly.cc/</id>
+  
+  <author>
+    <name>Jalen</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>两道String类型面试题</title>
+    <link href="http://ccfly.cc/2017/05/08/%E4%B8%A4%E9%81%93String%E7%B1%BB%E5%9E%8B%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://ccfly.cc/2017/05/08/两道String类型面试题/</id>
+    <published>2017-05-08T08:34:08.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1.给定一个字符串，找出其中重复次数最多的字符，并输出重复次数&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>java8新特性学习-Lambda</title>
+    <link href="http://ccfly.cc/2017/04/12/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/"/>
+    <id>http://ccfly.cc/2017/04/12/java8新特性学习-Lambda/</id>
+    <published>2017-04-12T08:34:08.000Z</published>
+    <updated>2017-05-08T18:44:04.148Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇博客转自网上，网址是：!(&lt;a href=&quot;http://www.jb51.net/article/48304.htm)[http://www.jb51.net/article/48304.htm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jb51.net/article/48304.htm)[http://www.jb51.net/article/48304.htm&lt;/a&gt;]&lt;br&gt;，首先谢谢博主，收藏一下&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>java8新特性学习-接口扩展</title>
+    <link href="http://ccfly.cc/2017/04/11/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95/"/>
+    <id>http://ccfly.cc/2017/04/11/java8新特性学习-接口扩展/</id>
+    <published>2017-04-11T08:34:08.000Z</published>
+    <updated>2017-05-08T18:44:04.148Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文转自：&lt;a href=&quot;http://www.jb51.net/article/48304.htm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jb51.net/article/48304.htm&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ubuntu chrome flash插件过期处理方法</title>
+    <link href="http://ccfly.cc/2017/04/10/ubuntu%20chrome%20flash%E6%8F%92%E4%BB%B6%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95/"/>
+    <id>http://ccfly.cc/2017/04/10/ubuntu chrome flash插件过期处理方法/</id>
+    <published>2017-04-10T08:34:08.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;下载符合自己系统版本的adobe flash player版本，格式如tar.gz&lt;/li&gt;
+&lt;li&gt;找到目录：/home/你的计算机用户名/.config/google-chrome/PepperFlash
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://ccfly.cc/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>创建list的两种方式</title>
+    <link href="http://ccfly.cc/2017/04/09/%E5%88%9B%E5%BB%BAlist%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
+    <id>http://ccfly.cc/2017/04/09/创建list的两种方式/</id>
+    <published>2017-04-09T08:34:08.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;一种是直接创建&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>eclipse生成javadoc</title>
+    <link href="http://ccfly.cc/2017/04/09/eclipse%E7%94%9F%E6%88%90javadoc/"/>
+    <id>http://ccfly.cc/2017/04/09/eclipse生成javadoc/</id>
+    <published>2017-04-09T08:34:08.000Z</published>
+    <updated>2017-05-08T18:44:04.148Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;工作中有时需要为项目生成javadoc，通常我们可以使用eclipse自动生成，也可以使用终端命令javadoc去生成。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>shell脚本学习</title>
+    <link href="http://ccfly.cc/2017/03/15/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://ccfly.cc/2017/03/15/shell脚本学习/</id>
+    <published>2017-03-15T07:29:15.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天学习一下unix/Linux下强大的脚本语言shell。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Shell" scheme="http://ccfly.cc/categories/Shell/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>java操作数组之Arrays</title>
+    <link href="http://ccfly.cc/2017/03/14/java%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84%E4%B9%8BArrays/"/>
+    <id>http://ccfly.cc/2017/03/14/java操作数组之Arrays/</id>
+    <published>2017-03-14T07:29:15.000Z</published>
+    <updated>2017-05-08T18:44:04.148Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1.Array和Arrays区别&lt;br&gt;Array—&amp;gt;java.lang.reflect.Array&lt;br&gt;此类提供了动态创建和访问java数组的方法&lt;/p&gt;
+&lt;p&gt;Arrays—&amp;gt;java.util.Arrays&lt;br&gt;此类包含用来操作数组(如排序/搜索)的各种方法，此类还包含一个允许将数组作为列表来查看的静态工厂。&lt;br&gt;前者倾向于操作数组的单个元素，后者倾向于操作整个数组。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>java线程池简介</title>
+    <link href="http://ccfly.cc/2017/03/14/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%AE%80%E4%BB%8B/"/>
+    <id>http://ccfly.cc/2017/03/14/java线程池简介/</id>
+    <published>2017-03-14T07:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.148Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;以下是从网上搜索到的有关线程池的知识。&lt;br&gt;&lt;a href=&quot;http://page.factj.com/blog/p/4098&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://page.factj.com/blog/p/4098&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://blog.csdn.net/ljd2038/article/details/51278508#&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.csdn.net/ljd2038/article/details/51278508#&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;1.首先了解一下为什么使用线程池，也就是线程池的优势&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>怎么提高数据库性能</title>
+    <link href="http://ccfly.cc/2017/03/13/%E6%80%8E%E4%B9%88%E6%8F%90%E9%AB%98%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD/"/>
+    <id>http://ccfly.cc/2017/03/13/怎么提高数据库性能/</id>
+    <published>2017-03-13T07:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.156Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;通常在生产中总会涉及到或多或少与数据库相关的问题，这里我们可能因为自身服务器设置的问题，数据库内部变量参数设置的问题，事务的问题，抑或是外键，索引等相关数据库语言优化的问题，下面摘抄一下从网上看到的对数据库进行优化的几点建议：&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Database" scheme="http://ccfly.cc/categories/Database/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>JS获取英文字符占位长度</title>
+    <link href="http://ccfly.cc/2017/03/10/JS%E8%8E%B7%E5%8F%96%E8%8B%B1%E6%96%87%E5%AD%97%E7%AC%A6%E5%8D%A0%E4%BD%8D%E9%95%BF%E5%BA%A6/"/>
+    <id>http://ccfly.cc/2017/03/10/JS获取英文字符占位长度/</id>
+    <published>2017-03-10T07:29:15.000Z</published>
+    <updated>2017-05-08T18:44:04.140Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;工作中因为前台为不同长度的英文字符进行自适应，首先获取其长度&lt;br&gt;
+    
+    </summary>
+    
+      <category term="JavaScript" scheme="http://ccfly.cc/categories/JavaScript/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>mybatis自动生成代码</title>
+    <link href="http://ccfly.cc/2017/03/10/mybatis%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81/"/>
+    <id>http://ccfly.cc/2017/03/10/mybatis自动生成代码/</id>
+    <published>2017-03-10T07:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;当我们使用mybatis时，为减少代码量，可以选择自动生成数据库连接代码，下面是以连接postgresql为例&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;准备jar包（2个），&lt;br&gt;postgresql-9.2-1003-jdbc4.jar （jdbc驱动）&lt;br&gt;mybatis-generator-core-1.3.2.jar （改为可执行文件）&lt;br&gt;my.xml （需要根据这个文件配置进行生成）&lt;br&gt;UserInfo.java (1个pojo类)
+    
+    </summary>
+    
+      <category term="Mybatis" scheme="http://ccfly.cc/categories/Mybatis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>spring mybatis学习,简单的项目创建</title>
+    <link href="http://ccfly.cc/2017/03/10/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/"/>
+    <id>http://ccfly.cc/2017/03/10/spring mybatis学习,简单的项目创建/</id>
+    <published>2017-03-10T07:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是一个spring集成mybatis的小项目实践，通过spring的bean管理，配置mybatis的mapper，同时使用阿里巴巴连接池druid，连接到postgresql数据库，实现insert插入操作&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Mybatis" scheme="http://ccfly.cc/categories/Mybatis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用jasypt为datasource属性加密</title>
+    <link href="http://ccfly.cc/2017/03/10/%E4%BD%BF%E7%94%A8jasypt%E4%B8%BAdatasource%E5%B1%9E%E6%80%A7%E5%8A%A0%E5%AF%86/"/>
+    <id>http://ccfly.cc/2017/03/10/使用jasypt为datasource属性加密/</id>
+    <published>2017-03-10T00:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;实际应用中，我们不能将密码暴露在外部，为避免不安全隐患，我们使用jasypt对密码进行加密&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://ccfly.cc/categories/Spring/"/>
+    
+    
+      <category term="jasypt" scheme="http://ccfly.cc/tags/jasypt/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cglib动态代理</title>
+    <link href="http://ccfly.cc/2017/03/09/cglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/"/>
+    <id>http://ccfly.cc/2017/03/09/cglib动态代理/</id>
+    <published>2017-03-09T05:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.148Z</updated>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;我们知道，使用jdk创建的动态代理，其目标对象需要实现一个接口，当目标对象，即需要进行动态代理的对象没有实现接口时，便无法使用jdk的动态代理，此时我们可以考虑使用cglib动态代理来组织我们的业务逻辑织入，使用cglib动态代理类似于jdk动态代理，不过jdk是实现InvocationHandler，而cglib是实现MethodInterceptor，底层都是对于字节码的处理。（使用cglib动态代理需要导入cglib.jar和asm.jar）
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+      <category term="cglib" scheme="http://ccfly.cc/tags/cglib/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jdk动态代理</title>
+    <link href="http://ccfly.cc/2017/03/09/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://ccfly.cc/2017/03/09/JDK动态代理的实现/</id>
+    <published>2017-03-09T04:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.140Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一. 动态代理的基本实现&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;首先创建一个类，觉得可以叫工具类，让它实现InvocationHandler接口，这个接口呢会自动实现一个方法，就是invoke()方法，注意，这个invoke方法的参数含有一个动态代理对象，一个反射的方法名，还有一组对象数组，
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java并发和多线程学习</title>
+    <link href="http://ccfly.cc/2017/03/06/Java%E5%B9%B6%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://ccfly.cc/2017/03/06/Java并发和多线程学习/</id>
+    <published>2017-03-06T05:19:15.000Z</published>
+    <updated>2017-05-08T18:44:04.140Z</updated>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;Java采用的是单线程编程模型&lt;/li&gt;
+&lt;li&gt;JVM进程不是单线程的（创建后启动一个任务线程，同时含其他线程，如垃圾回收线程）&lt;/li&gt;
+&lt;li&gt;耗时操作尽量放入子线程
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>liferay页面session过期处理</title>
+    <link href="http://ccfly.cc/2017/03/06/liferay%E9%A1%B5%E9%9D%A2session%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86/"/>
+    <id>http://ccfly.cc/2017/03/06/liferay页面session过期处理/</id>
+    <published>2017-03-06T05:18:15.000Z</published>
+    <updated>2017-05-08T18:44:04.152Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;生产中，因为dashboard需要实时反馈产线产能及良率状态，所以需要禁掉liferay里面的session过期机制，故而需要引入对session的处理：&lt;br&gt;方法如下&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Liferay" scheme="http://ccfly.cc/categories/Liferay/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>小书匠语法使用手册</title>
+    <link href="http://ccfly.cc/2017/03/06/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%AF%AD%E6%B3%95%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"/>
+    <id>http://ccfly.cc/2017/03/06/小书匠语法使用手册/</id>
+    <published>2017-03-06T00:18:15.000Z</published>
+    <updated>2017-05-08T18:44:04.156Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;常用语法&quot;&gt;&lt;a href=&quot;#常用语法&quot; class=&quot;headerlink&quot; title=&quot;常用语法&quot;&gt;&lt;/a&gt;常用语法&lt;/h1&gt;
+    
+    </summary>
+    
+      <category term="Article" scheme="http://ccfly.cc/categories/Article/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>小书匠使用手册</title>
+    <link href="http://ccfly.cc/2017/03/06/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"/>
+    <id>http://ccfly.cc/2017/03/06/小书匠使用手册/</id>
+    <published>2017-03-06T00:18:15.000Z</published>
+    <updated>2017-05-08T18:44:04.156Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;常用语法&quot;&gt;&lt;a href=&quot;#常用语法&quot; class=&quot;headerlink&quot; title=&quot;常用语法&quot;&gt;&lt;/a&gt;常用语法&lt;/h1&gt;
+    
+    </summary>
+    
+      <category term="Article" scheme="http://ccfly.cc/categories/Article/"/>
+    
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Struts2获取前台页面输入信息（Struts2+Extjs-combobox组件） | Jalen</title>
+  <meta name="description" content="description" />
+  <meta name="keywords" content="A_KEYWORD,A_KEYWORD" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/images/avatar.jpg">
+  <link rel="alternate" href="/atom.xml" title="Jalen">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要: struts2的jar包：struts-2.3.24.1 extjs包：extjs4.2.1">
+<meta name="keywords" content="A_KEYWORD,A_KEYWORD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Struts2获取前台页面输入信息（Struts2+Extjs-combobox组件）">
+<meta property="og:url" content="http://ccfly.cc/2017/02/21/Struts2获取前台页面输入信息（Struts2-Extjs-combobox组件）/index.html">
+<meta property="og:site_name" content="Jalen">
+<meta property="og:description" content="摘要: struts2的jar包：struts-2.3.24.1 extjs包：extjs4.2.1">
+<meta property="og:updated_time" content="2017-05-08T18:44:04.144Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Struts2获取前台页面输入信息（Struts2+Extjs-combobox组件）">
+<meta name="twitter:description" content="摘要: struts2的jar包：struts-2.3.24.1 extjs包：extjs4.2.1">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+		<div class="wrapper container">
+			<a class="logo flat-box" href='/' >
+				Jalen
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/archives'>
+								Archives
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-about' href='/about'>
+								About
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu"></span></a></li>
+			</ul>
+		</div>
+		<aside class="menu-phone">
+			<nav>
+				
+					<a href="/" class="nav-home nav">
+						Home
+					</a>
+				
+					<a href="/archives" class="nav-archives nav">
+						Archives
+					</a>
+				
+					<a href="/about" class="nav-about nav">
+						About
+					</a>
+				
+			</nav>
+		</aside>
+</header>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container'>
+      <div class='l_main'>
+        <article id="post-Struts2获取前台页面输入信息（Struts2-Extjs-combobox组件）"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/2017/02/21/Struts2获取前台页面输入信息（Struts2-Extjs-combobox组件）/">
+    	Struts2获取前台页面输入信息（Struts2+Extjs-combobox组件）
+    </a>
+  </h2>
+	<time>
+	  2月 21, 2017
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/categories/Struts/">Struts</a>
+    </div>
+
+	</section>
+	
+		<section class="tog"></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p><em>摘要: struts2的jar包：struts-2.3.24.1 extjs包：extjs4.2.1</em><br><a id="more"></a></p>
+<ol>
+<li>解决的问题</li>
+</ol>
+<p>1）eclipse的Build Path引入User Library里面的struts2 jar包后，还要复制这些jar包到WEB-INF的lib下面</p>
+<p>2）struts.xml里面DTD引入的配置，Window-Preferences-XML Catalog-add，在location里面添加自己的DTD路径</p>
+<p>我们的DTD文件获得可以通过解压struts2 jar包下的：struts2-core-2.3.24.1.jar获得，</p>
+<p>①Location：（你的struts-2.3.dtd的路径）</p>
+<p>②Key type：Public ID</p>
+<p>③Key：<a href="http://struts.apache.org/dtds/struts-2.3.dtd（复制这个添加进去）" target="_blank" rel="external">http://struts.apache.org/dtds/struts-2.3.dtd（复制这个添加进去）</a></p>
+<p>3）struts.xml里面action格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;action name=&quot;loadLineName&quot;  class=&quot;com.lineStatus.action.lineStatusAction&quot; method=&quot;loadLineName&quot;&gt;&lt;/action&gt;</div></pre></td></tr></table></figure></p>
+<p>4）前台页面Extjs写的，组件里面store定义总出问题，最后写成这样，好像还是用Ext.Ajax.request好些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">store:Ext.create(&apos;Ext.data.Store&apos;,&#123;</div><div class="line">	fields:[&apos;lineName&apos;],</div><div class="line">								</div><div class="line">	proxy:&#123;</div><div class="line">		type:&apos;ajax&apos;,</div><div class="line">		url:&apos;\loadLineName.action&apos;,</div><div class="line">		reader:&#123;</div><div class="line">			type:&apos;json&apos;,</div><div class="line">			root:&apos;lineName&apos;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<ol>
+<li>没有解决的问题：</li>
+</ol>
+<p>1）extjs的combobox组件从前台页面下拉框里面至少输入4个字符才会发送请求到action，不解，难道是默认的？</p>
+<p>2）extjs前台页面请求的方式默认是get，但请求的url参数值是query，如下：</p>
+<pre><code>Request URL:
+
+http://localhost:8080/ExtjsDemo01/loadLineName.action_dc=1458266498448&amp;query=sdfssss&amp;page=1&amp;start=0&amp;limit=25
+</code></pre><p>3）这个只是前台数据到后面，后面到前面没有</p>
+<ol>
+<li>代码：</li>
+</ol>
+<p>1）extjs页面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</div><div class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</div><div class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</div><div class="line">&lt;title&gt;form&lt;/title&gt;</div><div class="line"></div><div class="line">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;ext-4.2.1/resources/css/ext-all.css&quot; &gt;</div><div class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;ext-4.2.1/bootstrap.js&quot;&gt;&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line"></div><div class="line">	Ext.onReady(function()&#123;</div><div class="line">		Ext.create(&apos;Ext.window.Window&apos;,&#123;</div><div class="line">			title:&apos;Preferences&apos;,</div><div class="line">			width:400,</div><div class="line">			height:300,</div><div class="line">			layout:&apos;fit&apos;,</div><div class="line">			resizable: false,</div><div class="line">			</div><div class="line">			items:</div><div class="line">				Ext.create(&apos;Ext.tab.Panel&apos;,&#123;</div><div class="line">					renderTo:Ext.getBody(),</div><div class="line">					</div><div class="line">					items:[&#123;</div><div class="line">						title:&apos;A&apos;,</div><div class="line">						</div><div class="line">						items:[&#123;</div><div class="line">							xtype:&apos;combobox&apos;,</div><div class="line">							width:300,</div><div class="line">							fieldLabel:&apos;MFG Line&apos;,</div><div class="line">							store:Ext.create(&apos;Ext.data.Store&apos;,&#123;</div><div class="line">								fields:[&apos;lineName&apos;],</div><div class="line">								</div><div class="line">								proxy:&#123;</div><div class="line">									type:&apos;ajax&apos;,</div><div class="line">									url:&apos;\loadLineName.action&apos;,</div><div class="line">									reader:&#123;</div><div class="line">										type:&apos;json&apos;,</div><div class="line">										root:&apos;lineName&apos;</div><div class="line">									&#125;</div><div class="line">								&#125;</div><div class="line">							&#125;)</div><div class="line">							</div><div class="line">						&#125;]</div><div class="line">					&#125;,&#123;</div><div class="line">						title:&apos;B&apos;</div><div class="line">					&#125;,&#123;</div><div class="line">						title:&apos;C&apos;</div><div class="line">					&#125;,&#123;</div><div class="line">						title:&apos;D&apos;</div><div class="line">					&#125;]</div><div class="line">				&#125;)</div><div class="line">		&#125;).show();</div><div class="line">	&#125;);</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line"></div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p> 2）web.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;3.0&quot;&gt;</div><div class="line">  &lt;display-name&gt;ExtjsDemo01&lt;/display-name&gt;</div><div class="line">  </div><div class="line">  &lt;filter&gt;</div><div class="line">  	&lt;filter-name&gt;struts2&lt;/filter-name&gt;</div><div class="line">  	&lt;filter-class&gt;org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter&lt;/filter-class&gt;</div><div class="line">  &lt;/filter&gt;</div><div class="line">  </div><div class="line">  &lt;filter-mapping&gt;</div><div class="line">  	&lt;filter-name&gt;struts2&lt;/filter-name&gt;</div><div class="line">  	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">  &lt;/filter-mapping&gt;</div><div class="line">  </div><div class="line">  &lt;welcome-file-list&gt;</div><div class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</div><div class="line">    &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;</div><div class="line">    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</div><div class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</div><div class="line">    &lt;welcome-file&gt;default.htm&lt;/welcome-file&gt;</div><div class="line">    &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</div><div class="line">  &lt;/welcome-file-list&gt;</div><div class="line">&lt;/web-app&gt;</div></pre></td></tr></table></figure></p>
+<p>3）struts.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;!DOCTYPE struts PUBLIC &quot;http://struts.apache.org/dtds/struts-2.3.dtd&quot; &quot;struts-2.3.dtd&quot; &gt;</div><div class="line">&lt;struts&gt;</div><div class="line"></div><div class="line"> &lt;constant name=&quot;struts.devMode&quot; value=&quot;true&quot; /&gt; </div><div class="line"> &lt;package name=&quot;default&quot; namespace=&quot;/&quot; extends=&quot;struts-default&quot;&gt;</div><div class="line"> 	&lt;action name=&quot;loadLineName&quot;  class=&quot;com.lineStatus.action.lineStatusAction&quot; method=&quot;loadLineName&quot;&gt;</div><div class="line"> 		&lt;!-- &lt;result name=&quot;error&quot;&gt;/pages/error.jsp&lt;/result&gt;  --&gt;</div><div class="line"> 	&lt;/action&gt;</div><div class="line"> &lt;/package&gt;</div><div class="line"></div><div class="line">&lt;/struts&gt;</div></pre></td></tr></table></figure></p>
+<p>4）action<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">package com.lineStatus.action;</div><div class="line"></div><div class="line">import javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line">import org.apache.struts2.ServletActionContext;</div><div class="line"></div><div class="line">import com.opensymphony.xwork2.ActionContext;</div><div class="line">import com.opensymphony.xwork2.ActionSupport;</div><div class="line"></div><div class="line">public class lineStatusAction extends ActionSupport&#123;</div><div class="line">	/**</div><div class="line">	 * </div><div class="line">	 */</div><div class="line">	private static final long serialVersionUID = 1L;</div><div class="line">	private String lineName;</div><div class="line">	public String getLineName() &#123;</div><div class="line">		return lineName;</div><div class="line">	&#125;</div><div class="line">	public void setLineName(String lineName) &#123;</div><div class="line">		this.lineName = lineName;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	public void loadLineName()&#123;</div><div class="line">                //三种取数据方式</div><div class="line">		//①</div><div class="line">		//System.out.println(this.query);                //ognl方式？要query的set和get方法</div><div class="line">		//②</div><div class="line">		/*ActionContext context=ActionContext.getContext();</div><div class="line">		Map parameterMap=context.getParameters();</div><div class="line">		String lineNames[]=(String[]) parameterMap.get(“query”);</div><div class="line">		System.out.println(lineNames[0]);*/</div><div class="line">		//③</div><div class="line">		ActionContext context=ActionContext.getContext();</div><div class="line">		HttpServletRequest request = (HttpServletRequest)context.get(ServletActionContext.HTTP_REQUEST);</div><div class="line">		String lineNames=request.getParameter(&quot;query&quot;);</div><div class="line">		System.out.println(lineNames);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+  	</div>
+	  
+	</section>
+	
+		<section id="comments">
+		    <!-- 多说评论框 start -->
+		    <div class="ds-thread" data-thread-key="post-Struts2获取前台页面输入信息（Struts2-Extjs-combobox组件）" data-title="Struts2获取前台页面输入信息（Struts2+Extjs-combobox组件）" data-url="http://ccfly.cc/2017/02/21/Struts2获取前台页面输入信息（Struts2-Extjs-combobox组件）/"></div>
+		    <!-- 多说评论框 end -->
+		    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		    <script type="text/javascript">
+		    var duoshuoQuery = {short_name:'ccfly'};
+		      (function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		      })();
+		      </script>
+		    <!-- 多说公共JS代码 end -->
+		</section>
+	
+</article>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src='/images/avatar.jpg' />
+
+<div class='header'>Jalen</div>
+<div class='content'>
+<div></div>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/categories/Article/"><div class='name'>Article</div><div class='badget'>10</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Cache/"><div class='name'>Cache</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Database/"><div class='name'>Database</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Extjs/"><div class='name'>Extjs</div><div class='badget'>25</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Game/"><div class='name'>Game</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IDE/"><div class='name'>IDE</div><div class='badget'>5</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IT-Article/"><div class='name'>IT Article</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Java/"><div class='name'>Java</div><div class='badget'>21</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/JavaScript/"><div class='name'>JavaScript</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/LeapJs/"><div class='name'>LeapJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Life/"><div class='name'>Life</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Liferay/"><div class='name'>Liferay</div><div class='badget'>8</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Linux/"><div class='name'>Linux</div><div class='badget'>16</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Maven/"><div class='name'>Maven</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Mybatis/"><div class='name'>Mybatis</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/PostgreSQL/"><div class='name'>PostgreSQL</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Protocol/"><div class='name'>Protocol</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Research/"><div class='name'>Research</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SVG/"><div class='name'>SVG</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Servlet/"><div class='name'>Servlet</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Shell/"><div class='name'>Shell</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Spring/"><div class='name'>Spring</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Struts/"><div class='name'>Struts</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SweetAlertJs/"><div class='name'>SweetAlertJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Tomcat/"><div class='name'>Tomcat</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Video/"><div class='name'>Video</div><div class='badget'>12</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/WebService/"><div class='name'>WebService</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Website/"><div class='name'>Website</div><div class='badget'>5</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/tags/Article/" style="font-size: 14px; color: #808080">Article</a> <a href="/tags/Chrome-Apps/" style="font-size: 14px; color: #808080">Chrome Apps</a> <a href="/tags/Ubuntu/" style="font-size: 14px; color: #808080">Ubuntu</a> <a href="/tags/article/" style="font-size: 15.2px; color: #666">article</a> <a href="/tags/article-movies/" style="font-size: 14px; color: #808080">article movies</a> <a href="/tags/cache/" style="font-size: 14px; color: #808080">cache</a> <a href="/tags/cache-connectionpool/" style="font-size: 14px; color: #808080">cache connectionpool</a> <a href="/tags/cglib/" style="font-size: 14px; color: #808080">cglib</a> <a href="/tags/combobox/" style="font-size: 15.2px; color: #666">combobox</a> <a href="/tags/eclipse/" style="font-size: 15.2px; color: #666">eclipse</a> <a href="/tags/ehcache/" style="font-size: 14px; color: #808080">ehcache</a> <a href="/tags/extjs/" style="font-size: 14px; color: #808080">extjs</a> <a href="/tags/game/" style="font-size: 14px; color: #808080">game</a> <a href="/tags/guestbook/" style="font-size: 14px; color: #808080">guestbook</a> <a href="/tags/jasypt/" style="font-size: 14px; color: #808080">jasypt</a> <a href="/tags/java/" style="font-size: 15.2px; color: #666">java</a> <a href="/tags/jdbc/" style="font-size: 14px; color: #808080">jdbc</a> <a href="/tags/jdbctemplate/" style="font-size: 14px; color: #808080">jdbctemplate</a> <a href="/tags/leap-motion/" style="font-size: 14px; color: #808080">leap-motion</a> <a href="/tags/lftp/" style="font-size: 14px; color: #808080">lftp</a> <a href="/tags/liferay/" style="font-size: 14px; color: #808080">liferay</a> <a href="/tags/log4j/" style="font-size: 14px; color: #808080">log4j</a> <a href="/tags/movie/" style="font-size: 14px; color: #808080">movie</a> <a href="/tags/net/" style="font-size: 14px; color: #808080">net</a> <a href="/tags/ppt/" style="font-size: 14px; color: #808080">ppt</a> <a href="/tags/proxy/" style="font-size: 14px; color: #808080">proxy</a> <a href="/tags/rpm/" style="font-size: 14px; color: #808080">rpm</a> <a href="/tags/sencha/" style="font-size: 18.8px; color: #1a1a1a">sencha</a> <a href="/tags/servlet/" style="font-size: 15.2px; color: #666">servlet</a> <a href="/tags/story/" style="font-size: 16.4px; color: #4d4d4d">story</a> <a href="/tags/system-bashrc-environment/" style="font-size: 14px; color: #808080">system bashrc environment</a> <a href="/tags/testng/" style="font-size: 14px; color: #808080">testng</a> <a href="/tags/tomcat/" style="font-size: 14px; color: #808080">tomcat</a> <a href="/tags/ubuntu/" style="font-size: 17.6px; color: #333">ubuntu</a> <a href="/tags/ubuntu-javac/" style="font-size: 14px; color: #808080">ubuntu javac</a> <a href="/tags/ubuntu-postgresql/" style="font-size: 14px; color: #808080">ubuntu postgresql</a> <a href="/tags/ubuntu-proxy/" style="font-size: 14px; color: #808080">ubuntu proxy</a> <a href="/tags/ubuntu-sougou/" style="font-size: 14px; color: #808080">ubuntu sougou</a> <a href="/tags/ubuntu-tomcat/" style="font-size: 14px; color: #808080">ubuntu tomcat</a> <a href="/tags/video/" style="font-size: 20px; color: #000">video</a> <a href="/tags/webservice/" style="font-size: 14px; color: #808080">webservice</a> <a href="/tags/website/" style="font-size: 15.2px; color: #666">website</a> <a href="/tags/website-JS/" style="font-size: 14px; color: #808080">website JS</a> <a href="/tags/新建-模板-小书匠/" style="font-size: 14px; color: #808080">新建,模板,小书匠</a>
+    </div>
+</div>
+
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/xxxx" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="https://twitter.com/xxxx" class="social twitter"
+          target="_blank" rel="external">
+          <span class="icon icon-twitter"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a> designed by <a href="http://keyin.me/" target="_blank">Kevin Tan</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<script src="/js/jquery.fitvids.js"></script>
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

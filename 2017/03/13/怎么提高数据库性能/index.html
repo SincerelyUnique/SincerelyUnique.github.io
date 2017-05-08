@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>怎么提高数据库性能 | Jalen</title>
+  <meta name="description" content="description" />
+  <meta name="keywords" content="A_KEYWORD,A_KEYWORD" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/images/avatar.jpg">
+  <link rel="alternate" href="/atom.xml" title="Jalen">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通常在生产中总会涉及到或多或少与数据库相关的问题，这里我们可能因为自身服务器设置的问题，数据库内部变量参数设置的问题，事务的问题，抑或是外键，索引等相关数据库语言优化的问题，下面摘抄一下从网上看到的对数据库进行优化的几点建议：">
+<meta name="keywords" content="A_KEYWORD,A_KEYWORD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么提高数据库性能">
+<meta property="og:url" content="http://ccfly.cc/2017/03/13/怎么提高数据库性能/index.html">
+<meta property="og:site_name" content="Jalen">
+<meta property="og:description" content="通常在生产中总会涉及到或多或少与数据库相关的问题，这里我们可能因为自身服务器设置的问题，数据库内部变量参数设置的问题，事务的问题，抑或是外键，索引等相关数据库语言优化的问题，下面摘抄一下从网上看到的对数据库进行优化的几点建议：">
+<meta property="og:updated_time" content="2017-05-08T18:44:04.156Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="怎么提高数据库性能">
+<meta name="twitter:description" content="通常在生产中总会涉及到或多或少与数据库相关的问题，这里我们可能因为自身服务器设置的问题，数据库内部变量参数设置的问题，事务的问题，抑或是外键，索引等相关数据库语言优化的问题，下面摘抄一下从网上看到的对数据库进行优化的几点建议：">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+		<div class="wrapper container">
+			<a class="logo flat-box" href='/' >
+				Jalen
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/archives'>
+								Archives
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-about' href='/about'>
+								About
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu"></span></a></li>
+			</ul>
+		</div>
+		<aside class="menu-phone">
+			<nav>
+				
+					<a href="/" class="nav-home nav">
+						Home
+					</a>
+				
+					<a href="/archives" class="nav-archives nav">
+						Archives
+					</a>
+				
+					<a href="/about" class="nav-about nav">
+						About
+					</a>
+				
+			</nav>
+		</aside>
+</header>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container'>
+      <div class='l_main'>
+        <article id="post-怎么提高数据库性能"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/2017/03/13/怎么提高数据库性能/">
+    	怎么提高数据库性能
+    </a>
+  </h2>
+	<time>
+	  3月 13, 2017
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/categories/Database/">Database</a>
+    </div>
+
+	</section>
+	
+		<section class="tog"></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>通常在生产中总会涉及到或多或少与数据库相关的问题，这里我们可能因为自身服务器设置的问题，数据库内部变量参数设置的问题，事务的问题，抑或是外键，索引等相关数据库语言优化的问题，下面摘抄一下从网上看到的对数据库进行优化的几点建议：<br><a id="more"></a><br>本文主要是摘录从网上查找到的数据库性能优化的案例，未做验证<br><strong>索引</strong><br>1.使用索引<br>说明：索引类似书的目录，无需查询整个表<br>优点：数据量越大越好用，适用于修改不多，但重复查询的场景<br>缺点：占用物理空间，创建和维护有消耗，数据库操作要多一步去维护索引，关系到数据库增删改查的性能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE INDEX idx_username ON users(username);</div></pre></td></tr></table></figure></p>
+<p>可以通过SHOW INDEX命令查询索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW INDEX FROM users</div></pre></td></tr></table></figure></p>
+<p>分类：直接创建（sql语句创建），间接创建（主键等）</p>
+<ol>
+<li>字段数据更新频率低，查询频率高，且查询内容大致在一定范围（order by/group by/MIN()/MAX()），可用索引；如同时存取多列，且每列含有重复值可用复合索引</li>
+<li><p>复合索引，将使用最频繁的列作为前导列，如果进行查询时，如果前导列不在查询条件中，则不会被查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create unique index PK_GRADE_CLASS on student (grade, class)</div><div class="line">select * from student where class = 2	//未使用到索引</div><div class="line">select * from dept where grade = 3	//使用到了索引</div></pre></td></tr></table></figure>
+</li>
+<li><p>避免对前导列运算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from student where tochar(grade)=’2′</div></pre></td></tr></table></figure>
+</li>
+<li><p>比较值避免使用NULL</p>
+</li>
+<li>多表查询选择合适的表做内表</li>
+<li>查询列与索引列次序一致</li>
+<li>用多表连接代替EXISTS</li>
+<li>把过滤记录数最多的条件放在最前面</li>
+<li>善于使用存储过程，慎用，因为通常情况下，前台应用程序的执行效率往往比后台数据库存储过程要高的多</li>
+<li>在建有索引的字段上尽量不要使用函数操作</li>
+</ol>
+<p><strong>事物</strong></p>
+<ol>
+<li>原子提交，要么完成，要么所有都不做，失败自动回滚</li>
+<li>更优性能</li>
+<li>注意，当事务在执行过程中，数据库会被锁定，只有当当前用户执行的事务完成之后，才可以允许其他用户操作</li>
+</ol>
+<p><strong>网络</strong></p>
+<ol>
+<li>网络拥塞，如利用集线器进行连接，导致企业内部网络广播泛滥</li>
+</ol>
+<p><strong>硬件</strong></p>
+<ol>
+<li>硬盘小和少，硬盘寻道难</li>
+<li>服务器内存小，或这有些企业为降低成本，数据库服务器和应用服务器放在一个服务器，资源争用问题</li>
+<li>CPU数量</li>
+<li>其他改善服务器的配置</li>
+<li>注意差异备份和完全备份，还有注意备份的时间，如夜晚</li>
+</ol>
+<p><strong>其他</strong></p>
+<ol>
+<li>字符串拼接使用StringBuilder，String会导致创建多个临时对象</li>
+<li>查询时不要返回太多结果集，只取所需</li>
+<li><p>少用cursor.getColumnIndex()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public static final String       HTTP_RESPONSE_TABLE_RESPONSE            = &quot;response&quot;;</div><div class="line">public List&lt;Object&gt; getData() &#123;</div><div class="line">	……</div><div class="line">	cursor.getString(cursor.getColumnIndex(HTTP_RESPONSE_TABLE_RESPONSE));</div><div class="line">	……</div><div class="line">&#125;</div><div class="line">可以优化为</div><div class="line">public List&lt;Object&gt; getData() &#123;</div><div class="line">	……</div><div class="line">	cursor.getString(HTTP_RESPONSE_TABLE_RESPONSE_INDEX);</div><div class="line">	……</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>数据库视图设计，尽量缩小内容，宁可多增加视图</p>
+</li>
+<li>数值数据处理速度要比文本快，尤其是比text快</li>
+<li><p>使用子查询Sub-Queries，可以完成很多逻辑上需要很多步骤才能完成的SQL操作，同时也可以避免事务或死锁，但某些情况下使用连接JOIN会更有效率</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//使用子查询</div><div class="line">DELETE FROM customerinfo WHERE CustomerID NOT in (SELECT CustomerID FROM salesinfo )</div><div class="line">SELECT * FROM customerinfo WHERE CustomerID NOT in (SELECT CustomerID FROM salesinfo )</div><div class="line">//使用连接，则不需要在内存中创建临时表来达到我们最终需求的操作</div><div class="line">SELECT * FROM customerinfo LEFT JOIN salesinfo ON customerinfo.CustomerID=salesinfo. CustomerID WHERE salesinfo.CustomerID IS NULL</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用联合（UNION）来代替手动创建临时表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//注意所有select语句里字段数目一致</div><div class="line">SELECT Name, Phone FROM client UNION SELECT Name, BirthDate FROM author UNION SELECT Name, Supplier FROM product</div></pre></td></tr></table></figure>
+</li>
+<li><p>由于事务的资源锁占用问题，导致多用户无法访问数据库表，我们可以使用锁定表的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">LOCK TABLE inventory WRITE SELECT Quantity FROM inventory WHEREItem=&apos;book&apos;;</div><div class="line">...</div><div class="line">UPDATE inventory SET Quantity=11 WHEREItem=&apos;book&apos;;</div><div class="line">UNLOCK TABLES</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用外键，保证数据的关联性<br>“ON DELETE CASCADE”参数保证当 customerinfo 表中的一条客户记录被删除的时候，salesinfo 表中所有与该客户相关的记录也会被自动删除。<br>如果要在 MySQL 中使用外键，一定要记住在创建表的时候将表的类型定义为事务安全表 InnoDB类型。该类型不是 MySQL 表的默认类型,定义的方法是在 CREATE TABLE 语句中加上 TYPE=INNODB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE customerinfo</div><div class="line">(</div><div class="line">	CustomerID INT NOT NULL ,</div><div class="line">	PRIMARY KEY ( CustomerID )</div><div class="line">) TYPE = INNODB;</div><div class="line"></div><div class="line">CREATE TABLE salesinfo</div><div class="line">(</div><div class="line">	SalesID INT NOT NULL,</div><div class="line">	CustomerID INT NOT NULL,</div><div class="line">	PRIMARY KEY(CustomerID, SalesID),</div><div class="line">	FOREIGN KEY (CustomerID) REFERENCES customerinfo (CustomerID) ON DELETECASCADE</div><div class="line">) TYPE = INNODB;</div></pre></td></tr></table></figure>
+</li>
+<li><p>比较最好在相同类型之间比较，且有时由于数据库语句问题会导致索引无效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//下面sql语句虽然返回结果一样，但是后面的效率要优于前面的执行效率</div><div class="line">SELECT * FROM order WHERE YEAR(OrderDate)&lt;2001;</div><div class="line"></div><div class="line">SELECT * FROM order WHERE OrderDate&lt;&quot;2001-01-01&quot;;</div><div class="line">//同样的情形也会发生在对数值型字段进行计算的时候：</div><div class="line">SELECT * FROM inventory WHERE Amount/7&lt;24;</div><div class="line"></div><div class="line">SELECT * FROM inventory WHERE Amount&lt;24*7;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在搜索字符型字段时，有时会使用LIKE关键字和通配符，这样虽然简单，但是是以牺牲系统性能为代价的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SELECT * FROM books WHERE name like &quot;MySQL%&quot;</div><div class="line"></div><div class="line">//性能不如下面，他们返回结果一样</div><div class="line">SELECT * FROM books WHERE name&gt;=&quot;MySQL&quot;and name&lt;&quot;MySQM&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>避免在查询中让MySQL进行自动类型转换，因为转换过程也会使索引变得不起作用</p>
+</li>
+<li>注意sql语句尽可能使用大写字母，因为在执行时会默认从小写转换成大写，浪费时间</li>
+<li>尽可能不要在sql语句中使用运算符进行运算，或者是转型</li>
+<li>尽量不要使用“+”号作字符串连接中对于变量的引入，使用StringBuilder优于String</li>
+<li>如MySQL，可以调整内部变量来获得更高性能<br>改变索引缓冲区长度(key_buffer)<br>改变表长(read_buffer_size)<br>设定打开表的数目的最大值(table_cache)<br>对缓长查询设定一个时间限制(long_query_time)</li>
+</ol>
+
+  	</div>
+	  
+	</section>
+	
+		<section id="comments">
+		    <!-- 多说评论框 start -->
+		    <div class="ds-thread" data-thread-key="post-怎么提高数据库性能" data-title="怎么提高数据库性能" data-url="http://ccfly.cc/2017/03/13/怎么提高数据库性能/"></div>
+		    <!-- 多说评论框 end -->
+		    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		    <script type="text/javascript">
+		    var duoshuoQuery = {short_name:'ccfly'};
+		      (function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		      })();
+		      </script>
+		    <!-- 多说公共JS代码 end -->
+		</section>
+	
+</article>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src='/images/avatar.jpg' />
+
+<div class='header'>Jalen</div>
+<div class='content'>
+<div></div>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/categories/Article/"><div class='name'>Article</div><div class='badget'>10</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Cache/"><div class='name'>Cache</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Database/"><div class='name'>Database</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Extjs/"><div class='name'>Extjs</div><div class='badget'>25</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Game/"><div class='name'>Game</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IDE/"><div class='name'>IDE</div><div class='badget'>5</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IT-Article/"><div class='name'>IT Article</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Java/"><div class='name'>Java</div><div class='badget'>21</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/JavaScript/"><div class='name'>JavaScript</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/LeapJs/"><div class='name'>LeapJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Life/"><div class='name'>Life</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Liferay/"><div class='name'>Liferay</div><div class='badget'>8</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Linux/"><div class='name'>Linux</div><div class='badget'>16</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Maven/"><div class='name'>Maven</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Mybatis/"><div class='name'>Mybatis</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/PostgreSQL/"><div class='name'>PostgreSQL</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Protocol/"><div class='name'>Protocol</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Research/"><div class='name'>Research</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SVG/"><div class='name'>SVG</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Servlet/"><div class='name'>Servlet</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Shell/"><div class='name'>Shell</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Spring/"><div class='name'>Spring</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Struts/"><div class='name'>Struts</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SweetAlertJs/"><div class='name'>SweetAlertJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Tomcat/"><div class='name'>Tomcat</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Video/"><div class='name'>Video</div><div class='badget'>12</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/WebService/"><div class='name'>WebService</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Website/"><div class='name'>Website</div><div class='badget'>5</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/tags/Article/" style="font-size: 14px; color: #808080">Article</a> <a href="/tags/Chrome-Apps/" style="font-size: 14px; color: #808080">Chrome Apps</a> <a href="/tags/Ubuntu/" style="font-size: 14px; color: #808080">Ubuntu</a> <a href="/tags/article/" style="font-size: 15.2px; color: #666">article</a> <a href="/tags/article-movies/" style="font-size: 14px; color: #808080">article movies</a> <a href="/tags/cache/" style="font-size: 14px; color: #808080">cache</a> <a href="/tags/cache-connectionpool/" style="font-size: 14px; color: #808080">cache connectionpool</a> <a href="/tags/cglib/" style="font-size: 14px; color: #808080">cglib</a> <a href="/tags/combobox/" style="font-size: 15.2px; color: #666">combobox</a> <a href="/tags/eclipse/" style="font-size: 15.2px; color: #666">eclipse</a> <a href="/tags/ehcache/" style="font-size: 14px; color: #808080">ehcache</a> <a href="/tags/extjs/" style="font-size: 14px; color: #808080">extjs</a> <a href="/tags/game/" style="font-size: 14px; color: #808080">game</a> <a href="/tags/guestbook/" style="font-size: 14px; color: #808080">guestbook</a> <a href="/tags/jasypt/" style="font-size: 14px; color: #808080">jasypt</a> <a href="/tags/java/" style="font-size: 15.2px; color: #666">java</a> <a href="/tags/jdbc/" style="font-size: 14px; color: #808080">jdbc</a> <a href="/tags/jdbctemplate/" style="font-size: 14px; color: #808080">jdbctemplate</a> <a href="/tags/leap-motion/" style="font-size: 14px; color: #808080">leap-motion</a> <a href="/tags/lftp/" style="font-size: 14px; color: #808080">lftp</a> <a href="/tags/liferay/" style="font-size: 14px; color: #808080">liferay</a> <a href="/tags/log4j/" style="font-size: 14px; color: #808080">log4j</a> <a href="/tags/movie/" style="font-size: 14px; color: #808080">movie</a> <a href="/tags/net/" style="font-size: 14px; color: #808080">net</a> <a href="/tags/ppt/" style="font-size: 14px; color: #808080">ppt</a> <a href="/tags/proxy/" style="font-size: 14px; color: #808080">proxy</a> <a href="/tags/rpm/" style="font-size: 14px; color: #808080">rpm</a> <a href="/tags/sencha/" style="font-size: 18.8px; color: #1a1a1a">sencha</a> <a href="/tags/servlet/" style="font-size: 15.2px; color: #666">servlet</a> <a href="/tags/story/" style="font-size: 16.4px; color: #4d4d4d">story</a> <a href="/tags/system-bashrc-environment/" style="font-size: 14px; color: #808080">system bashrc environment</a> <a href="/tags/testng/" style="font-size: 14px; color: #808080">testng</a> <a href="/tags/tomcat/" style="font-size: 14px; color: #808080">tomcat</a> <a href="/tags/ubuntu/" style="font-size: 17.6px; color: #333">ubuntu</a> <a href="/tags/ubuntu-javac/" style="font-size: 14px; color: #808080">ubuntu javac</a> <a href="/tags/ubuntu-postgresql/" style="font-size: 14px; color: #808080">ubuntu postgresql</a> <a href="/tags/ubuntu-proxy/" style="font-size: 14px; color: #808080">ubuntu proxy</a> <a href="/tags/ubuntu-sougou/" style="font-size: 14px; color: #808080">ubuntu sougou</a> <a href="/tags/ubuntu-tomcat/" style="font-size: 14px; color: #808080">ubuntu tomcat</a> <a href="/tags/video/" style="font-size: 20px; color: #000">video</a> <a href="/tags/webservice/" style="font-size: 14px; color: #808080">webservice</a> <a href="/tags/website/" style="font-size: 15.2px; color: #666">website</a> <a href="/tags/website-JS/" style="font-size: 14px; color: #808080">website JS</a> <a href="/tags/新建-模板-小书匠/" style="font-size: 14px; color: #808080">新建,模板,小书匠</a>
+    </div>
+</div>
+
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/xxxx" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="https://twitter.com/xxxx" class="social twitter"
+          target="_blank" rel="external">
+          <span class="icon icon-twitter"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a> designed by <a href="http://keyin.me/" target="_blank">Kevin Tan</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<script src="/js/jquery.fitvids.js"></script>
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

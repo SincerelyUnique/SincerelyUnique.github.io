@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>SenchaCmd学习笔记（9）:Working with Grids(网格) | Jalen</title>
+  <meta name="description" content="description" />
+  <meta name="keywords" content="A_KEYWORD,A_KEYWORD" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/images/avatar.jpg">
+  <link rel="alternate" href="/atom.xml" title="Jalen">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="0.概述 •     The basic grid•     Sorting•     Renderer•     Filtering•     Pagination•     Cell editing•     Row editing•     Grouping•     The pivot grid•     Company Directory — a sample project分页、排序、">
+<meta name="keywords" content="sencha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SenchaCmd学习笔记（9）:Working with Grids(网格)">
+<meta property="og:url" content="http://ccfly.cc/2017/02/22/SenchaCmd学习笔记（9）-Working-with-Grids-网格/index.html">
+<meta property="og:site_name" content="Jalen">
+<meta property="og:description" content="0.概述 •     The basic grid•     Sorting•     Renderer•     Filtering•     Pagination•     Cell editing•     Row editing•     Grouping•     The pivot grid•     Company Directory — a sample project分页、排序、">
+<meta property="og:updated_time" content="2017-05-08T18:44:04.144Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SenchaCmd学习笔记（9）:Working with Grids(网格)">
+<meta name="twitter:description" content="0.概述 •     The basic grid•     Sorting•     Renderer•     Filtering•     Pagination•     Cell editing•     Row editing•     Grouping•     The pivot grid•     Company Directory — a sample project分页、排序、">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+		<div class="wrapper container">
+			<a class="logo flat-box" href='/' >
+				Jalen
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/archives'>
+								Archives
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-about' href='/about'>
+								About
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu"></span></a></li>
+			</ul>
+		</div>
+		<aside class="menu-phone">
+			<nav>
+				
+					<a href="/" class="nav-home nav">
+						Home
+					</a>
+				
+					<a href="/archives" class="nav-archives nav">
+						Archives
+					</a>
+				
+					<a href="/about" class="nav-about nav">
+						About
+					</a>
+				
+			</nav>
+		</aside>
+</header>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container'>
+      <div class='l_main'>
+        <article id="post-SenchaCmd学习笔记（9）-Working-with-Grids-网格"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/2017/02/22/SenchaCmd学习笔记（9）-Working-with-Grids-网格/">
+    	SenchaCmd学习笔记（9）:Working with Grids(网格)
+    </a>
+  </h2>
+	<time>
+	  2月 22, 2017
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/categories/Extjs/">Extjs</a>
+    </div>
+
+	</section>
+	
+		<section class="tog"></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>0.概述</p>
+<p>•     The basic grid<br>•     Sorting<br>•     Renderer<br>•     Filtering<br>•     Pagination<br>•     Cell editing<br>•     Row editing<br>•     Grouping<br>•     The pivot grid<br>•     Company Directory — a sample project<br>分页、排序、过滤、搜索、排编辑单元格编辑、分组、对接工具栏、缓冲滚动，列大小和隐藏，分组头，多种类，行扩展，等等。<br><a id="more"></a></p>
+<p>1.The basic grid</p>
+<pre><code> classic：Ext.grid.Panel
+
+ modern：Ext.grid.Grid
+
+ 1）首先通过在线硬编码创建一个简单的store和model        
+
+             Ext.define(&apos;Product&apos;, {
+
+                             extend: &apos;Ext.data.Model&apos;,
+
+                             fields: [ &apos;id&apos;, &apos;productname&apos;, &apos;desc&apos;, &apos;price&apos; ]
+
+                             });
+
+                             var productStore = Ext.create(&apos;Ext.data.Store&apos;, {
+
+                                                 model: &apos;Product&apos;,
+
+                             data: [{
+
+                                     id: &apos;P1&apos;,
+
+                                     productname: &apos;Ice Pop Maker&apos;,
+
+                                     desc: &apos;Create fun and healthy treats anytime&apos;,
+
+                                     price: &apos;$16.33&apos;
+
+                             }, {
+
+                                     id: &apos;P2&apos;,
+
+                                     productname: &apos;Stainless Steel Food Jar&apos;,
+
+                                     desc: &apos;Thermos double wall vacuum insulated food jar&apos;,
+
+                                     price: &apos;$14.87&apos;
+
+                             },{
+
+                                     id: &apos;P3&apos;,
+
+                                     productname: &apos;Shower Caddy&apos;,
+
+                                     desc: &apos;Non-slip grip keeps your caddy in place&apos;,
+
+                                     price: &apos;$17.99&apos;
+
+                             }, {
+
+                                     id: &apos;P4&apos;,
+
+                                     productname: &apos;VoIP Phone Adapter&apos;,
+
+                                     desc: &apos;Works with Up to Four VoIP Services Across One Phone
+
+                                     Port&apos;,
+
+                                     price: &apos;$47.50&apos;
+
+                             }
+
+                             ]
+
+             });
+
+ 2）创建网格grid，使用store
+
+             Ext.create(&apos;Ext.grid.Panel&apos;, {
+
+                             renderTo: Ext.getBody(),
+
+                             store: productStore,
+
+                             width: 600,
+
+                             title: &apos;Products&apos;,
+
+                             columns: [
+
+                             {
+
+                                     text: &apos;Id&apos;,
+
+                                     dataIndex: &apos;id&apos;,
+
+                                     hidden: true
+
+                             },
+
+                             {
+
+                                     text: &apos;Name&apos;,
+
+                                     width:150,
+
+                                     dataIndex: &apos;productname&apos;
+
+                             },
+
+                             {
+
+                                     text: &apos;Description&apos;,
+
+                                     dataIndex: &apos;desc&apos;,
+
+                                     sortable: false,
+
+                                     flex: 1
+
+                             },
+
+                             {
+
+                                     text: &apos;price&apos;,
+
+                                     width: 100,
+
+                                     dataIndex: &apos;price&apos;
+
+                             }
+
+                             ]
+
+             });
+
+ 3）Sorting    （排序）
+
+ sortable：false     禁用排序（客户端）
+
+ remoteSort：false    禁用排序（服务器端）
+
+ 4）Renderer    （渲染器）      
+
+ 让我们用渲染器以“前缀”为“价格”列的符号
+
+             Ext.create(&apos;Ext.grid.Panel&apos;, {
+
+                             renderTo: Ext.getBody(),
+
+                             store: productStore,
+
+                             width: 600,
+
+                             title: &apos;Products&apos;,
+
+                             columns: [{
+
+                                                 text: &apos;Id&apos;,
+
+                                                 dataIndex: &apos;id&apos;,
+
+                                                 hidden: true
+
+                             }, {                                  
+
+                                                 text: &apos;Name&apos;,
+
+                                                 width:150,
+
+                                                 dataIndex: &apos;productname&apos;
+
+                             }, {
+
+                                                 text: &apos;Description&apos;,
+
+                                                 dataIndex: &apos;desc&apos;,
+
+                                                 sortable: false,
+
+                                                 flex: 1
+
+                             }, {
+
+                                                 text: &apos;price&apos;,
+
+                                                 width: 100,
+
+                                                 dataIndex: &apos;price&apos;,
+
+                                                 renderer: function(value) {
+
+                                                                 return Ext.String.format(&apos;${0}&apos;, value);
+
+                                                         }
+
+                             }
+
+                             ]
+
+             });
+
+ 5）Filtering    （筛选）
+
+ 为grid添加筛选很容易，只是简单的添加：Ext.grid.filters.Filters (ptype: gridfilters )，如：
+
+             Ext.create(&apos;Ext.grid.Panel&apos;, {
+
+                             renderTo: Ext.getBody(),
+
+                             store: productStore,
+
+                             plugins: &apos;gridfilters&apos;,
+
+                             width: 600,
+
+                             title: &apos;Products&apos;,
+
+                             columns: [
+
+                             {
+
+                                             text: &apos;Id&apos;,
+
+                                             dataIndex: &apos;id&apos;,
+
+                                             hidden: true
+
+                             },
+
+                             {
+
+                                             text: &apos;Name&apos;,
+
+                                             width:150,
+
+                                             dataIndex: &apos;productname&apos;,
+
+                                             filter:&apos;string&apos;
+
+                             },
+
+                             {
+
+                                             text: &apos;Description&apos;,
+
+                                             dataIndex: &apos;desc&apos;,
+
+                                             sortable: false,
+
+                                             flex: 1,
+
+                                             filter: {
+
+                                                             type: &apos;string&apos;,
+
+                                                             itemDefaults: {
+
+                                                                             emptyText: &apos;Search for...&apos; }
+
+                                             }
+
+                             },
+
+                             {
+
+                                             text: &apos;price&apos;,
+
+                                             width: 100,
+
+                                             dataIndex: &apos;price&apos;
+
+                             }
+
+                             ]
+
+             });    
+
+ 6）Pagination    （分页）
+
+ 使用：Ext.toolbar.Paging ( xtype: pagingtoolbar )
+
+ 使用：dockedItems    （Ext.panel.Panel的属性）
+
+             Ext.create(&apos;Ext.grid.Panel&apos;, {
+
+                             renderTo: Ext.getBody(),
+
+                             store: productStore,
+
+                             width: 600,
+
+                             title: &apos;Products&apos;,
+
+                             columns: [
+
+                                             { text: &apos;Id&apos;, dataIndex: &apos;id&apos;, hidden: true },
+
+                                             { text: &apos;Name&apos;, width:150, dataIndex: &apos;productname&apos;},
+
+                                             { text: &apos;Description&apos;, dataIndex: &apos;desc&apos;, sortable: false, flex:
+
+                                             1},
+
+                                             { text: &apos;price&apos;, width: 100, dataIndex: &apos;price&apos; }
+
+                             ],
+
+                             dockedItems: [{
+
+                                             xtype: &apos;pagingtoolbar&apos;,
+
+                                             store: productStore,
+
+                                             dock: &apos;bottom&apos;,
+
+                                             displayInfo: true
+
+                             }]
+
+             });
+
+ 7）store从json文件里面读取数据
+
+         var productStore = Ext.create(&apos;Ext.data.Store&apos;, {
+
+                                     model: &apos;Product&apos;,
+
+                                     pageSize: 10,      //给服务器发送请求，限制记录的数量，
+
+                                                                         http://localhost:8000/data.json?page=1&amp;start=0&amp;limit=10
+
+                                     autoLoad: true,
+
+                                     proxy: {
+
+                                                     type: &apos;ajax&apos;,
+
+                                                     url: &apos;data.json&apos;,
+
+                                                     reader: {
+
+                                                                     type: &apos;json&apos;,
+
+                                                                     rootProperty: &apos;data&apos;,        //告诉在json文件的哪里找数据
+
+                                                                     totalProperty: &apos;total&apos;        //让store知道去哪里读取总的数据和记录
+
+                                                                 }
+
+                                     }
+
+         });
+
+ 8）Cell editing    （单元格编辑）
+
+ 使用：Ext.grid.plugin.CellEditing
+
+ 添加一个基本的文本域个一个列
+
+             Ext.create(&apos;Ext.grid.Panel&apos;, {
+
+                             renderTo: Ext.getBody(),
+
+                             store: productStore,
+
+                             plugins: [&apos;cellediting&apos;,&apos;gridfilters&apos;],
+
+                             width: 600,
+
+                             title: &apos;Products&apos;,
+
+                             columns: [
+
+                             {
+
+                                     text: &apos;Id&apos;,
+
+                                     dataIndex: &apos;id&apos;,
+
+                                     hidden: true
+
+                             },
+
+                             {
+
+                                     text: &apos;Name&apos;,
+
+                                     width:150,
+
+                                     dataIndex: &apos;productname&apos;,
+
+                                     filter:&apos;string&apos;,
+
+                                     editor: {
+
+                                             allowBlank: false,
+
+                                             type: &apos;string&apos;
+
+                                     }
+
+                             },
+
+                             {
+
+                                     text: &apos;Description&apos;,
+
+                                     dataIndex: &apos;desc&apos;,
+
+                                     sortable: false,
+
+                                     flex: 1
+
+                             },
+
+                             {
+
+                                     text: &apos;Price&apos;,
+
+                                     width: 100,
+
+                                     dataIndex: &apos;price&apos;
+
+                             },
+
+                             {
+
+                                     text: &apos;Type&apos;,
+
+                                     width: 100,
+
+                                     dataIndex: &apos;type&apos;,
+
+                                     editor: new Ext.form.field.ComboBox({
+
+                                             typeAhead: true,
+
+                                             triggerAction: &apos;all&apos;,
+
+                                             store: [
+
+                                                     [&apos;Bath&apos;,&apos;Bath&apos;],
+
+                                                     [&apos;Kitchen&apos;,&apos;Kitchen&apos;],
+
+                                                     [&apos;Electronic&apos;,&apos;Electronic&apos;],
+
+                                                     [&apos;Food&apos;, &apos;Food&apos;],
+
+                                                     [&apos;Computer&apos;, &apos;Computer&apos;]
+
+                                             ]
+
+                                        })
+
+                             //set the editor for the Type column. Here, the store has the hardcoded inline data, but it can be configured to
+
+                             //talk to the server to get the data from the server
+
+                             } ]
+
+             });    
+
+ 以上editor不会保存数据到server，需要设置：autosync  为true（对于任何CRUD操作都会发送请求到server）
+
+ 9）Row editing    （行编辑）
+
+使用：Ext.grid.plugin.RowEditing
+
+ 10）Grouping    （分组）
+
+ 使用：用store里面的groupField指定分组的field，在grid里面设置Ext.grid.feature.Feature
+
+             var productStore = Ext.create(&apos;Ext.data.Store&apos;, {
+
+                                         model: &apos;Product&apos;,
+
+                                         pageSize: 10,
+
+                                         autoLoad: true,
+
+                                         proxy: {
+
+                                                     type: &apos;ajax&apos;,
+
+                                                     url: &apos;data.json&apos;,
+
+                                                     reader: {
+
+                                                                 type: &apos;json&apos;,
+
+                                                                 rootProperty: &apos;data&apos;,
+
+                                                                 totalProperty: &apos;total&apos;
+
+                                                                 }
+
+                                         },
+
+                                         groupField: &apos;type&apos;
+
+                                  });
+
+                                         Ext.create(&apos;Ext.grid.Panel&apos;, {
+
+                                                         renderTo: Ext.getBody(),
+
+                                                         store: productStore,
+
+                                                         width: 600,
+
+                                                         title: &apos;Products&apos;,
+
+                                                         features: [{
+
+                                                                         id: &apos;group&apos;,
+
+                                                                         ftype: &apos;grouping&apos;,
+
+                                                                         groupHeaderTpl : &apos;{name}&apos;,
+
+                                                                         hideGroupedHeader: true,
+
+                                                                         enableGroupingMenu: false
+
+                                                         }],
+
+                                                         columns: [{
+
+                                                                                 text: &apos;Id&apos;,
+
+                                                                                 dataIndex: &apos;id&apos;,
+
+                                                                                 hidden: true
+
+                                                                         },{
+
+                                                                                 text: &apos;Name&apos;,
+
+                                                                                 width:150,
+
+                                                                                 dataIndex: &apos;productname&apos;
+
+                                                                         },{
+
+                                                                                 text: &apos;Description&apos;,
+
+                                                                                 dataIndex: &apos;desc&apos;,
+
+                                                                                 sortable: false,
+
+                                                                                 flex: 1,
+
+                                                                                 groupable:false
+
+                                                                         },{
+
+                                                                                 text: &apos;Price&apos;,
+
+                                                                                 width: 100,
+
+                                                                                 dataIndex: &apos;price&apos;
+
+                                                                         },{
+
+                                                                                 text: &apos;Type&apos;,
+
+                                                                                 width: 100,
+
+                                                                                 dataIndex: &apos;type&apos;
+
+                                                                     }
+
+                                                                     ]
+
+                                                         });
+
+                                         }
+
+             });    
+
+         禁用所有分组：enableGroupingMenu=false
+
+         禁用某个列分组：groupable=false
+
+ 11）The pivot grid
+
+         让您重新整理和汇总选定的列和行的数据，以获得所需的报告
+
+         需要提供两个重要的东西：axis （指定行和列的定位） and aggregates （分组计算）
+
+
+                                     leftAxis: [{
+
+                                                     width: 80,
+
+                                                     dataIndex: &apos;employee&apos;,
+
+                                                     header: &apos;Employee&apos;
+
+                                     }]
+
+                                     topAxis: [{
+
+                                                     dataIndex: &apos;cat&apos;,
+
+                                                     header: &apos;Category&apos;,
+
+                                                     direction: &apos;ASC&apos;
+
+                                     }]
+
+           在 axis, 也可以指定sortable, sort direction, filter, and so on.
+
+                                     aggregate: [{
+
+                                                     measure: &apos;amount&apos;,
+
+                                                     header: &apos;Expense&apos;,
+
+                                                     aggregator: &apos;sum&apos;,
+
+                                                     align: &apos;right&apos;,
+
+                                                     width: 85,
+
+                                                     renderer: Ext.util.Format.numberRenderer(&apos;0,000.00&apos;)
+
+                                     }]    
+
+             在pivot grid，也可以指定renderer渲染自定义格式内的数据
+
+
+                                     renderer: function(value, meta, record) {
+
+                                                     return Ext.util.Format.number(value, &apos;0,000.00&apos;);
+
+                                     }
+
+             创建一个pivot grid在store里面应用
+
+
+                             var store = new Ext.data.JsonStore({
+
+                                                 proxy: {
+
+                                                                 type: &apos;ajax&apos;,
+
+                                                                 url: &apos;expense.json&apos;,
+
+                                                                 reader: {
+
+                                                                 type: &apos;json&apos;,
+
+                                                                 rootProperty: &apos;rows&apos;
+
+                                                                 }
+
+                                                 },
+
+                                                 autoLoad: true,
+
+                                                 fields: [
+
+                                                             {name: &apos;id&apos;,
+
+                                                             type: &apos;int&apos;},
+
+                                                             {name: &apos;employee&apos;,
+
+                                                             type: &apos;string&apos;},
+
+                                                             {name: &apos;amount&apos;,
+
+                                                             type: &apos;int&apos;},
+
+                                                             {name: &apos;date&apos;,
+
+                                                             type: &apos;date&apos;, dateFormat: &apos;d/m/Y&apos;},
+
+                                                             {name: &apos;cat&apos;,
+
+                                                             type: &apos;string&apos;},
+
+                                                 {
+
+                                                             name: &apos;year&apos;,
+
+                                                             convert: function(v, record){
+
+                                                             return Ext.Date.format(record.get(&apos;date&apos;), &quot;Y&quot;);
+
+                                                 }
+
+                                                 }
+
+                                                 ]
+
+                             });    
+</code></pre><p>2.案例：见附件</p>
+
+  	</div>
+	  
+	  <div class="article-tags tags">
+      
+        <a href="/tags/sencha/">sencha</a>
+      
+	  </div>
+    
+	</section>
+	
+		<section id="comments">
+		    <!-- 多说评论框 start -->
+		    <div class="ds-thread" data-thread-key="post-SenchaCmd学习笔记（9）-Working-with-Grids-网格" data-title="SenchaCmd学习笔记（9）:Working with Grids(网格)" data-url="http://ccfly.cc/2017/02/22/SenchaCmd学习笔记（9）-Working-with-Grids-网格/"></div>
+		    <!-- 多说评论框 end -->
+		    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		    <script type="text/javascript">
+		    var duoshuoQuery = {short_name:'ccfly'};
+		      (function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		      })();
+		      </script>
+		    <!-- 多说公共JS代码 end -->
+		</section>
+	
+</article>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src='/images/avatar.jpg' />
+
+<div class='header'>Jalen</div>
+<div class='content'>
+<div></div>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/categories/Article/"><div class='name'>Article</div><div class='badget'>10</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Cache/"><div class='name'>Cache</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Database/"><div class='name'>Database</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Extjs/"><div class='name'>Extjs</div><div class='badget'>25</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Game/"><div class='name'>Game</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IDE/"><div class='name'>IDE</div><div class='badget'>5</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IT-Article/"><div class='name'>IT Article</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Java/"><div class='name'>Java</div><div class='badget'>21</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/JavaScript/"><div class='name'>JavaScript</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/LeapJs/"><div class='name'>LeapJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Life/"><div class='name'>Life</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Liferay/"><div class='name'>Liferay</div><div class='badget'>8</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Linux/"><div class='name'>Linux</div><div class='badget'>16</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Maven/"><div class='name'>Maven</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Mybatis/"><div class='name'>Mybatis</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/PostgreSQL/"><div class='name'>PostgreSQL</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Protocol/"><div class='name'>Protocol</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Research/"><div class='name'>Research</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SVG/"><div class='name'>SVG</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Servlet/"><div class='name'>Servlet</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Shell/"><div class='name'>Shell</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Spring/"><div class='name'>Spring</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Struts/"><div class='name'>Struts</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SweetAlertJs/"><div class='name'>SweetAlertJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Tomcat/"><div class='name'>Tomcat</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Video/"><div class='name'>Video</div><div class='badget'>12</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/WebService/"><div class='name'>WebService</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Website/"><div class='name'>Website</div><div class='badget'>5</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/tags/Article/" style="font-size: 14px; color: #808080">Article</a> <a href="/tags/Chrome-Apps/" style="font-size: 14px; color: #808080">Chrome Apps</a> <a href="/tags/Ubuntu/" style="font-size: 14px; color: #808080">Ubuntu</a> <a href="/tags/article/" style="font-size: 15.2px; color: #666">article</a> <a href="/tags/article-movies/" style="font-size: 14px; color: #808080">article movies</a> <a href="/tags/cache/" style="font-size: 14px; color: #808080">cache</a> <a href="/tags/cache-connectionpool/" style="font-size: 14px; color: #808080">cache connectionpool</a> <a href="/tags/cglib/" style="font-size: 14px; color: #808080">cglib</a> <a href="/tags/combobox/" style="font-size: 15.2px; color: #666">combobox</a> <a href="/tags/eclipse/" style="font-size: 15.2px; color: #666">eclipse</a> <a href="/tags/ehcache/" style="font-size: 14px; color: #808080">ehcache</a> <a href="/tags/extjs/" style="font-size: 14px; color: #808080">extjs</a> <a href="/tags/game/" style="font-size: 14px; color: #808080">game</a> <a href="/tags/guestbook/" style="font-size: 14px; color: #808080">guestbook</a> <a href="/tags/jasypt/" style="font-size: 14px; color: #808080">jasypt</a> <a href="/tags/java/" style="font-size: 15.2px; color: #666">java</a> <a href="/tags/jdbc/" style="font-size: 14px; color: #808080">jdbc</a> <a href="/tags/jdbctemplate/" style="font-size: 14px; color: #808080">jdbctemplate</a> <a href="/tags/leap-motion/" style="font-size: 14px; color: #808080">leap-motion</a> <a href="/tags/lftp/" style="font-size: 14px; color: #808080">lftp</a> <a href="/tags/liferay/" style="font-size: 14px; color: #808080">liferay</a> <a href="/tags/log4j/" style="font-size: 14px; color: #808080">log4j</a> <a href="/tags/movie/" style="font-size: 14px; color: #808080">movie</a> <a href="/tags/net/" style="font-size: 14px; color: #808080">net</a> <a href="/tags/ppt/" style="font-size: 14px; color: #808080">ppt</a> <a href="/tags/proxy/" style="font-size: 14px; color: #808080">proxy</a> <a href="/tags/rpm/" style="font-size: 14px; color: #808080">rpm</a> <a href="/tags/sencha/" style="font-size: 18.8px; color: #1a1a1a">sencha</a> <a href="/tags/servlet/" style="font-size: 15.2px; color: #666">servlet</a> <a href="/tags/story/" style="font-size: 16.4px; color: #4d4d4d">story</a> <a href="/tags/system-bashrc-environment/" style="font-size: 14px; color: #808080">system bashrc environment</a> <a href="/tags/testng/" style="font-size: 14px; color: #808080">testng</a> <a href="/tags/tomcat/" style="font-size: 14px; color: #808080">tomcat</a> <a href="/tags/ubuntu/" style="font-size: 17.6px; color: #333">ubuntu</a> <a href="/tags/ubuntu-javac/" style="font-size: 14px; color: #808080">ubuntu javac</a> <a href="/tags/ubuntu-postgresql/" style="font-size: 14px; color: #808080">ubuntu postgresql</a> <a href="/tags/ubuntu-proxy/" style="font-size: 14px; color: #808080">ubuntu proxy</a> <a href="/tags/ubuntu-sougou/" style="font-size: 14px; color: #808080">ubuntu sougou</a> <a href="/tags/ubuntu-tomcat/" style="font-size: 14px; color: #808080">ubuntu tomcat</a> <a href="/tags/video/" style="font-size: 20px; color: #000">video</a> <a href="/tags/webservice/" style="font-size: 14px; color: #808080">webservice</a> <a href="/tags/website/" style="font-size: 15.2px; color: #666">website</a> <a href="/tags/website-JS/" style="font-size: 14px; color: #808080">website JS</a> <a href="/tags/新建-模板-小书匠/" style="font-size: 14px; color: #808080">新建,模板,小书匠</a>
+    </div>
+</div>
+
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/xxxx" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="https://twitter.com/xxxx" class="social twitter"
+          target="_blank" rel="external">
+          <span class="icon icon-twitter"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a> designed by <a href="http://keyin.me/" target="_blank">Kevin Tan</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<script src="/js/jquery.fitvids.js"></script>
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

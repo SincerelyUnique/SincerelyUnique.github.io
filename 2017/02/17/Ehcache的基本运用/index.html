@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Ehcache的基本运用 | Jalen</title>
+  <meta name="description" content="description" />
+  <meta name="keywords" content="A_KEYWORD,A_KEYWORD" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/images/avatar.jpg">
+  <link rel="alternate" href="/atom.xml" title="Jalen">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Ehcache 的基本运用1.src/main/resources目录下面新建配置文件，ehcache.xml">
+<meta name="keywords" content="ehcache">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ehcache的基本运用">
+<meta property="og:url" content="http://ccfly.cc/2017/02/17/Ehcache的基本运用/index.html">
+<meta property="og:site_name" content="Jalen">
+<meta property="og:description" content="Ehcache 的基本运用1.src/main/resources目录下面新建配置文件，ehcache.xml">
+<meta property="og:updated_time" content="2017-05-08T18:44:04.140Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ehcache的基本运用">
+<meta name="twitter:description" content="Ehcache 的基本运用1.src/main/resources目录下面新建配置文件，ehcache.xml">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+		<div class="wrapper container">
+			<a class="logo flat-box" href='/' >
+				Jalen
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/archives'>
+								Archives
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-about' href='/about'>
+								About
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu"></span></a></li>
+			</ul>
+		</div>
+		<aside class="menu-phone">
+			<nav>
+				
+					<a href="/" class="nav-home nav">
+						Home
+					</a>
+				
+					<a href="/archives" class="nav-archives nav">
+						Archives
+					</a>
+				
+					<a href="/about" class="nav-about nav">
+						About
+					</a>
+				
+			</nav>
+		</aside>
+</header>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container'>
+      <div class='l_main'>
+        <article id="post-Ehcache的基本运用"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/2017/02/17/Ehcache的基本运用/">
+    	Ehcache的基本运用
+    </a>
+  </h2>
+	<time>
+	  2月 17, 2017
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/categories/Cache/">Cache</a>
+    </div>
+
+	</section>
+	
+		<section class="tog"></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>Ehcache 的基本运用<br>1.src/main/resources目录下面新建配置文件，ehcache.xml<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;ehcache xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line"> xsi:noNamespaceSchemaLocation=&quot;http://ehcache.org/ehcache.xsd&quot;&gt;</div><div class="line">&lt;!-- 缓存在磁盘上的存储路径 --&gt;</div><div class="line">&lt;diskStore path=&quot;java.io.tmpdir&quot;/&gt;</div><div class="line">    &lt;defaultCache</div><div class="line">        maxElementsInMemory=&quot;10000&quot;</div><div class="line">        eternal=&quot;false&quot;</div><div class="line">        overflowToDisk=&quot;true&quot;</div><div class="line">        timeToIdleSeconds=&quot;500&quot;</div><div class="line">        timeToLiveSeconds=&quot;1000&quot;</div><div class="line">        diskPersistent=&quot;false&quot;</div><div class="line">        diskExpiryThreadIntervalSeconds=&quot;120&quot;/&gt;</div><div class="line">   &lt;cache name=&quot;preferenceConfigCache&quot; </div><div class="line">   	maxElementsInMemory=&quot;50000&quot;</div><div class="line">        eternal=&quot;false&quot; </div><div class="line">        overflowToDisk=&quot;false&quot;</div><div class="line">        diskSpoolBufferSizeMB=&quot;20&quot; </div><div class="line">        timeToIdleSeconds=&quot;300&quot;</div><div class="line">        timeToLiveSeconds=&quot;600&quot;</div><div class="line">        memoryStoreEvictionPolicy=&quot;LFU&quot; /&gt;</div><div class="line"> </div><div class="line">&lt;/ehcache&gt;</div></pre></td></tr></table></figure></p>
+<!--more-->
+<p>2.WEB-INF下面定义ehcache-config.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">&lt;beans xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; </div><div class="line">    xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</div><div class="line">    xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">    xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</div><div class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </div><div class="line">    http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">    http://www.springframework.org/schema/aop </div><div class="line">    http://www.springframework.org/schema/aop/spring-aop.xsd</div><div class="line">    http://www.springframework.org/schema/tx </div><div class="line">    http://www.springframework.org/schema/tx/spring-tx.xsd</div><div class="line">    http://www.springframework.org/schema/context</div><div class="line">    http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</div><div class="line">    &lt;!--缓存 --&gt;</div><div class="line">    </div><div class="line">    &lt;bean id=&quot;cacheManager&quot;</div><div class="line">        class=&quot;org.springframework.cache.ehcache.EhCacheManagerFactoryBean&quot;</div><div class="line">   p:shared=&quot;true&quot;&gt;</div><div class="line">        &lt;property name=&quot;configLocation&quot;&gt;</div><div class="line">            &lt;value&gt;classpath:ehcache.xml&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line">&lt;bean id=&quot;preferenceConfigCache&quot; </div><div class="line">class=&quot;org.springframework.cache.ehcache.EhCacheFactoryBean&quot;&gt;</div><div class="line">        &lt;property name=&quot;cacheManager&quot; ref=&quot;cacheManager&quot; /&gt;</div><div class="line">        &lt;property name=&quot;cacheName&quot;&gt;&lt;value&gt;preferenceConfigCache&lt;/value&gt;&lt;/property&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line">    </div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>3.spring总配置文件引入ehcache-config.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;import resource=&quot;ehcache-config.xml&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>4.ehcache 辅助方法类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">import net.sf.ehcache.Cache;</div><div class="line">import net.sf.ehcache.Element;</div><div class="line"> </div><div class="line">import org.apache.log4j.Logger;</div><div class="line">import org.springframework.context.ApplicationContext;</div><div class="line">import org.springframework.context.support.FileSystemXmlApplicationContext;</div><div class="line"> </div><div class="line">public class CallEhcacheTool &#123;</div><div class="line"> </div><div class="line">protected static Logger logger = Logger.getLogger(CallEhcacheTool.class);</div><div class="line"> </div><div class="line">private static ApplicationContext ctxt;</div><div class="line"> </div><div class="line">static &#123;</div><div class="line">System.out.println(System.getProperty(&quot;user.dir&quot;));</div><div class="line">ctxt = new FileSystemXmlApplicationContext(</div><div class="line">&quot;workspace/mes-dashboard-server/dashboardServerWeb/src/main</div><div class="line">        /webapp/WEB-INF/ehcache-config.xml&quot;</div><div class="line">); </div><div class="line">System.out.println(&quot;初始化缓存&quot;);</div><div class="line">/*ctxt = new FileSystemXmlApplicationContext(&quot;</div><div class="line">               dashboardServerWeb/src/main/webapp/WEB-INF/ehcache-config.xml&quot;);    </div><div class="line">System.out.println(&quot;初始化缓存&quot;);*/</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public static Cache getCache(String cacheName) &#123;</div><div class="line">return (Cache) ctxt.getBean(cacheName);</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public static Object getObjectInCache(String cacheName, String key) &#123;</div><div class="line">Cache ch = getCache(cacheName);</div><div class="line">if (null != ch) &#123;</div><div class="line">System.out.println(&quot;缓存[&quot; + cacheName + &quot;]中的对象数量为= &quot; + ch.getSize());</div><div class="line">&#125;</div><div class="line">Element ele = ch.get(key);</div><div class="line">if (ele == null) &#123;</div><div class="line">System.out.println(&quot;缓存[&quot; + cacheName + &quot;]中key为[&quot; + key + &quot;]的对象不存在&quot;);</div><div class="line">return null;</div><div class="line">&#125; else &#123;</div><div class="line">return ele.getValue();</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public static void setObjectInCache(String cacheName, String key,</div><div class="line">Object value) &#123;</div><div class="line">Cache ch = getCache(cacheName);</div><div class="line">Element ele = new Element(key, value);</div><div class="line">ch.put(ele);</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public static void delCache(String cacheName) &#123;</div><div class="line">Cache ch = getCache(cacheName);</div><div class="line">ch.removeAll();</div><div class="line">System.out.println(&quot;清除缓存[&quot; + cacheName + &quot;]内的所有数据。&quot;);</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public static boolean checkKey(String cacheName, String key) &#123;</div><div class="line">Cache ch = getCache(cacheName);</div><div class="line">return ch.getKeys().contains(key);</div><div class="line">&#125;</div><div class="line">public static void main(String[] args) &#123;</div><div class="line">//test</div><div class="line">String input = &quot;a json String object&quot;;</div><div class="line">setObjectInCache(&quot;preferenceConfigCache&quot;,&quot;SPC_WAR_spcportlet_INSTANCE_pzC0&quot;</div><div class="line">    ,input);</div><div class="line">Object value = getObjectInCache(&quot;preferenceConfigCache&quot;, </div><div class="line">  &quot;SPC_WAR_spcportlet_INSTANCE_pzC0&quot;);</div><div class="line">System.out.println(value);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.ehcache的接口定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public interface LSMCacheService&lt;T&gt; &#123;</div><div class="line">public T getLSMCache(String portletId); </div><div class="line">public void setLSMCache(String portletId, T object); </div><div class="line">public void delLSMCache();</div><div class="line">public boolean checkLSMKey(String portletId);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>6.ehcache接口实现类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class LSMCacheServiceImpl implements LSMCacheService&lt;PreferenceConfigData&gt;</div><div class="line"> &#123;</div><div class="line"> </div><div class="line">private static Log log = LogFactory.getLog(LSMCacheServiceImpl.class);</div><div class="line"> </div><div class="line">public static final String LINESTATUSMONITOR_CACHENAME = &quot;preferenceConfigCache&quot;;</div><div class="line"> </div><div class="line">public PreferenceConfigData getLSMCache(String portletId) &#123;</div><div class="line">// 直接调用辅助方法，返回结果</div><div class="line">//System.out.println(portletId);</div><div class="line">return (PreferenceConfigData) </div><div class="line">CallEhcacheTool</div><div class="line">.getObjectInCache(LINESTATUSMONITOR_CACHENAME, portletId);</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public void setLSMCache(String portletId, PreferenceConfigData preferConfig) &#123;</div><div class="line">// 调用辅助方法，放入缓存</div><div class="line">CallEhcacheTool</div><div class="line">.setObjectInCache(LINESTATUSMONITOR_CACHENAME, portletId, preferConfig);</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public void delLSMCache() &#123;</div><div class="line">// 调用辅助方法，清空缓存数据</div><div class="line">CallEhcacheTool.delCache(LINESTATUSMONITOR_CACHENAME);</div><div class="line">log.info(&quot;清空名称为[&quot; + LINESTATUSMONITOR_CACHENAME + &quot;]的缓存&quot;);</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public boolean checkLSMKey(String sid) &#123;</div><div class="line">return CallEhcacheTool.checkKey(LINESTATUSMONITOR_CACHENAME, sid);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>8.使用ehcache<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">LSMCacheServiceImpl lsm = new LSMCacheServiceImpl();</div><div class="line">lsm.setLSMCache(config.getPortletId(), config);</div><div class="line"></div><div class="line">LSMCacheServiceImpl lsm = new LSMCacheServiceImpl();</div><div class="line">PreferenceConfigData config = lsm.getLSMCache(portletId);</div></pre></td></tr></table></figure></p>
+<p>9.使用ehcache（单例模式）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">package com.sanmina.mes.dashboard.server.cache.impl;</div><div class="line"></div><div class="line">import java.util.HashMap;</div><div class="line">import java.util.List;</div><div class="line">import java.util.Map;</div><div class="line"></div><div class="line">import org.apache.log4j.Logger;</div><div class="line"></div><div class="line">import com.sanmina.mes.dashboard.server.cache.CacheService;</div><div class="line">import com.sanmina.mes.dashboard.server.model.LineStatusMonitorConfig;</div><div class="line">import com.sanmina.mes.dashboard.server.util.EhcacheTool;</div><div class="line"></div><div class="line">public class LsmConfigCacheServiceImpl implements CacheService&lt;List&lt;LineStatusMonitorConfig&gt;&gt; </div><div class="line">&#123;	</div><div class="line">	protected static Logger logger = Logger.getLogger(LsmConfigCacheServiceImpl.class);</div><div class="line"></div><div class="line">	public static final String LINESTATUSMONITOR_CACHENAME = &quot;preferenceConfigCache&quot;;</div><div class="line"></div><div class="line">	public static long CURRENT_MILL_SECOND =  System.currentTimeMillis() ;</div><div class="line">	</div><div class="line">	public static long REFRESH_CURRENT_MILL_SECOND =  System.currentTimeMillis() ;</div><div class="line">	</div><div class="line">	public static int REFREASH_MINUTES = 5;</div><div class="line">	</div><div class="line">	public static Map&lt;String, Long&gt; REFRESH_MAP = new HashMap&lt;String, Long&gt;();</div><div class="line">	</div><div class="line">	private LsmConfigCacheServiceImpl() </div><div class="line">	&#123;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	private static LsmConfigCacheServiceImpl lsmConfigCache = new LsmConfigCacheServiceImpl();</div><div class="line"></div><div class="line">	public static LsmConfigCacheServiceImpl getInstance() </div><div class="line">	&#123;</div><div class="line">		return lsmConfigCache;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@SuppressWarnings(&quot;unchecked&quot;)</div><div class="line">	public List&lt;LineStatusMonitorConfig&gt; getCache(String portletId) </div><div class="line">	&#123;</div><div class="line">		return (List&lt;LineStatusMonitorConfig&gt;) EhcacheTool.getObjectFromCache(LINESTATUSMONITOR_CACHENAME, portletId);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setCache(String portletId,List&lt;LineStatusMonitorConfig&gt; preferConfig) </div><div class="line">	&#123;</div><div class="line">		if(!REFRESH_MAP.containsKey(portletId))&#123;</div><div class="line">			long currentTime = System.currentTimeMillis() ;</div><div class="line">			REFRESH_MAP.put(portletId, currentTime);</div><div class="line">		&#125;</div><div class="line">		EhcacheTool.setObjectInCache(LINESTATUSMONITOR_CACHENAME, portletId,preferConfig);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void delCache() </div><div class="line">	&#123;</div><div class="line">		EhcacheTool.delCache(LINESTATUSMONITOR_CACHENAME);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public boolean checkKey(String sid) </div><div class="line">	&#123;</div><div class="line">		return EhcacheTool.checkKey(LINESTATUSMONITOR_CACHENAME, sid);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void updateCache(String portletId,List&lt;LineStatusMonitorConfig&gt; preferConfig) </div><div class="line">	&#123;</div><div class="line">		EhcacheTool.updateObjectFromCache(LINESTATUSMONITOR_CACHENAME, portletId,preferConfig);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void removeCacheByKey(String portletid) </div><div class="line">	&#123;</div><div class="line">		EhcacheTool.removeCacheByKey(LINESTATUSMONITOR_CACHENAME, portletid);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+  	</div>
+	  
+	  <div class="article-tags tags">
+      
+        <a href="/tags/ehcache/">ehcache</a>
+      
+	  </div>
+    
+	</section>
+	
+		<section id="comments">
+		    <!-- 多说评论框 start -->
+		    <div class="ds-thread" data-thread-key="post-Ehcache的基本运用" data-title="Ehcache的基本运用" data-url="http://ccfly.cc/2017/02/17/Ehcache的基本运用/"></div>
+		    <!-- 多说评论框 end -->
+		    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		    <script type="text/javascript">
+		    var duoshuoQuery = {short_name:'ccfly'};
+		      (function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		      })();
+		      </script>
+		    <!-- 多说公共JS代码 end -->
+		</section>
+	
+</article>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src='/images/avatar.jpg' />
+
+<div class='header'>Jalen</div>
+<div class='content'>
+<div></div>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/categories/Article/"><div class='name'>Article</div><div class='badget'>10</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Cache/"><div class='name'>Cache</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Database/"><div class='name'>Database</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Extjs/"><div class='name'>Extjs</div><div class='badget'>25</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Game/"><div class='name'>Game</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IDE/"><div class='name'>IDE</div><div class='badget'>5</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/IT-Article/"><div class='name'>IT Article</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Java/"><div class='name'>Java</div><div class='badget'>21</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/JavaScript/"><div class='name'>JavaScript</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/LeapJs/"><div class='name'>LeapJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Life/"><div class='name'>Life</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Liferay/"><div class='name'>Liferay</div><div class='badget'>8</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Linux/"><div class='name'>Linux</div><div class='badget'>16</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Maven/"><div class='name'>Maven</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Mybatis/"><div class='name'>Mybatis</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/PostgreSQL/"><div class='name'>PostgreSQL</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Protocol/"><div class='name'>Protocol</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Research/"><div class='name'>Research</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SVG/"><div class='name'>SVG</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Servlet/"><div class='name'>Servlet</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Shell/"><div class='name'>Shell</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Spring/"><div class='name'>Spring</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Struts/"><div class='name'>Struts</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/SweetAlertJs/"><div class='name'>SweetAlertJs</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Tomcat/"><div class='name'>Tomcat</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Video/"><div class='name'>Video</div><div class='badget'>12</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/WebService/"><div class='name'>WebService</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/Website/"><div class='name'>Website</div><div class='badget'>5</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/tags/Article/" style="font-size: 14px; color: #808080">Article</a> <a href="/tags/Chrome-Apps/" style="font-size: 14px; color: #808080">Chrome Apps</a> <a href="/tags/Ubuntu/" style="font-size: 14px; color: #808080">Ubuntu</a> <a href="/tags/article/" style="font-size: 15.2px; color: #666">article</a> <a href="/tags/article-movies/" style="font-size: 14px; color: #808080">article movies</a> <a href="/tags/cache/" style="font-size: 14px; color: #808080">cache</a> <a href="/tags/cache-connectionpool/" style="font-size: 14px; color: #808080">cache connectionpool</a> <a href="/tags/cglib/" style="font-size: 14px; color: #808080">cglib</a> <a href="/tags/combobox/" style="font-size: 15.2px; color: #666">combobox</a> <a href="/tags/eclipse/" style="font-size: 15.2px; color: #666">eclipse</a> <a href="/tags/ehcache/" style="font-size: 14px; color: #808080">ehcache</a> <a href="/tags/extjs/" style="font-size: 14px; color: #808080">extjs</a> <a href="/tags/game/" style="font-size: 14px; color: #808080">game</a> <a href="/tags/guestbook/" style="font-size: 14px; color: #808080">guestbook</a> <a href="/tags/jasypt/" style="font-size: 14px; color: #808080">jasypt</a> <a href="/tags/java/" style="font-size: 15.2px; color: #666">java</a> <a href="/tags/jdbc/" style="font-size: 14px; color: #808080">jdbc</a> <a href="/tags/jdbctemplate/" style="font-size: 14px; color: #808080">jdbctemplate</a> <a href="/tags/leap-motion/" style="font-size: 14px; color: #808080">leap-motion</a> <a href="/tags/lftp/" style="font-size: 14px; color: #808080">lftp</a> <a href="/tags/liferay/" style="font-size: 14px; color: #808080">liferay</a> <a href="/tags/log4j/" style="font-size: 14px; color: #808080">log4j</a> <a href="/tags/movie/" style="font-size: 14px; color: #808080">movie</a> <a href="/tags/net/" style="font-size: 14px; color: #808080">net</a> <a href="/tags/ppt/" style="font-size: 14px; color: #808080">ppt</a> <a href="/tags/proxy/" style="font-size: 14px; color: #808080">proxy</a> <a href="/tags/rpm/" style="font-size: 14px; color: #808080">rpm</a> <a href="/tags/sencha/" style="font-size: 18.8px; color: #1a1a1a">sencha</a> <a href="/tags/servlet/" style="font-size: 15.2px; color: #666">servlet</a> <a href="/tags/story/" style="font-size: 16.4px; color: #4d4d4d">story</a> <a href="/tags/system-bashrc-environment/" style="font-size: 14px; color: #808080">system bashrc environment</a> <a href="/tags/testng/" style="font-size: 14px; color: #808080">testng</a> <a href="/tags/tomcat/" style="font-size: 14px; color: #808080">tomcat</a> <a href="/tags/ubuntu/" style="font-size: 17.6px; color: #333">ubuntu</a> <a href="/tags/ubuntu-javac/" style="font-size: 14px; color: #808080">ubuntu javac</a> <a href="/tags/ubuntu-postgresql/" style="font-size: 14px; color: #808080">ubuntu postgresql</a> <a href="/tags/ubuntu-proxy/" style="font-size: 14px; color: #808080">ubuntu proxy</a> <a href="/tags/ubuntu-sougou/" style="font-size: 14px; color: #808080">ubuntu sougou</a> <a href="/tags/ubuntu-tomcat/" style="font-size: 14px; color: #808080">ubuntu tomcat</a> <a href="/tags/video/" style="font-size: 20px; color: #000">video</a> <a href="/tags/webservice/" style="font-size: 14px; color: #808080">webservice</a> <a href="/tags/website/" style="font-size: 15.2px; color: #666">website</a> <a href="/tags/website-JS/" style="font-size: 14px; color: #808080">website JS</a> <a href="/tags/新建-模板-小书匠/" style="font-size: 14px; color: #808080">新建,模板,小书匠</a>
+    </div>
+</div>
+
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/xxxx" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="https://twitter.com/xxxx" class="social twitter"
+          target="_blank" rel="external">
+          <span class="icon icon-twitter"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a> designed by <a href="http://keyin.me/" target="_blank">Kevin Tan</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<script src="/js/jquery.fitvids.js"></script>
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
