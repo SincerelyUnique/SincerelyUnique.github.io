@@ -145,7 +145,8 @@ var customSearch;
 			if (res.data.length > 0) {
 				const index = Math.floor(Math.random() * res.data.length);
 // 				$banner.css('background-image', 'url(' + res.data[index].big + ')');
-				$banner.css('background-image', 'url(' http://7xvoon.com1.z0.glb.clouddn.com/battle20170106.png ')');
+				var urldata = "http://7xvoon.com1.z0.glb.clouddn.com/battle20170106.png";
+				$banner.css('background-image', 'url(' + urldata + ')');
 			}
 		})
 	}
