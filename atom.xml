@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://ccfly.cc/"/>
+  <link href="http://jalen.site/"/>
   <updated>2017-05-08T18:44:04.152Z</updated>
-  <id>http://ccfly.cc/</id>
+  <id>http://jalen.site/</id>
   
   <author>
     <name>Jalen</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>两道String类型面试题</title>
-    <link href="http://ccfly.cc/2017/05/08/%E4%B8%A4%E9%81%93String%E7%B1%BB%E5%9E%8B%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
-    <id>http://ccfly.cc/2017/05/08/两道String类型面试题/</id>
+    <link href="http://jalen.site/2017/05/08/%E4%B8%A4%E9%81%93String%E7%B1%BB%E5%9E%8B%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <id>http://jalen.site/2017/05/08/两道String类型面试题/</id>
     <published>2017-05-08T08:34:08.000Z</published>
     <updated>2017-05-08T18:44:04.152Z</updated>
     
@@ -28,15 +28,15 @@
     
     </summary>
     
-      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+      <category term="Java" scheme="http://jalen.site/categories/Java/"/>
     
     
   </entry>
   
   <entry>
     <title>java8新特性学习-Lambda</title>
-    <link href="http://ccfly.cc/2017/04/12/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/"/>
-    <id>http://ccfly.cc/2017/04/12/java8新特性学习-Lambda/</id>
+    <link href="http://jalen.site/2017/04/12/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/"/>
+    <id>http://jalen.site/2017/04/12/java8新特性学习-Lambda/</id>
     <published>2017-04-12T08:34:08.000Z</published>
     <updated>2017-05-08T18:44:04.148Z</updated>
     
@@ -46,15 +46,15 @@
     
     </summary>
     
-      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+      <category term="Java" scheme="http://jalen.site/categories/Java/"/>
     
     
   </entry>
   
   <entry>
     <title>java8新特性学习-接口扩展</title>
-    <link href="http://ccfly.cc/2017/04/11/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95/"/>
-    <id>http://ccfly.cc/2017/04/11/java8新特性学习-接口扩展/</id>
+    <link href="http://jalen.site/2017/04/11/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95/"/>
+    <id>http://jalen.site/2017/04/11/java8新特性学习-接口扩展/</id>
     <published>2017-04-11T08:34:08.000Z</published>
     <updated>2017-05-08T18:44:04.148Z</updated>
     
@@ -64,15 +64,15 @@
     
     </summary>
     
-      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+      <category term="Java" scheme="http://jalen.site/categories/Java/"/>
     
     
   </entry>
   
   <entry>
     <title>ubuntu chrome flash插件过期处理方法</title>
-    <link href="http://ccfly.cc/2017/04/10/ubuntu%20chrome%20flash%E6%8F%92%E4%BB%B6%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95/"/>
-    <id>http://ccfly.cc/2017/04/10/ubuntu chrome flash插件过期处理方法/</id>
+    <link href="http://jalen.site/2017/04/10/ubuntu%20chrome%20flash%E6%8F%92%E4%BB%B6%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95/"/>
+    <id>http://jalen.site/2017/04/10/ubuntu chrome flash插件过期处理方法/</id>
     <published>2017-04-10T08:34:08.000Z</published>
     <updated>2017-05-08T18:44:04.152Z</updated>
     
@@ -84,15 +84,15 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://ccfly.cc/categories/Linux/"/>
+      <category term="Linux" scheme="http://jalen.site/categories/Linux/"/>
     
     
   </entry>
   
   <entry>
     <title>创建list的两种方式</title>
-    <link href="http://ccfly.cc/2017/04/09/%E5%88%9B%E5%BB%BAlist%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
-    <id>http://ccfly.cc/2017/04/09/创建list的两种方式/</id>
+    <link href="http://jalen.site/2017/04/09/%E5%88%9B%E5%BB%BAlist%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
+    <id>http://jalen.site/2017/04/09/创建list的两种方式/</id>
     <published>2017-04-09T08:34:08.000Z</published>
     <updated>2017-05-08T18:44:04.152Z</updated>
     
@@ -158,15 +158,15 @@
     
     </summary>
     
-      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+      <category term="Java" scheme="http://jalen.site/categories/Java/"/>
     
     
   </entry>
   
   <entry>
     <title>java线程池简介</title>
-    <link href="http://ccfly.cc/2017/03/14/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%AE%80%E4%BB%8B/"/>
-    <id>http://ccfly.cc/2017/03/14/java线程池简介/</id>
+    <link href="http://jalen.site/2017/03/14/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%AE%80%E4%BB%8B/"/>
+    <id>http://jalen.site/2017/03/14/java线程池简介/</id>
     <published>2017-03-14T07:19:15.000Z</published>
     <updated>2017-05-08T18:44:04.148Z</updated>
     
@@ -177,15 +177,15 @@
     
     </summary>
     
-      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+      <category term="Java" scheme="http://jalen.site/categories/Java/"/>
     
     
   </entry>
   
   <entry>
     <title>怎么提高数据库性能</title>
-    <link href="http://ccfly.cc/2017/03/13/%E6%80%8E%E4%B9%88%E6%8F%90%E9%AB%98%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD/"/>
-    <id>http://ccfly.cc/2017/03/13/怎么提高数据库性能/</id>
+    <link href="http://jalen.site/2017/03/13/%E6%80%8E%E4%B9%88%E6%8F%90%E9%AB%98%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD/"/>
+    <id>http://jalen.site/2017/03/13/怎么提高数据库性能/</id>
     <published>2017-03-13T07:19:15.000Z</published>
     <updated>2017-05-08T18:44:04.156Z</updated>
     
@@ -195,15 +195,15 @@
     
     </summary>
     
-      <category term="Database" scheme="http://ccfly.cc/categories/Database/"/>
+      <category term="Database" scheme="http://jalen.site/categories/Database/"/>
     
     
   </entry>
   
   <entry>
     <title>JS获取英文字符占位长度</title>
-    <link href="http://ccfly.cc/2017/03/10/JS%E8%8E%B7%E5%8F%96%E8%8B%B1%E6%96%87%E5%AD%97%E7%AC%A6%E5%8D%A0%E4%BD%8D%E9%95%BF%E5%BA%A6/"/>
-    <id>http://ccfly.cc/2017/03/10/JS获取英文字符占位长度/</id>
+    <link href="http://jalen.site/2017/03/10/JS%E8%8E%B7%E5%8F%96%E8%8B%B1%E6%96%87%E5%AD%97%E7%AC%A6%E5%8D%A0%E4%BD%8D%E9%95%BF%E5%BA%A6/"/>
+    <id>http://jalen.site/2017/03/10/JS获取英文字符占位长度/</id>
     <published>2017-03-10T07:29:15.000Z</published>
     <updated>2017-05-08T18:44:04.140Z</updated>
     
@@ -213,15 +213,15 @@
     
     </summary>
     
-      <category term="JavaScript" scheme="http://ccfly.cc/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://jalen.site/categories/JavaScript/"/>
     
     
   </entry>
   
   <entry>
     <title>mybatis自动生成代码</title>
-    <link href="http://ccfly.cc/2017/03/10/mybatis%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81/"/>
-    <id>http://ccfly.cc/2017/03/10/mybatis自动生成代码/</id>
+    <link href="http://jalen.site/2017/03/10/mybatis%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81/"/>
+    <id>http://jalen.site/2017/03/10/mybatis自动生成代码/</id>
     <published>2017-03-10T07:19:15.000Z</published>
     <updated>2017-05-08T18:44:04.152Z</updated>
     
@@ -233,15 +233,15 @@
     
     </summary>
     
-      <category term="Mybatis" scheme="http://ccfly.cc/categories/Mybatis/"/>
+      <category term="Mybatis" scheme="http://jalen.site/categories/Mybatis/"/>
     
     
   </entry>
   
   <entry>
     <title>spring mybatis学习,简单的项目创建</title>
-    <link href="http://ccfly.cc/2017/03/10/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/"/>
-    <id>http://ccfly.cc/2017/03/10/spring mybatis学习,简单的项目创建/</id>
+    <link href="http://jalen.site/2017/03/10/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/"/>
+    <id>http://jalen.site/2017/03/10/spring mybatis学习,简单的项目创建/</id>
     <published>2017-03-10T07:19:15.000Z</published>
     <updated>2017-05-08T18:44:04.152Z</updated>
     
@@ -251,15 +251,15 @@
     
     </summary>
     
-      <category term="Mybatis" scheme="http://ccfly.cc/categories/Mybatis/"/>
+      <category term="Mybatis" scheme="http://jalen.site/categories/Mybatis/"/>
     
     
   </entry>
   
   <entry>
     <title>使用jasypt为datasource属性加密</title>
-    <link href="http://ccfly.cc/2017/03/10/%E4%BD%BF%E7%94%A8jasypt%E4%B8%BAdatasource%E5%B1%9E%E6%80%A7%E5%8A%A0%E5%AF%86/"/>
-    <id>http://ccfly.cc/2017/03/10/使用jasypt为datasource属性加密/</id>
+    <link href="http://jalen.site/2017/03/10/%E4%BD%BF%E7%94%A8jasypt%E4%B8%BAdatasource%E5%B1%9E%E6%80%A7%E5%8A%A0%E5%AF%86/"/>
+    <id>http://jalen.site/2017/03/10/使用jasypt为datasource属性加密/</id>
     <published>2017-03-10T00:19:15.000Z</published>
     <updated>2017-05-08T18:44:04.152Z</updated>
     
@@ -299,8 +299,8 @@
   
   <entry>
     <title>jdk动态代理</title>
-    <link href="http://ccfly.cc/2017/03/09/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://ccfly.cc/2017/03/09/JDK动态代理的实现/</id>
+    <link href="http://jalen.site/2017/03/09/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://jalen.site/2017/03/09/JDK动态代理的实现/</id>
     <published>2017-03-09T04:19:15.000Z</published>
     <updated>2017-05-08T18:44:04.140Z</updated>
     
@@ -312,15 +312,15 @@
     
     </summary>
     
-      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+      <category term="Java" scheme="http://jalen.site/categories/Java/"/>
     
     
   </entry>
   
   <entry>
     <title>Java并发和多线程学习</title>
-    <link href="http://ccfly.cc/2017/03/06/Java%E5%B9%B6%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://ccfly.cc/2017/03/06/Java并发和多线程学习/</id>
+    <link href="http://jalen.site/2017/03/06/Java%E5%B9%B6%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://jalen.site/2017/03/06/Java并发和多线程学习/</id>
     <published>2017-03-06T05:19:15.000Z</published>
     <updated>2017-05-08T18:44:04.140Z</updated>
     
@@ -333,15 +333,15 @@
     
     </summary>
     
-      <category term="Java" scheme="http://ccfly.cc/categories/Java/"/>
+      <category term="Java" scheme="http://jalen.site/categories/Java/"/>
     
     
   </entry>
   
   <entry>
     <title>liferay页面session过期处理</title>
-    <link href="http://ccfly.cc/2017/03/06/liferay%E9%A1%B5%E9%9D%A2session%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86/"/>
-    <id>http://ccfly.cc/2017/03/06/liferay页面session过期处理/</id>
+    <link href="http://jalen.site/2017/03/06/liferay%E9%A1%B5%E9%9D%A2session%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86/"/>
+    <id>http://jalen.site/2017/03/06/liferay页面session过期处理/</id>
     <published>2017-03-06T05:18:15.000Z</published>
     <updated>2017-05-08T18:44:04.152Z</updated>
     
@@ -351,15 +351,15 @@
     
     </summary>
     
-      <category term="Liferay" scheme="http://ccfly.cc/categories/Liferay/"/>
+      <category term="Liferay" scheme="http://jalen.site/categories/Liferay/"/>
     
     
   </entry>
   
   <entry>
     <title>小书匠语法使用手册</title>
-    <link href="http://ccfly.cc/2017/03/06/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%AF%AD%E6%B3%95%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"/>
-    <id>http://ccfly.cc/2017/03/06/小书匠语法使用手册/</id>
+    <link href="http://jalen.site/2017/03/06/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E8%AF%AD%E6%B3%95%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"/>
+    <id>http://jalen.site/2017/03/06/小书匠语法使用手册/</id>
     <published>2017-03-06T00:18:15.000Z</published>
     <updated>2017-05-08T18:44:04.156Z</updated>
     
@@ -369,15 +369,15 @@
     
     </summary>
     
-      <category term="Article" scheme="http://ccfly.cc/categories/Article/"/>
+      <category term="Article" scheme="http://jalen.site/categories/Article/"/>
     
     
   </entry>
   
   <entry>
     <title>小书匠使用手册</title>
-    <link href="http://ccfly.cc/2017/03/06/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"/>
-    <id>http://ccfly.cc/2017/03/06/小书匠使用手册/</id>
+    <link href="http://jalen.site/2017/03/06/%E5%B0%8F%E4%B9%A6%E5%8C%A0%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"/>
+    <id>http://jalen.site/2017/03/06/小书匠使用手册/</id>
     <published>2017-03-06T00:18:15.000Z</published>
     <updated>2017-05-08T18:44:04.156Z</updated>
     
@@ -387,7 +387,7 @@
     
     </summary>
     
-      <category term="Article" scheme="http://ccfly.cc/categories/Article/"/>
+      <category term="Article" scheme="http://jalen.site/categories/Article/"/>
     
     
   </entry>
