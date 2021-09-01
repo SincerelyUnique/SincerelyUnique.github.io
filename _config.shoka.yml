@@ -23,8 +23,8 @@ menu:
     tags: /tags/ || tags
   friends: /friends/ || heart
   links: /links/ || magic
-  travellings: /travellings/ || briefcase
-  webstack: /webstack/ || user
+  # travellings: /travellings/ || briefcase
+  # webstack: /webstack/ || user
   # about: 
   # commonweal
 
