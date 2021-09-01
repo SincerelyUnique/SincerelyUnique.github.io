@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: subtitle
-description: 描述123
-keywords: 关键词1,关键词2 # edit for Theme.shoka
-author: John Doe
+title: Follow your heart
+subtitle: A happy life
+description: And in case i don't see you,good afternoon,good evening,and good night!
+keywords: Life,Program # edit for Theme.shoka
+author: Jalen Chu
 language: zh-CN # 这里只可以选 zh-CN、zh-HK、zh-TW、ja、en 这几个格式
 timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://jalen.site
 permalink: :title/ # edit for Theme.shoka
 permalink_defaults:
 pretty_urls:
