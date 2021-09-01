@@ -1,5 +1,5 @@
 # Hexo Configuration
-## Docs: https://hexo.io/docs/configuration.html
+## Docs: http://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
@@ -12,13 +12,11 @@ language: zh-CN # 这里只可以选 zh-CN、zh-HK、zh-TW、ja、en 这几个�
 timezone: 'Asia/Shanghai'
 
 # URL
-## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+url: http://yoursite.com
+root: /
 permalink: :title/ # edit for Theme.shoka
 permalink_defaults:
-pretty_urls:
-  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
 
 # Directory
 source_dir: source
@@ -49,25 +47,17 @@ highlight:
   auto_detect: true
   tab_replace: ''
 prismjs:
-  enable: false
-
-# Home page setting
-# path: Root path for your blogs index page. (default = '')
-# per_page: Posts displayed per page. (0 = disable pagination)
-# order_by: Posts order. (Order by date descending by default)
-index_generator:
-  path: ''
-  per_page: 10
-  order_by: -date
+  enable: false # edit for Theme.shoka
 
 # Category & Tag
 default_category: uncategorized
-category_map:
+category_map: # edit for Theme.shoka
+  计算机科学: computer-science
+  Java: java
+  二进制杂谈: note
+  零基础学Java语言-浙江大学-翁恺: course-1
+  Theme Shoka Documentation: theme-shoka-doc
 tag_map:
-
-# Metadata elements
-## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
-meta_generator: true
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
@@ -75,40 +65,28 @@ meta_generator: true
 ## http://momentjs.com/docs/#/displaying/format/
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
-## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
 
 # Pagination
 ## Set per_page to 0 to disable pagination
 per_page: 10
 pagination_dir: page
 
-# Include / Exclude file(s)
-## include:/exclude: options only apply to the 'source/' folder
-include:
-exclude:
-ignore:
-
 # Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-# theme: landscape
-theme: shoka
+## Plugins: http://hexo.io/plugins/
+## Themes: http://hexo.io/themes/
+theme: shoka # edit for Theme.shoka
 
 # Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
+## Docs: http://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: git@github.com:SincerelyUnique/SincerelyUnique.github.io.git
-  branch: master
-  name: 1152357479@qq.com
-  email: 1152357479@qq.com
+  type:
+
 
 # edit for Theme.shoka
 autoprefixer:
   exclude:
     - '*.min.css'
-      
+
 markdown:
   render: # 渲染器设置
     html: false # 过滤 HTML 标签
@@ -141,7 +119,7 @@ markdown:
         enable: true
         options:
           title: "你知道得太多了"
-          
+
 minify:
   html:
     enable: true
@@ -164,45 +142,36 @@ minify:
     compress:
     exclude:
       - '**/*.min.js'
-        
-feed:
-  limit: 20
-  order_by: "-date"
-  tag_dir: false
-  category_dir: false
-  rss:
-    enable: true
-    template: "themes/shoka/layout/_alternate/rss.ejs"
-    output: "rss.xml"
-  atom:
-    enable: true
-    template: "themes/shoka/layout/_alternate/atom.ejs"
-    output: "atom.xml"
-  jsonFeed:
-    enable: true
-    template: "themes/shoka/layout/_alternate/json.ejs"
-    output: "feed.json"
-    
-algolia:
-  appId: OVLJD7VQ38
-  apiKey: 803f125aa44863bb6c22e88257f889e6
-  adminApiKey: 33cb3eb075da1564abe0d273bbcd2b47
-  chunkSize: 5000
-  indexName: dev_companyname
-  fields:
-    - title #必须配置
-    - path #必须配置
-    - categories #推荐配置
-    - content:strip:truncate,0,4000
-    - gallery
-    - photos
-    - tags
 
-algolia_search:
-  enable: true
-  hits:
-    per_page: 10
-  labels:
-    input_placeholder: Search for Posts
-    hits_empty: "我们没有找到任何搜索结果: ${query}"
-    hits_stats: "找到${hits}条结果（用时${time} ms）"
+# algolia:
+#   appId:
+#   apiKey:
+#   adminApiKey:
+#   chunkSize: 5000
+#   indexName:
+#   fields:
+#     - title #必须配置
+#     - path #必须配置
+#     - categories #推荐配置
+#     - content:strip:truncate,0,4000
+#     - gallery
+#     - photos
+#     - tags
+
+feed:
+    limit: 20
+    order_by: "-date"
+    tag_dir: false
+    category_dir: false
+    rss:
+        enable: true
+        template: "themes/shoka/layout/_alternate/rss.ejs"
+        output: "rss.xml"
+    atom:
+        enable: true
+        template: "themes/shoka/layout/_alternate/atom.ejs"
+        output: "atom.xml"
+    jsonFeed:
+        enable: true
+        template: "themes/shoka/layout/_alternate/json.ejs"
+        output: "feed.json"
