@@ -18,6 +18,9 @@ menu:
     tags: /tags/ || tags
   friends: /friends/ || heart
   links: /links/ || magic
+  test:
+    - [Linux, Hexo]
+    - [Tools, PHP]
 
 # Social Links
 # Usage: `Key: permalink || icon || color`
