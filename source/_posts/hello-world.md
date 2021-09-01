@@ -24,7 +24,7 @@ More info: [Server](https://hexo.io/docs/server.html)
 ### Generate static files
 
 ``` bash
-$ hexo generate
+$ hexo generate2222
 ```
 
 More info: [Generating](https://hexo.io/docs/generating.html)
