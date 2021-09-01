@@ -18,8 +18,10 @@ menu:
     tags: /tags/ || tags
   friends: /friends/ || heart
   links: /links/ || magic
-  # travellings: 
-  # webstack: 
+  travellings: /travellings/ || car
+  webstack: /webstack/ || university
+  # about: 
+  # commonweal
 
 # Social Links
 # Usage: `Key: permalink || icon || color`
