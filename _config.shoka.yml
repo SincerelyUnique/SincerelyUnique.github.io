@@ -24,13 +24,15 @@ menu:
 # Value before `||` delimiter is the target permalink,
 # secend value is the name of Font icon.
 social:
-  github: https://github.com/amehime || github || "#191717"
+  github: https://github.com/SincerelyUnique || github || "#191717"
   #google: https://plus.google.com/yourname || google
-  twitter: https://twitter.com/amehime || twitter || "#00aff0"
+  twitter: https://twitter.com/jalen_chu || twitter || "#00aff0"
   zhihu: https://www.zhihu.com/people/rurismzk || zhihu || "#1e88e5"
-  music: https://music.163.com/#/user/home?id=12886823 || cloud-music || "#e60026"
-  weibo: https://weibo.com/amehime || weibo || "#ea716e"
-  about: https://about.me/amehime || address-card || "#3b5998"
+  #csdn：https://blog.csdn.net/baidu_30809315 || csdn || "#1e88e5"
+  music: https://music.163.com/#/my/m/music/playlist?id=2031973464 || cloud-music || "#e60026"
+  #weibo: https://weibo.com/amehime || weibo || "#ea716e"
+  oschina: https://my.oschina.net/chumingcheng || oschina || "#ea716e"
+  about: https://about.me/JalenChu || address-card || "#3b5998"
   #email: mailto:yourname@mail.com || envelope || "#55acd5"
   #facebook: https://www.facebook.com/yourname || facebook
   #stackoverflow: https://stackoverflow.com/yourname || stack-overflow
@@ -56,8 +58,8 @@ post:
 # Valine
 # For more information: https://valine.js.org, https://github.com/xCss/Valine
 valine:
-  appId: #这里不要忘了改
-  appKey: #这里不要忘了改
+  appId: 7zazslgUIl5UsRfVMdPouomw-gzGzoHsz #这里不要忘了改
+  appKey: jX6FxzLEiu8sQD0tX7c5wrj4 #这里不要忘了改
   placeholder: ヽ(○´∀`)ﾉ♪ # Comment box placeholder
   pageSize: 10 # Pagination size
   lang: zh-CN
@@ -69,13 +71,13 @@ valine:
 
 # bgm
 audio:
-   - title: 列表1
-      list:
-        - https://music.163.com/#/playlist?id=2943811283
-        - https://music.163.com/#/playlist?id=2297706586
-   - title: 列表2
-      list:
-        - https://music.163.com/#/playlist?id=2031842656
+  - title: 列表1
+    list:
+      - https://music.163.com/#/playlist?id=6773033546
+      - https://music.163.com/#/playlist?id=6773033546
+  - title: 列表2
+    list:
+      - https://music.163.com/#/playlist?id=6773033546
 
 # Dependencies: https://github.com/amehime/hexo-renderer-multi-markdown-it
 pangu: true

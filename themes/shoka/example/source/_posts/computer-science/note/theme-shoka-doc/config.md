@@ -17,7 +17,7 @@ valine:
 
 # 站点别称
 ```yml
-alternate: Jalen Shoka
+alternate: Jalen Chu
 ```
 这里设置的名称代替Logo，显示在页面顶部，以及页尾:copyright:处
 
