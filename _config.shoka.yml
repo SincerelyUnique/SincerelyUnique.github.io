@@ -18,6 +18,8 @@ menu:
     tags: /tags/ || tags
   friends: /friends/ || heart
   links: /links/ || magic
+  # travellings: 
+  # webstack: 
 
 # Social Links
 # Usage: `Key: permalink || icon || color`
