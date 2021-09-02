@@ -211,3 +211,22 @@ algolia_search:
     input_placeholder: Search for Posts
     hits_empty: "我们没有找到任何搜索结果: ${query}"
     hits_stats: "找到${hits}条结果（用时${time} ms）"
+
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  log: false
+  model:
+    use: live2d-widget-model-miku
+  display:
+    position: right
+    width: 300
+    height: 600
+  mobile:
+    show: true
+  react:
+    opacity: 0.7
