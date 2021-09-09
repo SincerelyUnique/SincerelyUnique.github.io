@@ -68,6 +68,12 @@ category_map: # edit for Theme.shoka
   二进制杂谈: note
   零基础学Java语言-浙江大学-翁恺: course-1
   Theme Shoka Documentation: theme-shoka-doc
+
+  生活: life
+  电影: movies
+  书籍: books
+  闲聊: talk
+  旅游: travel
 tag_map:
 
 # Metadata elements
