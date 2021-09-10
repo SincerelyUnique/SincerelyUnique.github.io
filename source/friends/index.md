@@ -6,11 +6,11 @@ copyright: false
 ---
 
 # 本站信息
-- 站名： 優萌初華
-- 站长： 霜月琉璃
-- 地址： https://shoka.lostyu.me
-- 标志： ![霜月琉璃](https://cdn.jsdelivr.net/gh/amehime/shoka@latest/images/avatar.jpg){height="100" width="100"}
-- 简介： 琉璃的医学 & 编程笔记
+- 站名： Jalen's Blog
+- 站长： Jalen
+- 地址： https://jalen.site
+- 标志： ![Jalen](https://ae01.alicdn.com/kf/U39cf0177bf5f4d62974408629c0b6d63b.png){height="100" width="100"}
+- 简介： Jalen的生活 & 编程笔记
 
 # 申请方法
 - 添加本站后，在本页留言，格式如下

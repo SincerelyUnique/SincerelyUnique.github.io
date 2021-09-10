@@ -1,13 +1,27 @@
-- site: 優萌初華
-  owner: 霜月琉璃
-  url: https://shoka.lostyu.me
-  desc: 琉璃的医学 & 编程笔记
-  image: https://cdn.jsdelivr.net/gh/amehime/shoka@latest/images/avatar.jpg
+- site: Jalen的云博客
+  owner: Jalen
+  url: https://chumingcheng.com
+  desc: Jalen的生活 & 编程笔记（Jalen的另一个博客网址）
+  image: https://ae05.alicdn.com/kf/U9ade2242e0854f1cba41a75715bf8796C.png
   color: "#e9546b"
 
-- site: 優萌初華
-  owner: 霜月琉璃
-  url: https://shoka.lostyu.me
-  desc: 琉璃的医学 & 编程笔记
-  image: https://cdn.jsdelivr.net/gh/amehime/shoka@latest/images/avatar.jpg
+- site: Jalen的CSDN博客
+  owner: Jalen
+  url: https://blog.csdn.net/baidu_30809315
+  desc: Jalen的CSDN博客网址
+  image: https://ae02.alicdn.com/kf/U7c846db5a32c4f31b1f9714c64c4564bq.png
+  color: "#e9546b"
+  
+- site: Jalen的开源中国博客
+  owner: Jalen
+  url: https://my.oschina.net/chumingcheng
+  desc: Jalen的开源中国博客网址
+  image: https://ae06.alicdn.com/kf/U4ed2bc31b7cd4aa0ac4aa3f6692d3ac60.png
+  color: "#e9546b"
+
+- site: Jalen的Github
+  owner: Jalen
+  url: https://github.com/SincerelyUnique
+  desc: Jalen的Github网址
+  image: https://ae01.alicdn.com/kf/U769d244228c644e7bae79c60bfabdd56d.png
   color: "#e9546b"

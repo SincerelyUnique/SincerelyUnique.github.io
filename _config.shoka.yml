@@ -21,9 +21,9 @@ menu:
     archives: /archives/ || list-alt
     categories: /categories/ || th
     tags: /tags/ || tags
-#  friends: /friends/ || heart
-#  links: /links/ || magic
-#  webstack: /webstack/ || user
+  friends: /friends/ || heart
+  # links: /links/ || magic
+  webstack: /webstack/ || user
   # travellings: /travellings/ || books
   # about: 
   # commonweal
