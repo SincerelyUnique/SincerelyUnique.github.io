@@ -69,8 +69,12 @@ category_map: # edit for Theme.shoka
 #  零基础学Java语言-浙江大学-翁恺: course-1
 #  Theme Shoka Documentation: theme-shoka-doc
   学习: learn
+  
   Go语言学习: go
   菜鸟教程 - Go语言: runoob
+
+  Java语言学习: java
+  Java核心技术卷: core-java
 
   生活: life
   电影: movies
