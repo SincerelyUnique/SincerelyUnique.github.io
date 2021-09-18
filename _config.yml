@@ -63,17 +63,18 @@ index_generator:
 # Category & Tag
 default_category: uncategorized
 category_map: # edit for Theme.shoka
-  计算机科学: computer-science
-  Java: java
-  二进制杂谈: note
-  零基础学Java语言-浙江大学-翁恺: course-1
-  Theme Shoka Documentation: theme-shoka-doc
+#  计算机科学: computer-science
+#  Java: java
+#  二进制杂谈: note
+#  零基础学Java语言-浙江大学-翁恺: course-1
+#  Theme Shoka Documentation: theme-shoka-doc
+  学习: learn
+  Go语言学习: go
+  菜鸟教程 - Go语言: runoob
 
   生活: life
   电影: movies
   书籍: books
-  闲聊: talk
-  旅游: travel
 tag_map:
 
 # Metadata elements
