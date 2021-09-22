@@ -33,12 +33,14 @@ func init() {
 ```
 这里做下解释：
 1. 定义当前程序的包的名字，如果想要写一个go文件并作为可运行的独立文件，必须要导入main包，不导入main包或者导入其他比如名字叫mains的包都会执行报错，这里执行指的是在cmd命令行下运行`go run hello.go`报错。每个go应用程序都包含一个名字叫main的包。
-2. 导入fmt包（或者函数啥的，也有可能是其他的），fmt是我们在下面程序里需要用到的格式化输入、输出的函数，这个在python或者java里都有自己的输出方式，不过不需要显式的导入，这里竟然需要显式的导入进来，比较新奇。
+2. 导入fmt包（或者函数啥的，也有可能是其他的），fmt是我们在下面程序里需要用到的格式化输入、输出的函数。（也可以不导入包，直接使用`println("hello world")`）
 3. main是程序开始执行的函数，这个在各个语言中都差不多，main函数是每个可执行程序都必须的，是程序的入口（一般来说，如果有init方法，会先执行init方法），init函数和main函数有些差别，主要体现在使用上，可以自行百度。
 4. 注释很简单，略~~
 5. fmt.Println()注意这里的Println函数的首字母是大写的P，go语言里如果函数、常量、变量等以大写字母开头，表示可以被外部包里的程序调用，相当于java里的public修饰符，如果第一个字母小写，相当于java里的protect修饰符（java的默认修饰符），主要影响程序的调用和可见性。
 6. 程序可以直接使用`go run hello.go`运行得到输出，也可以先编译在运行，比如`go build hello.go`windows编译后会得到一个.exe的可执行文件，然后`.\hello.exe`执行，能够得到同样的输出。
 7. 同一个文件夹下面所有文件的package name必须是一样的（package name不一定非得和文件夹名字一样），否则执行时会报错。
+8. `{` 不能单独放在一行，会报：unexpected semicolon or newline before
+9. 不建议使用省略调用，`import . "fmt"`
 
 # 导入自定义包
 
@@ -90,7 +92,9 @@ func Sub(x, y int) int {
 	return x - y + z + s
 }
 ```
-注意上面导入的使用即可
+注意上面导入，Go语言中，使用大小写来决定该常量、变量、类型、接口、结构或函数是否可以被外部包所调用。
+- 函数名首字母小写即为protect，仅包内部可调用
+- 函数名首字母大写即为public，包外部可调用
 
 # 声明变量与格式化输出
 ```go
@@ -108,6 +112,63 @@ func main() {
 	fmt.Println(total)
 }
 ```
+指定变量类型，如果没有初始化，则变量默认为零值。
+零值就是变量没有做初始化时系统默认设置的值。
+```bash
+/* hello.go */
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	var age int
+	fmt.Println(age) //0
+
+	var name string
+	fmt.Println(name) //""
+
+	var isStudent bool
+	fmt.Println(isStudent) //false
+
+	var pointer *int
+	fmt.Println(pointer) //<nil>
+
+	var array []int
+	fmt.Println(array) //[]
+
+	var mapString map[string]int
+	fmt.Println(mapString) //map[]
+
+	var socketChannel chan int
+	fmt.Println(socketChannel) //<nil>
+
+	var savePictureFunc func(string) int
+	fmt.Println(savePictureFunc) //<nil>
+
+	var errorInterface error
+	fmt.Println(errorInterface) //<nil>
+}
+```
+
+`intVal := 1` 相等于
+
+```bash
+var intVal int 
+intVal =1 
+``` 
+
+注意值类型和引用类型以及它们在内存中分布的一些基本概念
+int、float、bool 和 string 这些基本类型都属于值类型，使用这些类型的变量直接指向存在内存中的值
+
+变量声明后必须使用，否则报unused错误
+
+值的交换，`a, b = b, a`
+
+并行赋值，`val, err = Func1(var1)`
+
+可以是用_表时抛弃值
 
 # 数据类型
 布尔型（true，false）、数字类型（int，float32，float64，complex）、字符串类型、派生类型。
