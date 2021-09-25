@@ -1,8 +1,8 @@
 ---
-title: Java核心技术第10版原书笔记（卷一 第4章）
+title: 原书笔记（卷一 第4章）
 date: 2021-07-24 23:40:28
 categories:
-- [学习, Java语言学习, Java核心技术卷]
+- [学习, Java语言学习, Java核心技术卷(第10版)]
 tags:
 - java
 valine:

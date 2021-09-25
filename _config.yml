@@ -74,7 +74,8 @@ category_map: # edit for Theme.shoka
   菜鸟教程 - Go语言: runoob
 
   Java语言学习: java
-  Java核心技术卷: core-java
+  Java核心技术卷(第10版): core-java
+  SpringBoot实战: springboot-in-action
 
   生活: life
   电影: movies
