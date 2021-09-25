@@ -252,6 +252,7 @@ quicklink:
 # ---------------------------------------------------------------
 # https://tongji.baidu.com/
 baidu_analytics: 908585f2e8b845b564946752e587f4a0
+
 # https://support.google.com/analytics/answer/1008080?hl=zh-Hans#zippy=%2C%E6%9C%AC%E6%96%87%E5%8C%85%E5%90%AB%E7%9A%84%E4%B8%BB%E9%A2%98
 google_analytics: G-RG69XHPDGJ
 
