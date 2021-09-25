@@ -151,6 +151,8 @@ ssh 192.168.2.170 '/usr/bin/kubectl apply -f /root/kube.yaml'
 ssh 192.168.2.170 '/usr/bin/kubectl get svc|grep maven'
 ```
 
+![jenkins01](../images/jenkins01.png)
+
 ## 设置jenkins服务器到k8s master ssh免密登录，在jenkins服务器执行
 
 ```shell script
