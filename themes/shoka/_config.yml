@@ -250,7 +250,11 @@ quicklink:
 # ---------------------------------------------------------------
 # analytics & SEO Settings
 # ---------------------------------------------------------------
-baidu_analytics: # <app_id>
+# https://tongji.baidu.com/
+baidu_analytics: 908585f2e8b845b564946752e587f4a0
+
+# https://support.google.com/analytics/answer/1008080?hl=zh-Hans#zippy=%2C%E6%9C%AC%E6%96%87%E5%8C%85%E5%90%AB%E7%9A%84%E4%B8%BB%E9%A2%98
+google_analytics: G-RG69XHPDGJ
 
 # Disable Baidu transformation on mobile devices.
 disable_baidu_transformation: true
@@ -260,11 +264,13 @@ exturl: true
 
 # Google Webmaster tools verification.
 # See: https://www.google.com/webmasters
-google_site_verification:
+# <meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c" />
+google_site_verification: MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c
 
 # Bing Webmaster tools verification.
 # See: https://www.bing.com/webmaster
-bing_site_verification:
+# <meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5" />
+bing_site_verification: 8BDA269F1F25AB9AB2160E377B2334C5
 
 # Yandex Webmaster tools verification.
 # See: https://webmaster.yandex.ru
@@ -275,7 +281,7 @@ yandex_site_verification:
 baidu_site_verification:
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
-baidu_push: false
+baidu_push: true
 
 
 #! ---------------------------------------------------------------
