@@ -6,7 +6,7 @@ tags:
 categories:
 ---
 
-记一次ImportError: No module named xxx问题
+记一次ImportError No module named xxx问题
 
 正常来讲，遇见No moudule named xxx都是直接执行pip install xxx即可，这里不太一样，记一下原因，因为这个本身是很简单的事情，却耗费了挺多时间。
 
