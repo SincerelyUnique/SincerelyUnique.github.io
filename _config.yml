@@ -73,6 +73,9 @@ category_map: # edit for Theme.shoka
   Go语言学习: go
   菜鸟教程 - Go语言: runoob
 
+  Nginx学习: nginx
+  Nginx文档学习: nginx-document
+
   Java语言学习: java
   Java核心技术卷(第10版): core-java
   SpringBoot实战: springboot-in-action
