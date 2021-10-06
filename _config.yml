@@ -206,6 +206,9 @@ feed:
     template: "themes/shoka/layout/_alternate/json.ejs"
     output: "feed.json"
     
+# ref: https://blog.csdn.net/qq_35479468/article/details/107335663
+# export HEXO_ALGOLIA_INDEXING_KEY=your apiKey  (windows use set)
+# hexo algolia
 algolia:
   appId: OVLJD7VQ38
   apiKey: 803f125aa44863bb6c22e88257f889e6
