@@ -5,25 +5,25 @@ const cardActive = function() {
   if (!window.IntersectionObserver) {
     $.each('.index.wrap article.item, .index.wrap section.item', function(article) {
       if( article.hasClass("show") === false){
-          article.addClass("show");
+        article.addClass("show");
       }
     })
   } else {
     var io = new IntersectionObserver(function(entries) {
 
-        entries.forEach(function(article) {
-          if (article.target.hasClass("show")) {
-            io.unobserve(article.target)
-          } else {
-            if (article.isIntersecting || article.intersectionRatio > 0) {
-              article.target.addClass("show");
-              io.unobserve(article.target);
-            }
+      entries.forEach(function(article) {
+        if (article.target.hasClass("show")) {
+          io.unobserve(article.target)
+        } else {
+          if (article.isIntersecting || article.intersectionRatio > 0) {
+            article.target.addClass("show");
+            io.unobserve(article.target);
           }
-        })
+        }
+      })
     }, {
-        root: null,
-        threshold: [0.3]
+      root: null,
+      threshold: [0.3]
     });
 
     $.each('.index.wrap article.item, .index.wrap section.item', function(article) {
@@ -52,21 +52,21 @@ const cardActive = function() {
 
 const registerExtURL = function() {
   $.each('span.exturl', function(element) {
-      var link = document.createElement('a');
-      // https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings
-      link.href = decodeURIComponent(atob(element.dataset.url).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      link.rel = 'noopener external nofollow noreferrer';
-      link.target = '_blank';
-      link.className = element.className;
-      link.title = element.title || element.innerText;
-      link.innerHTML = element.innerHTML;
-      if(element.dataset.backgroundImage) {
-        link.dataset.backgroundImage = element.dataset.backgroundImage;
-      }
-      element.parentNode.replaceChild(link, element);
-    });
+    var link = document.createElement('a');
+    // https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings
+    link.href = decodeURIComponent(atob(element.dataset.url).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    link.rel = 'noopener external nofollow noreferrer';
+    link.target = '_blank';
+    link.className = element.className;
+    link.title = element.title || element.innerText;
+    link.innerHTML = element.innerHTML;
+    if(element.dataset.backgroundImage) {
+      link.dataset.backgroundImage = element.dataset.backgroundImage;
+    }
+    element.parentNode.replaceChild(link, element);
+  });
 }
 
 const postFancybox = function(p) {
@@ -78,7 +78,7 @@ const postFancybox = function(p) {
       $.each(p + ' p.gallery', function(element) {
         var box = document.createElement('div');
         box.className = 'gallery';
-        box.attr('data-height', element.attr('data-height')||120);
+        box.attr('data-height', element.attr('data-height')||220);
 
         box.innerHTML = element.innerHTML.replace(/<br>/g, "")
 
@@ -141,6 +141,11 @@ const postBeauty = function () {
   $('.post.block').oncopy = function(event) {
     showtip(LOCAL.copyright)
 
+    if(LOCAL.nocopy) {
+      event.preventDefault()
+      return
+    }
+
     var copyright = $('#copyright')
     if(window.getSelection().toString().length > 30 && copyright) {
       event.preventDefault();
@@ -150,10 +155,10 @@ const postBeauty = function () {
       var htmlData = author + "<br>" + link + "<br>" + license + "<br><br>" + window.getSelection().toString().replace(/\r\n/g, "<br>");;
       var textData = author + "\n" + link + "\n" + license + "\n\n" + window.getSelection().toString().replace(/\r\n/g, "\n");
       if (event.clipboardData) {
-          event.clipboardData.setData("text/html", htmlData);
-          event.clipboardData.setData("text/plain", textData);
+        event.clipboardData.setData("text/html", htmlData);
+        event.clipboardData.setData("text/plain", textData);
       } else if (window.clipboardData) {
-          return window.clipboardData.setData("text", textData);
+        return window.clipboardData.setData("text", textData);
       }
     }
   }
@@ -164,6 +169,10 @@ const postBeauty = function () {
       parent = element.parentNode.parentNode;
     }
     parent.addClass('ruby');
+  })
+
+  $.each('ol[start]', function(element) {
+    element.style.counterReset = "counter " + parseInt(element.attr('start') - 1)
   })
 
   $.each('.md table', function (element) {
@@ -184,25 +193,29 @@ const postBeauty = function () {
     element.insertAdjacentHTML('beforeend', '<div class="operation"><span class="breakline-btn"><i class="ic i-align-left"></i></span><span class="copy-btn"><i class="ic i-clipboard"></i></span><span class="fullscreen-btn"><i class="ic i-expand"></i></span></div>');
 
     var copyBtn = element.child('.copy-btn');
-    copyBtn.addEventListener('click', function (event) {
-      var target = event.currentTarget;
-      var comma = '', code = '';
-      code_container.find('pre').forEach(function(line) {
-        code += comma + line.innerText;
-        comma = '\n'
-      })
+    if(LOCAL.nocopy) {
+      copyBtn.remove()
+    } else {
+      copyBtn.addEventListener('click', function (event) {
+        var target = event.currentTarget;
+        var comma = '', code = '';
+        code_container.find('pre').forEach(function(line) {
+          code += comma + line.innerText;
+          comma = '\n'
+        })
 
-      clipBoard(code, function(result) {
-        target.child('.ic').className = result ? 'ic i-check' : 'ic i-times';
-        target.blur();
-        showtip(LOCAL.copyright);
-      })
-    });
-    copyBtn.addEventListener('mouseleave', function (event) {
-      setTimeout(function () {
-        event.target.child('.ic').className = 'ic i-clipboard';
-      }, 1000);
-    });
+        clipBoard(code, function(result) {
+          target.child('.ic').className = result ? 'ic i-check' : 'ic i-times';
+          target.blur();
+          showtip(LOCAL.copyright);
+        })
+      });
+      copyBtn.addEventListener('mouseleave', function (event) {
+        setTimeout(function () {
+          event.target.child('.ic').className = 'ic i-clipboard';
+        }, 1000);
+      });
+    }
 
     var breakBtn = element.child('.breakline-btn');
     breakBtn.addEventListener('click', function (event) {
@@ -239,11 +252,11 @@ const postBeauty = function () {
     fullscreenBtn.addEventListener('click', fullscreenHandle);
     caption && caption.addEventListener('click', fullscreenHandle);
 
-    if(code_container && code_container.height() > 300) {
+    if(code_container && code_container.find("tr").length > 15) {
+
       code_container.style.maxHeight = "300px";
       code_container.insertAdjacentHTML('beforeend', '<div class="show-btn"><i class="ic i-angle-down"></i></div>');
       var showBtn = code_container.child('.show-btn');
-      var showBtnIcon = showBtn.child('i');
 
       var showCode = function() {
         code_container.style.maxHeight = ""
@@ -482,7 +495,7 @@ const algoliaSearch = function(pjax) {
         },
         empty: function(data) {
           return '<div id="hits-empty">'+
-              LOCAL.search.empty.replace(/\$\{query}/, data.query) +
+            LOCAL.search.empty.replace(/\$\{query}/, data.query) +
             '</div>';
         }
       },
@@ -519,8 +532,8 @@ const algoliaSearch = function(pjax) {
     element.addEventListener('click', function() {
       document.body.style.overflow = 'hidden';
       transition(siteSearch, 'shrinkIn', function() {
-          $('.search-input').focus();
-        }) // transition.shrinkIn
+        $('.search-input').focus();
+      }) // transition.shrinkIn
     });
   });
 

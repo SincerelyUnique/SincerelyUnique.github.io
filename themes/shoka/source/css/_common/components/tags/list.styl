@@ -13,7 +13,7 @@
   }
 
   ul, ol, dl {
-    margin: 0 0 .8em;
+    margin: .5em 0 .5em;
     padding: .1em .2em .1em 1.4em;
   }
 
@@ -30,9 +30,9 @@
       left: -1em;
     }
 
-    &.ruby::before {
-      top: 1.25em;
-    }
+    //&.ruby::before {
+    //  top: 1.25em;
+    //}
 
     &:hover::before {
       background: var(--color-pink);
@@ -63,9 +63,9 @@
         cursor: pointer;
       }
 
-      &.ruby::before {
-        top: .3em;
-      }
+      //&.ruby::before {
+      //  top: .3em;
+      //}
 
       &:hover::before {
         color: var(--grey-1);
@@ -121,13 +121,14 @@
     }
   }
 
-  li ol > li {
+  li ol > li, dd ol > li {
     &::before {
       content: counter(counter) ".";
       background: none;
       color: var(--primary-color);
       font-size: 1em;
       line-height: 1;
+      width: auto;
     }
 
     &:hover::before {

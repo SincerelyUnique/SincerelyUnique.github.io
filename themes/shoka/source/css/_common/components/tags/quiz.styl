@@ -39,9 +39,9 @@ $times {
     font-size: $font-size-base;
   }
 
-  &.ruby::before {
-    top: .5rem;
-  }
+  //&.ruby::before {
+  //  top: .5rem;
+  //}
 
   >p {
     margin: 0;
@@ -52,6 +52,12 @@ $times {
       font-size: $font-size-smallest;
       color: var(--grey-4);
       margin: auto .3125rem;
+    }
+  }
+
+  &.mistake >p {
+    &:first-child::before {
+      color: var(--primary-color);
     }
   }
 
