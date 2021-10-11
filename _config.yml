@@ -82,9 +82,15 @@ category_map: # edit for Theme.shoka
 
   Oracle学习: oracle
   Oracle性能优化: oracle-performance
+
+  面试相关: interview
+  剑指Offer: sword-to-offer
   
   设计模式: principle
   HeadFirst设计模式: head-first-design-pattern
+  
+  算法: algorithm
+  算法练习: practise
 
   生活: life
   电影: movies
