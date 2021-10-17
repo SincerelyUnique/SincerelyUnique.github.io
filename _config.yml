@@ -69,7 +69,7 @@ category_map: # edit for Theme.shoka
 #  零基础学Java语言-浙江大学-翁恺: course-1
 #  Theme Shoka Documentation: theme-shoka-doc
   学习: learn
-  
+
   Go语言学习: go
   菜鸟教程 - Go语言: runoob
 
@@ -79,16 +79,17 @@ category_map: # edit for Theme.shoka
   Java语言学习: java
   Java核心技术卷(第10版): core-java
   SpringBoot实战: springboot-in-action
+  Google Guava: google-guava
 
   Oracle学习: oracle
   Oracle性能优化: oracle-performance
 
   面试相关: interview
   剑指Offer: sword-to-offer
-  
+
   设计模式: principle
   HeadFirst设计模式: head-first-design-pattern
-  
+
   算法: algorithm
   算法练习: practise
 
@@ -140,7 +141,7 @@ deploy:
 autoprefixer:
   exclude:
     - '*.min.css'
-      
+
 markdown:
   render: # 渲染器设置
     html: false # 过滤 HTML 标签
@@ -173,7 +174,7 @@ markdown:
         enable: true
         options:
           title: "你知道得太多了"
-          
+
 minify:
   html:
     enable: true
@@ -196,7 +197,7 @@ minify:
     compress:
     exclude:
       - '**/*.min.js'
-        
+
 feed:
   limit: 20
   order_by: "-date"
@@ -214,7 +215,7 @@ feed:
     enable: true
     template: "themes/shoka/layout/_alternate/json.ejs"
     output: "feed.json"
-    
+
 # ref: https://blog.csdn.net/qq_35479468/article/details/107335663
 # export HEXO_ALGOLIA_INDEXING_KEY=your apiKey  (windows use set)
 # hexo algolia
