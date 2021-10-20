@@ -1,5 +1,5 @@
 ---
-title: (7) 集合工具 - Bimap接口
+title: Bimap接口
 date: 2017-10-24 16:05:55
 categories:
 - [学习, Java语言学习, Google Guava]

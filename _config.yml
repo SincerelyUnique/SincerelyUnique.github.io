@@ -89,6 +89,8 @@ category_map: # edit for Theme.shoka
 
   设计模式: principle
   HeadFirst设计模式: head-first-design-pattern
+  Java开发规范: dev-spec
+  深入理解Java虚拟机: deep-understand-jvm
 
   算法: algorithm
   算法练习: practise

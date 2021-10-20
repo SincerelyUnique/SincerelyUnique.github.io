@@ -1,5 +1,5 @@
 ---
-title: (10) 缓存工具 - Cache其二
+title: Cache类（2）
 date: 2017-10-27 16:05:58
 categories:
 - [学习, Java语言学习, Google Guava]

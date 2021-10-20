@@ -1,5 +1,5 @@
 ---
-title: (4) Range类
+title: Range类
 date: 2017-10-21 16:05:52
 categories:
 - [学习, Java语言学习, Google Guava]
