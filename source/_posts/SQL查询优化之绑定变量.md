@@ -34,7 +34,7 @@ python可以使用冒号（:）进行变量绑定，对于使用绑定变量这�
 
 下面针对一些特殊查询，比如like查询，in查询和between查询，列举一些python orm中可以使用的绑定变量方式。
 
-```
+```python
 from datetime import datetime
 
 import pandas as pd
