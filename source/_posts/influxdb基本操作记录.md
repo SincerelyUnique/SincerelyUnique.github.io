@@ -88,3 +88,42 @@ if __name__ == '__main__':
     result = client.query('select * from xxx;')
     logger.info("Result: {0}".format(result))
 ```
+
+```python
+def refresh_influx():
+    from influxdb import InfluxDBClient
+
+    from project import engine, logger
+    import pandas as pd
+
+    sql = "select * from TABLE_TEST"
+    df = pd.read_sql_query(sql, engine)
+    df = df[['uuid', 'text', 'createtime']]
+    df['uuid'] = df['code'].fillna('None')  # influxQL查询时候可以写 !='None', 好像没有is not null的判断
+    df['text'] = df['text'].fillna('None')
+    df = df.fillna('')
+
+    client = InfluxDBClient(host='192.168.0.2', port=8086, database='test')
+
+    logger.info('Delete old data.')
+    for uid in df['uuid'].tolist():
+        params = {"db": "test", "q": "delete from mm_test where code='%s'" % uid}
+        client.request('query', 'get', params=params)
+
+    logger.info('Insert new data.')
+    df_insert = df.copy()
+    df_insert["measurement"] = "test"
+    df_insert["fields"] = df_insert.apply(lambda x: {
+        'uuid': x['uuid'],
+        'text': x['text'],
+        'createtime': x['createtime']
+    }, axis=1)
+    df_insert["tags"] = df_insert.apply(lambda x: {
+        'uuid': x['uuid'],
+        'text': x['text']
+    }, axis=1)  # 只有设置为tag才能够作为influxQL查询条件
+    df_insert["time"] = df_insert['createtime']  # 指定时间序列
+    df_insert = df_insert[['measurement', 'fields', 'tags', 'time']]
+    client.write_points(df_insert.to_dict(orient='records'))
+    logger.info('refresh success')
+```
