@@ -1,6 +1,6 @@
 ---
 title: Grafana设置为Iframe
-date: 2015-02-22 14:34:43
+date: 2022-03-29 14:34:43
 tags: grafana
 categories:
 valine:

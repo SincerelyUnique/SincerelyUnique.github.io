@@ -25,7 +25,7 @@ menu:
   # links: /links/ || magic
   webstack: /webstack/ || user
   # travellings: /travellings/ || books
-  # about: 
+  # about:
   # commonweal
 
 # Social Links
@@ -37,16 +37,16 @@ social:
   github: https://github.com/SincerelyUnique || github || "#191717"
   #google: https://plus.google.com/yourname || google
   twitter: https://twitter.com/jalen_chu || twitter || "#00aff0"
-  zhihu: https://www.zhihu.com/people/rurismzk || zhihu || "#1e88e5"
-  # csdn: https://blog.csdn.net/baidu_30809315 || csdn || "#ea716e"
+  zhihu: https://www.zhihu.com/people/jalenchu || zhihu || "#1e88e5"
+  #csdn: https://blog.csdn.net/baidu_30809315 || csdn || "#ea716e"
   music: https://music.163.com/#/my/m/music/playlist?id=2031973464 || cloud-music || "#e60026"
-  #weibo: https://weibo.com/amehime || weibo || "#ea716e"
-  # oschina: https://my.oschina.net/chumingcheng || oschina || "#ea716e"
+  # weibo: https://weibo.com/amehime || weibo || "#ea716e"
+  #oschina: https://my.oschina.net/chumingcheng || oschina || "#ea716e"
   about: https://about.me/JalenChu || address-card || "#3b5998"
-  # email: mailto:1152357479@qq.com || envelope || "#55acd5"
-  #facebook: https://www.facebook.com/yourname || facebook
-  #stackoverflow: https://stackoverflow.com/yourname || stack-overflow
-  #youtube: https://youtube.com/yourname || youtube
+  email: mailto:1152357479@qq.com || envelope || "#55acd5"
+  facebook: https://www.facebook.com/jalen.chu.792/ || facebook || "#ea716e"
+  stackoverflow: https://stackoverflow.com/users/11117618/jalen-chu || stack-overflow || "#ea716e"
+  youtube: https://www.youtube.com/channel/UCqPFumPjF1eQuRkujt5Duag || youtube || "#ea716e"
   #instagram: https://instagram.com/yourname || instagram
   #skype: skype:yourname?call|chat || skype
   #douban: https://www.douban.com/people/yourname/ || douban
