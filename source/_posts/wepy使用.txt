@@ -1,0 +1,36 @@
+npm install wepy-cli -g
+
+npm install
+
+cp src/utils/host.js.example src/utils/host.js
+
+npm run build
+
+
+
+问题：
+（1） scripts is disabled on this system
+PS D:\wechatdevtool\workspace\jiezhang> wepy build --watch
+wepy : File C:\Users\jalchu\AppData\Roaming\npm\wepy.ps1 cannot be loaded because running scripts is disabled on this      
+system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ wepy build --watch
++ ~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+解决：
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+
+
+（2）TypeError: Cannot read property 'Promise' of undefined 
+https://github.com/dyq086/wepy-mall/issues/31
+
+（3）TypeError: Cannot read property 'mark' of undefined
+
+
+
+
+
+
+
+https://cloud.tencent.com/developer/article/1354726
