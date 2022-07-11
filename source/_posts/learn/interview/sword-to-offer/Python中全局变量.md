@@ -58,7 +58,7 @@ func1()
 
 当然，对于列表、字典这种只是修改其中某个元素的值，是可以不用global修饰的，如下会输出['Jady', 'Moe', 'Jones']：
 
-```
+```python
 names = ['Jalen', 'Moe', 'Jones']
 
 
