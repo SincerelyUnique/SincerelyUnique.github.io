@@ -29,7 +29,7 @@ valine:
     export class AppModule { }
     ```
 4. app.component.html
-    ```html
+    ```
     <app-form></app-form>
     ```
 5. style.scss
@@ -125,7 +125,7 @@ valine:
     }
     ```
 8. form.component.html
-    ```html
+    ```
     <h2>人员登记系统</h2>
 
     <div class="people_list">

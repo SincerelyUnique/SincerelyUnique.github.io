@@ -14,7 +14,7 @@ valine:
 3. `app.module.ts`手动添加FormsModule组件，测试表单数据双向绑定，即MVVM，注意imports
 4. `home.component.scss`的简单样式不再罗列，可以自行补入
 5. `home.component.ts`代码如下
-   ```ts
+   ```
     import { Component, OnInit } from '@angular/core';
 
     @Component({
@@ -95,8 +95,8 @@ valine:
       }
     }
    ```
-6. `home.component.html`代码如下
-   ```html
+6. `home.component.html`，代码如下
+   ```
     <h1>引入图片</h1>
     <img src="assets/images/01.jpg" alt="收藏">
     <img [src]="picUrl" alt="">
