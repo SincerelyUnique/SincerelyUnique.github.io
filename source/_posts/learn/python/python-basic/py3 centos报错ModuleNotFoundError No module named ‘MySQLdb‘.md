@@ -5,6 +5,7 @@ tags:
 - mysql
 - linux
 categories:
+- [学习, Python语言学习, Python]
 ---
 
 ref：https://github.com/PyMySQL/mysqlclient#linux

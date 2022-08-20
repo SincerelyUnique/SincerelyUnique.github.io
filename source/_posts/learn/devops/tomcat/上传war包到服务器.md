@@ -2,7 +2,8 @@
 title: 上传war包到服务器
 date: 2017-02-22 14:05:53
 tags:
-categories: Linux
+categories:
+- [学习, DevOPS, Tomcat]
 ---
 1>ssh  root@172.26.100.160
 2>password xxx

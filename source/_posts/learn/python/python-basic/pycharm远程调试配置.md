@@ -3,6 +3,7 @@ title: Pycharm远程调试配置
 date: 2022-01-07 14:34:43
 tags: pycharm
 categories:
+- [学习, Python语言学习, Python]
 ---
 
 > 主要解决问题： 本地访问国外DB速度慢，这里将code也同步到国外服务器上，启用远程调试

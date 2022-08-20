@@ -5,6 +5,7 @@ tags:
 - linux
 - python
 categories:
+- [学习, Python语言学习, Python]
 ---
 
 背景：OS是ubuntu18，python版本是Python3.6.x，执行

@@ -5,6 +5,7 @@ tags:
 - concurrent
 - python
 categories:
+- [学习, Python语言学习, Python]
 ---
 
 ## 报错信息

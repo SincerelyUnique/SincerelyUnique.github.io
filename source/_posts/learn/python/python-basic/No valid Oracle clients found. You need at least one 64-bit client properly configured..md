@@ -4,13 +4,14 @@ date: 2018-01-15 13:51:51
 tags:
 - oracle
 categories:
+- [学习, Python语言学习, Python]
 valine:
   placeholder: "1. 提问前请先仔细阅读本文档⚡\n2. 页面显示问题💥，请提供控制台截图📸或者您的测试网址\n3. 其他任何报错💣，请提供详细描述和截图📸，祝食用愉快💪"
 ---
 
 1. 问题：安装了toad for oracle12.12后，当打开软件时显示该错误。
 
-![](../images/toad01.png)
+![](../../../../images/toad01.png)
 
 2. 原因：没有安装64位oracle客户端。
 

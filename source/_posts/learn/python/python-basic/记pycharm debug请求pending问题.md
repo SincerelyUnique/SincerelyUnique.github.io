@@ -3,6 +3,7 @@ title: 记pycharm debug请求pending问题
 date: 2021-11-30 14:34:43
 tags: thread
 categories:
+- [学习, Python语言学习, Python]
 ---
 
 > 后端python flask，前端vue，前端vue里多个axios请求（比如for循环）阻塞（pending），因为ajax是异步调用，请求阻塞就很奇怪了，下面记录该问题
@@ -11,11 +12,11 @@ categories:
 
 ## 正常情况(此时请求异步，不阻塞)
 
-![](../images/requestpending02.jpg)
+![](../../../../images/requestpending02.jpg)
 
 ## 异常情况（此时请求pending）
 
-![](../images/requestpending01.jpg)
+![](../../../../images/requestpending01.jpg)
 
 # 模拟代码
 
@@ -76,7 +77,7 @@ test() {
 
 `runserver --host 0.0.0.0 --port 8080 --threaded`
 
-![](../images/requestpending03.jpg)
+![](../../../../images/requestpending03.jpg)
 
 可以参考：https://flask-script.readthedocs.io/en/latest/
 

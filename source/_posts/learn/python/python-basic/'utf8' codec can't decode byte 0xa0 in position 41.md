@@ -4,6 +4,7 @@ date: 2019-10-24 12:21:22
 tags:
 - codec
 categories:
+- [学习, Python语言学习, Python]
 valine:
   placeholder: "1. 提问前请先仔细阅读本文档⚡\n2. 页面显示问题💥，请提供控制台截图📸或者您的测试网址\n3. 其他任何报错💣，请提供详细描述和截图📸，祝食用愉快💪"
 ---
@@ -194,8 +195,8 @@ def py_fallback():
 
 flask_sqlalchemy==2.3.2 (问题版本 below picture) 
 
-![orm01](../images/orm01.png)
+![orm01](../../../../images/orm01.png)
 
 flask_sqlalchemy==2.4.1(正常版本 below picture)
 
-![orm02](../images/orm02.png)
+![orm02](../../../../images/orm02.png)

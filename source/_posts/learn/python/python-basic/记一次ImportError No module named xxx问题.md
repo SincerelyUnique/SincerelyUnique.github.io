@@ -4,6 +4,7 @@ date: 2020-09-07 16:28:31
 tags:
 - python
 categories:
+- [学习, Python语言学习, Python]
 ---
 
 记一次ImportError No module named xxx问题
@@ -16,4 +17,4 @@ categories:
 
 这个容易使我们想到java中的类加载机制，也就是双亲委派原则，后面还是需要具体了解一下python的类加载。
 
-![python02](../images/python02.png)
+![python02](../../../../images/python02.png)
