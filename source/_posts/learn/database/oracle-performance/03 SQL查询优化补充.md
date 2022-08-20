@@ -2,7 +2,7 @@
 title: (3) SQL查询优化（补）
 date: 2020-08-20 17:42:33
 categories:
-- [学习, 数据库学习, Oracle性能优化]
+- [学习, 数据库学习, Oracle]
 tags:
 - oracle
 - sql

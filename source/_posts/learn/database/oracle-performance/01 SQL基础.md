@@ -2,7 +2,7 @@
 title: (1) SQL基础
 date: 2020-08-21 12:42:23
 categories:
-- [学习, 数据库学习, Oracle性能优化]
+- [学习, 数据库学习, Oracle]
 tags:
 - oracle
 - sql

@@ -86,8 +86,10 @@ category_map: # edit for Theme.shoka
   数据库学习: database
 #  Oracle性能优化: oracle-performance
 
-  Python学习: python
-#  学习Python: learn-python
+  Python语言学习: python
+#  Python基础: learn-python
+
+  C语言学习: cprogram
 
 #  面试相关: interview
 #  剑指Offer: sword-to-offer
