@@ -5,7 +5,7 @@ tags:
 - pandas
 - excel
 categories:
-- [学习, Python语言学习, Pandas数据分析]
+- [学习, Python语言学习, Pandas]
 ---
 
 ## 需求

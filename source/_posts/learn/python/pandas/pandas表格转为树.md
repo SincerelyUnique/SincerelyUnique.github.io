@@ -4,7 +4,7 @@ date: 2020-11-16 15:39:21
 tags:
 - pandas
 categories:
-- [学习, Python语言学习, Pandas数据分析]
+- [学习, Python语言学习, Pandas]
 ---
 
 转自：https://stackoverflow.com/questions/49491418/converting-table-directly-to-tree-structure-with-pandas 

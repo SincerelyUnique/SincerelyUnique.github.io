@@ -5,7 +5,7 @@ tags:
 - python
 - pandas
 categories:
-- [学习, Python语言学习, Pandas数据分析]
+- [学习, Python语言学习, Pandas]
 ---
 
 一行拆多行参考：https://blog.csdn.net/baidu_30809315/article/details/93748732
