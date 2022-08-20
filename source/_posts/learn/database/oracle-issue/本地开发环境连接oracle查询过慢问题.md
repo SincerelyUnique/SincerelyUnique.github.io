@@ -3,7 +3,7 @@ title: 本地开发环境连接oracle查询过慢问题
 date: 2021-11-29 14:34:43
 tags: oracle
 categories:
-- [学习, DevOPS, Linux]
+- [学习, 数据库学习, Oracle问题记录]
 ---
 
 > 本地访问oracle和线上访问oracle速度差异原因排查及解决

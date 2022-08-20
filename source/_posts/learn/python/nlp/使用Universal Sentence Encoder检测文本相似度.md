@@ -5,7 +5,7 @@ tags:
 - nlp
 - tensorflow
 categories:
-- [学习, DevOPS, Linux]
+- [学习, Python语言学习, NLP]
 ---
 
 ```python

@@ -4,6 +4,7 @@ date: 2021-08-16 17:36:08
 tags:
 - ddos
 - linux
+sticky: true
 categories:
 - [学习, DevOPS, CloudService]
 ---
@@ -154,4 +155,6 @@ https://gist.github.com/mattia-beta/bd5b1c68e3d51db933181d8a3dc0ba64
 告警
 
 至今没有彻底解决，攻击频率比较低了，至少最近十多天没有攻击的警告~
+
+结尾真诚地请教一下所有看到这篇文章的小伙伴，遇到这种情况你们有什么好的办法吗，欢迎在评论区给出建议，Thanks in advance!
 ```
