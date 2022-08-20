@@ -5,6 +5,7 @@ tags:
 - k8s
 - linux
 categories:
+- [学习, DevOPS, Kubernetes]
 ---
 
 # centos k8s简单了解(集群环境搭建与使用)
@@ -261,7 +262,7 @@ demo-master  demo-master.zip  kubecfg.crt  kubecfg.key  kubecfg.p12  kube-flanne
 
 浏览器导入上面p12证书，重启浏览器，访问该地址，可以看到返回api所有的path。
 
-![k8s01](../images/k8s01.png)
+![k8s01](../../../../images/k8s01.png)
 
 ## 使用kubectl get pods发现node上2个pod一个一直处于init状态，另一个一直处于ContainerCreating状态，查看具体信息发现pull镜像k8s.gcr.io/pause:3.4.1一直pull不下来，手动去node上pull下，最好把proxy镜像也顺便一块pull下，如果是其他版本镜像，最好从docker hub找找，可以按日期查找找最新的，pull过镜像后可以去master上手动删除这俩pod，然后k8s会自动重新初始化这俩pod。
 

@@ -6,6 +6,7 @@ tags:
 - jenkins
 - maven
 categories:
+- [学习, DevOPS, Kubernetes]
 ---
 
 # centos registry+jenkins+k8s+maven 简单部署(待续)
@@ -151,7 +152,7 @@ ssh 192.168.2.170 '/usr/bin/kubectl apply -f /root/kube.yaml'
 ssh 192.168.2.170 '/usr/bin/kubectl get svc|grep maven'
 ```
 
-![jenkins01](../images/jenkins01.png)
+![jenkins01](../../../../images/jenkins01.png)
 
 ## 设置jenkins服务器到k8s master ssh免密登录，在jenkins服务器执行
 

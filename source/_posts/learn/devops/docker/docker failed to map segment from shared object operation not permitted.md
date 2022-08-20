@@ -4,6 +4,7 @@ date: 2020-01-13 15:57:40
 tags: 
 - docker
 categories:
+- [学习, DevOPS, Docker]
 ---
 
 好像是昨天在使用docker进行build时，访问/tmp目录，一直报没有权限，就是operation not permitted。

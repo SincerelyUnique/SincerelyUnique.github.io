@@ -4,6 +4,7 @@ date: 2020-01-13 15:52:31
 tags:
 - docker
 categories:
+- [学习, DevOPS, Docker]
 ---
 
 ## 原因

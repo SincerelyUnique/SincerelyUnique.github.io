@@ -5,6 +5,7 @@ tags:
 - go
 - gin
 categories:
+- [学习, Go语言学习, Gin框架]
 ---
 
 > OS： windows

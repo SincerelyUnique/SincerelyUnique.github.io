@@ -5,6 +5,7 @@ tags:
 - linux
 - docker
 categories:
+- [学习, DevOPS, Docker]
 ---
 
 # centos docker简单操作

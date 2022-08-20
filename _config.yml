@@ -71,9 +71,9 @@ category_map: # edit for Theme.shoka
   学习: learn
 
   Go语言学习: go
-#  菜鸟教程 - Go语言: runoob
+#  Go语言基础: runoob
 
-  中间件学习: nginx
+  中间件学习: middleware
 #  Nginx文档学习: nginx-document
 
   Java语言学习: java
@@ -83,7 +83,7 @@ category_map: # edit for Theme.shoka
 #  一天一个Java类: one-day-one-class
 #  Java集合扩容: java-collection-scale
 
-  数据库学习: oracle
+  数据库学习: database
 #  Oracle性能优化: oracle-performance
 
   Python学习: python
@@ -99,7 +99,7 @@ category_map: # edit for Theme.shoka
 
   算法与面试题: algorithm
 #  算法题: practise
-#  面试题: face-to-face
+#  面试题: interview
 
   生活: life
 #  电影: movies
