@@ -2,7 +2,7 @@
 title: (4) Install nginx plus
 date: 2021-01-03 19:20:27
 categories:
-- [学习, Nginx学习, Nginx文档学习]
+- [学习, 中间件学习, Nginx文档学习]
 tags:
 - nginx
 ---

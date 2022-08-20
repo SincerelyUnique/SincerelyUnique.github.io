@@ -2,7 +2,7 @@
 title: (3) Controlling nginx
 date: 2020-12-28 16:37:47
 categories:
-- [学习, Nginx学习, Nginx文档学习]
+- [学习, 中间件学习, Nginx文档学习]
 tags:
 - nginx
 ---

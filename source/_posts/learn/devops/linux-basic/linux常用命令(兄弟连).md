@@ -3,6 +3,7 @@ title: linux常用命令（兄弟连）
 date: 2022-07-15 14:34:43
 tags:
 categories:
+- [学习, DevOPS, 兄弟连Linux学习]
 valine:
   placeholder: ""
 ---

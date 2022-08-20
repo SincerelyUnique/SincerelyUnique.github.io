@@ -3,6 +3,7 @@ title: Shell基础（兄弟连）
 date: 2022-07-26 14:34:43
 tags:
 categories:
+- [学习, DevOPS, 兄弟连Linux学习]
 valine:
   placeholder: "bla~ bla~"
 ---
@@ -997,7 +998,7 @@ new
    - PATH变量：无登录shell
    - 调用/etc/profile.d/*.sh文件：无登录shell
 6. 后面的会覆盖前面的
-![linuxshellflow01.jpg](../images/linuxshellflow01.jpg)
+![linuxshellflow01.jpg](../../../../images/linuxshellflow01.jpg)
 
 ### 其他配置文件和登录信息
 1. 注销时生效的环境变量配置文件：`~/.bash_logout`，注销时想执行一些命令可以写在这里

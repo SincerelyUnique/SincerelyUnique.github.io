@@ -3,6 +3,7 @@ title: Angular学习（2）之环境项目搭建和目录结构简介
 date: 2022-08-15 14:34:43
 tags:
 categories:
+- [学习, 前端知识学习, AngularJS]
 valine:
   placeholder: "1. 提问前请先仔细阅读本文档⚡\n2. 页面显示问题💥，请提供控制台截图📸或者您的测试网址\n3. 其他任何报错💣，请提供详细描述和截图📸，祝食用愉快💪"
 ---
@@ -80,7 +81,7 @@ valine:
 
 1. 完整项目结构说明
 
-   ![目录结构分析](../images/augular02.jpg)
+   ![目录结构分析](../../../../images/augular02.jpg)
 
 2. 核心文件：app.module.ts文件说明
 

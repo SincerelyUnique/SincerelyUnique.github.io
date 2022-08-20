@@ -71,37 +71,46 @@ category_map: # edit for Theme.shoka
   学习: learn
 
   Go语言学习: go
-  菜鸟教程 - Go语言: runoob
+#  菜鸟教程 - Go语言: runoob
 
-  Nginx学习: nginx
-  Nginx文档学习: nginx-document
+  中间件学习: nginx
+#  Nginx文档学习: nginx-document
 
   Java语言学习: java
-  Java核心技术卷(第10版): core-java
-  SpringBoot实战: springboot-in-action
-  Google Guava: google-guava
-  一天一个Java类: one-day-one-class
+#  Java核心技术卷(第10版): core-java
+#  SpringBoot实战: springboot-in-action
+#  GoogleGuava: google-guava
+#  一天一个Java类: one-day-one-class
 
-  Oracle学习: oracle
-  Oracle性能优化: oracle-performance
+  数据库学习: oracle
+#  Oracle性能优化: oracle-performance
 
   Python学习: python
-  学习Python: learn-python
+#  学习Python: learn-python
 
-  面试相关: interview
-  剑指Offer: sword-to-offer
+#  面试相关: interview
+#  剑指Offer: sword-to-offer
 
   设计模式: principle
-  HeadFirst设计模式: head-first-design-pattern
-  Java开发规范: dev-spec
-  深入理解Java虚拟机: deep-understand-jvm
+#  HeadFirst设计模式: head-first-design-pattern
+#  Java开发规范: dev-spec
+#  深入理解Java虚拟机: deep-understand-jvm
 
-  算法: algorithm
-  算法练习: practise
+  算法与面试题: algorithm
+#  算法题: practise
+#  面试题: face-to-face
 
   生活: life
-  电影: movies
-  书籍: books
+#  电影: movies
+#  书籍: books
+#  常识: nous
+
+  前端知识学习: frontent
+#  AngularJS: angular-js
+
+  DevOPS: devops
+#  兄弟连Linux学习: linux-basic
+
 tag_map:
 
 # Metadata elements

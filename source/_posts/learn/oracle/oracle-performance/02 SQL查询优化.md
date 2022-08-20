@@ -2,7 +2,7 @@
 title: (2) SQL查询优化
 date: 2020-08-19 16:36:02
 categories:
-- [学习, Oracle学习, Oracle性能优化]
+- [学习, 数据库学习, Oracle性能优化]
 tags:
 - oracle
 - sql

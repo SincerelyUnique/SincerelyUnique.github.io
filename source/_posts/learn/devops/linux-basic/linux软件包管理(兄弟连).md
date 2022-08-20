@@ -3,6 +3,7 @@ title: linux软件包管理（兄弟连）
 date: 2022-07-22 14:34:43
 tags:
 categories:
+- [学习, DevOPS, 兄弟连Linux学习]
 valine:
   placeholder: "bla bla"
 ---

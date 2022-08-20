@@ -2,7 +2,7 @@
 title: (1) Install(Centos7)
 date: 2020-12-25 15:59:07
 categories:
-- [学习, Nginx学习, Nginx文档学习]
+- [学习, 中间件学习, Nginx文档学习]
 tags:
 - nginx
 ---
