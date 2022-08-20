@@ -125,7 +125,7 @@ valine:
     }
     ```
 8. form.component.html
-    ```
+    ```html
     <h2>人员登记系统</h2>
 
     <div class="people_list">
@@ -142,14 +142,14 @@ valine:
 
             <li>城 市：
                 <select name="city" id="city" [(ngModel)]="peopleInfo.city">
-                    <option [value]="item" *ngFor="let item of peopleInfo.cityList">{{item}}</option>
+                    <option [value]="item" *ngFor="let item of peopleInfo.cityList">&#123;&#123;item&#125;&#125;</option>
                 </select>
             </li>
 
             <li>爱 好：
                 <span *ngFor="let item of peopleInfo.hobby;let key=index">
                     <input type="checkbox" [id]="'check' + key" [(ngModel)]="item.checked"/><label [for]="'check' + key">
-                        {{item.title}}
+                        &#123;&#123;item.title&#125;&#125;
                     </label>
                     &nbsp;&nbsp;
                 </span>
@@ -168,7 +168,7 @@ valine:
         <br>
         <br>
         <pre class="pre-view">
-            {{peopleInfo | json}}
+            &#123;&#123;peopleInfo | json&#125;&#125;
         </pre>
     </div>
     ```

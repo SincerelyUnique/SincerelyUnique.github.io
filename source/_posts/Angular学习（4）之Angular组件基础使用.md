@@ -14,7 +14,7 @@ valine:
 3. `app.module.ts`手动添加FormsModule组件，测试表单数据双向绑定，即MVVM，注意imports
 4. `home.component.scss`的简单样式不再罗列，可以自行补入
 5. `home.component.ts`代码如下
-   ```
+   ```ts
     import { Component, OnInit } from '@angular/core';
 
     @Component({
@@ -96,7 +96,7 @@ valine:
     }
    ```
 6. `home.component.html`，代码如下
-   ```
+   ```html
     <h1>引入图片</h1>
     <img src="assets/images/01.jpg" alt="收藏">
     <img [src]="picUrl" alt="">
@@ -105,7 +105,7 @@ valine:
     <hr>
     <h1>循环数据 显示数据的索引（key）</h1>
     <ul>
-        <li *ngFor="let item of list; let key=index">{{key+1}} --- {{item.title}}</li>
+        <li *ngFor="let item of list; let key=index">&#123;&#123;key+1&#125;&#125; --- &#123;&#123;item.title&#125;&#125;</li>
     </ul>
 
 
@@ -120,10 +120,10 @@ valine:
     <ul>
         <li *ngFor="let item of list;let key=index;" >
             <span *ngIf="key==1" class="red">
-                {{key}} - {{item.title}}
+                &#123;&#123;key&#125;&#125; - &#123;&#123;item.title&#125;&#125;
             </span>
             <span *ngIf="key!=1">
-                {{key}} - {{item.title}}
+                &#123;&#123;key&#125;&#125; - &#123;&#123;item.title&#125;&#125;
             </span>
         </li>
     </ul>
@@ -151,7 +151,7 @@ valine:
     </div>
     <strong>循环数组，让数组的第一个元素的样式为red</strong>
     <li *ngFor="let item of list;let key=index;" [ngClass]="{'red': key==0, 'orange': key==1, 'blue': key==2}">
-        {{key}} --- {{item.title}}
+        &#123;&#123;key&#125;&#125; --- &#123;&#123;item.title&#125;&#125;
     </li>
     <p [ngStyle]="{'color': 'red'}">我是一个p标签，测试ngStyle</p>
     <p [ngStyle]="{'color': attr}">绑定数据到ngStyle</p>
@@ -159,14 +159,14 @@ valine:
 
     <hr>
     <h1>管道</h1>
-    <p>{{today}}</p>
-    <p>管道：{{today | date: "yyyy-MM-dd HH:mm:ss"}}</p>
+    <p>&#123;&#123;today&#125;&#125;</p>
+    <p>管道：&#123;&#123;today | date: "yyyy-MM-dd HH:mm:ss"&#125;&#125;</p>
     <p>还可以自定义管道方法</p>
 
 
     <hr>
     <h1>自定义事件</h1>
-    <strong>Title: {{title}}</strong><br>
+    <strong>Title: &#123;&#123;title&#125;&#125;</strong><br>
     <button (click)="run()">执行事件</button><br>
     <button (click)="getData()">执行事件，获取数据</button><br>
     <button (click)="setData()">执行事件，改变数据</button><br>
@@ -183,7 +183,7 @@ valine:
     <hr>
     <h1>双向数据绑定（MVVM）只是针对表单</h1>
     <input type="text" [(ngModel)]="keywords"><br><br>
-    {{keywords}}<br><br>
+    &#123;&#123;keywords&#125;&#125;<br><br>
     <button (click)="changeKeywords()">改变绑定值</button><br><br>
     <button (click)="getKeywords()">获取当前绑定值</button><br><br>
    ```
