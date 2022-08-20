@@ -81,6 +81,7 @@ category_map: # edit for Theme.shoka
 #  SpringBoot实战: springboot-in-action
 #  GoogleGuava: google-guava
 #  一天一个Java类: one-day-one-class
+#  Java集合扩容: java-collection-scale
 
   数据库学习: oracle
 #  Oracle性能优化: oracle-performance
@@ -104,12 +105,20 @@ category_map: # edit for Theme.shoka
 #  电影: movies
 #  书籍: books
 #  常识: nous
+#  小故事: story
+#  资料: material
+#  小视频: video
+#  小游戏: game
 
   前端知识学习: frontent
 #  AngularJS: angular-js
+#  ExtJS: ext-js
 
   DevOPS: devops
 #  兄弟连Linux学习: linux-basic
+
+  计算机网络: network
+#  图解HTTP: pic-http
 
 tag_map:
 
