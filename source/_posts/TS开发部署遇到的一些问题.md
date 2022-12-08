@@ -66,4 +66,14 @@ valine:
 
 - 解决： 修改apache-tomcat-8.5.84/conf/server.xml，8005/8080/8009，统一+1
 
+7. Caused by: java.lang.ClassNotFoundException: javax.servlet.Filter
+
+- 原因：缺少tomcat servlet-api.jar，直接原因，maven引入该包scope是provided，不是compile
+- 解决：注释scope或者在idea种启用Include dependencies with "Provided" scope
+
+# 参考
+
+https://www.baeldung.com/spring-reading-httpservletrequest-multiple-times
+
+
 
