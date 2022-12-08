@@ -8,16 +8,13 @@ categories:
 - [学习, DevOPS, Linux]
 ---
 
-```
-CDC是我们上包的工具，平时我们会通过Jenkis打rpm包，然后再通过CDC刷这个包，
-最近某台server经常遇到CDC刷包失败的问题，于是先自己查了一下CDC上包的log，
-发现有个报错，错误信息是ERROR: monxpmp can not be started.，于是和CDC 
-Team一起查了一下，最终原因是当前server的linux信号量满了，下面是检查步骤：
+> CDC是我们上包的工具，平时我们会通过Jenkis打rpm包，然后再通过CDC刷这个包，最近某台server经常遇到CDC刷包失败的问题，于是先自己查了一下CDC上包的log，发现有个报错，错误信息是ERROR: monxpmp can not be started.，于是和CDC Team一起查了一下，最终原因是当前server的linux信号量满了，下面是检查步骤：
  
-首先明确一下：monxpmp是需要用系统semaphore的，系统semaphore array满了
-monxpmp就启动不了了
+首先明确一下：monxpmp是需要用系统semaphore的，系统semaphore array满了, monxpmp就启动不了了
  
 1.尝试在机器上尝试移除monxpmp信号并重启monxpmp
+
+```bash
 [root@prodhostname test]# for semid in `ipcs -s | grep monxpmp | awk '{print $2}'`; do ipcrm -s $semid; done
 [root@prodhostname test]# service monxpmp start
 INFO: alertsender has been running...
@@ -28,8 +25,11 @@ ERROR: monxpmp can not be started.
 INFO: mondatapush is started.
 Succeed to enable auto recover check.
 [root@prodhostname test]# 
+```
  
 2.查看server信息
+
+```bash
 [root@prodhostname test]# cat /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
@@ -37,8 +37,11 @@ Succeed to enable auto recover check.
 [root@prodhostname test]# cat /etc/hostname 
 prodhostname.web.com
 [root@prodhostname test]# 
+```
  
 3.查看信号量大小，可以看到信号量满了，系统默认提供为128（132>128是因为有表头）
+
+```bash
 [root@prodhostname test]# ipcs -s | wc -l
 132
 [root@prodhostname test]# cat /proc/sys/kernel/sem  （查看信号量设置方法1）
@@ -97,22 +100,28 @@ used arrays = 128
 allocated semaphores = 128
  
 [root@prodhostname test]#
- 
+```
+
 4.解决方法一：找不到哪个用户资源申请的话，最简单的办法就是reboot
  
 5.解决方法二：暴力全部释放
+```bash
 [root@prodhostname test]# for semid in `ipcs -s | awk '{print $2}'`; do ipcrm -s $semid; done
 [root@prodhostname test]#
+```
 （释放了之后当时申请信号量的程序不确定会不会出问题，方法不是很好）
  
 6.解决方法三：调高信号量数组，这里调为256
+```bash
 [root@prodhostname test]# sysctl -w kernel.sem="250 32000 32 256"
 kernel.sem = 250 32000 32 256
 [root@prodhostname test]# ipcs -s | wc -l
 132
 [root@prodhostname test]# 
+```
  
 7.启动monxpmp应用，启动成功
+```bash
 [root@prodhostname test]# service monxpmp start
 INFO: alertsender has been running...
 INFO: snmpd has been running...
@@ -122,8 +131,10 @@ INFO: monxpmp is started.
 INFO: mondatapush is started.
 Succeed to enable auto recover check.
 [root@prodhostname test]# 
+``` 
  
 8.查看信号量列表，发现monxpmp启动添加成功
+```bash
 [root@prodhostname test]# ipcs -s
  
 ------ Semaphore Arrays --------
@@ -206,21 +217,28 @@ key        semid      owner      perms      nsems
 0x52038d9e 13238403   monxpmp    666        1         
 0x64038d9e 13271172   monxpmp    666        1         
 0x4f038d9e 13303941   monxpmp    666        1
- 
+```
+
 9.CDC尝试刷包，成功
- 
- 
+
 参考：
+
 https://zh.wikipedia.org/wiki/%E4%BF%A1%E5%8F%B7%E9%87%8F
+
 https://baike.baidu.com/item/%E4%BF%A1%E5%8F%B7%E9%87%8F
+
 https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/ipcs.html
+
 https://en.wikipedia.org/wiki/Semaphore_(programming)
+
 https://linoxide.com/linux-how-to/semaphore/
+
 https://www.thegeekdiary.com/how-to-change-kernel-semaphore-limits-in-centos-rhel/
  
  
 附录：
 1.ipcs用法
+```raw
 ipcs -a  是默认的输出信息 打印出当前系统中所有的进程间通信方式的信息
 ipcs -m  打印出使用共享内存进行进程间通信的信息
 ipcs -q   打印出使用消息队列进行进程间通信的信息
@@ -229,8 +247,10 @@ ipcs -t   输出信息的详细变化时间
 ipcs -p  输出ipc方式的进程ID
 ipcs -c  输出ipc方式的创建者/拥有者，输出ipc各种方式的在该系统下的限制条件信息
 ipcs -u  输出当前系统下ipc各种方式的状态信息(共享内存，消息队列，信号)
+``` 
  
 2.ipcrm用法
+```raw
 ipcrm -M shmkey  移除用shmkey创建的共享内存段
 ipcrm -m shmid    移除用shmid标识的共享内存段
 ipcrm -Q msgkey  移除用msqkey创建的消息队列
