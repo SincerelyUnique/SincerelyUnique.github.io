@@ -28,7 +28,9 @@ const randomBG = function(count = 1, image_server = null, image_list = []) {
     if (img.startsWith('//') || img.startsWith('http')) {
       return img
     } else {
-      return 'https://tva'+randomServer+'.sinaimg.cn/'+size+'/'+img
+      //return 'https://tva'+randomServer+'.sinaimg.cn/'+size+'/'+img
+      return 'https://s2.loli.net/2023/01/05/' + img
+      //return 'https://github.com/SincerelyUnique/picture_bed/blob/main/shoka-pic-bed/' + img
     }
   }
 
