@@ -12,12 +12,11 @@
             let obj = {
                 "questionText": $('#question').val()
             };
-            let url = "http://";
-            url = url + (110 - 6) + '.';
-            url = url + (230 - 5) + '.';
-            url = url + (150 - 2 - 2) + '.';
-            url = url + (210 - 6);
-            url = url + ':5000/chat';
+            let url = "https://";
+            url = url + "cmc" + ".";
+            url = url + "jalen" + ".";
+            url = url + "site"
+            url = url + '/chat';
             $.ajax({
                 url: url,
                 data: JSON.stringify(obj), //方法二   测试ok
