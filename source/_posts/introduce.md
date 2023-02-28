@@ -11,9 +11,9 @@ valine:
 
 你好，我是Jalen！
 
-很高兴能够在这里遇见你！希望你的每一天都是开心~
+很高兴能够在这里遇见你！希望你的每一天都是[开心](http://flower.jalen.site/)~
 
-假如再也见不到你，祝你早安，午安，晚安!  :kissing_heart:
+假如再也见不到你，祝你早安，午安，晚安!   :kissing_heart:
 
 !! Good Morning, and in case I don't see you, good afternoon, good evening, and good night!！！{.bulr}
 

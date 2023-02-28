@@ -24,6 +24,18 @@ menu:
   friends: /friends/ || heart
   # links: /links/ || magic
   webstack: /webstack/ || user
+  html:
+    default: /html/圈小猫.html || tags
+    圈小猫: /html/圈小猫.html || tags
+    撕渔网: /html/撕渔网.html || tags
+    彩虹雨: /html/彩虹雨.html || tags
+    方块穿梭: /html/方块穿梭.html || tags
+    烟花效果: /html/烟花效果.html || tags
+    碰撞小球: /html/碰撞小球.html || tags
+    纸飞机: /html/纸飞机.html || tags
+    骇客帝国: /html/骇客帝国.html || tags
+    玫瑰花: /html/玫瑰花.html || tags
+    问问题: /html/问问题.html || tags
   # travellings: /travellings/ || books
   # about:
   # commonweal
