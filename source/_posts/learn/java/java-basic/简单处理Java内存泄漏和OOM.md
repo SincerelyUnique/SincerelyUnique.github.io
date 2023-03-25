@@ -1,7 +1,7 @@
 ---
 title: 简单处理Java内存泄漏与OOM
 date: 2023-03-24 16:35:40
-tags: cache
+tags: oom
 categories:
 - [学习, Java语言学习, Java]
 ---
@@ -16,7 +16,7 @@ categories:
 [root@localhost ~]# docker logs -f 1d75d7d2abcb | grep Exception
 ```
 
-```log
+```raw
 23-Mar-2023 13:12:50.636 警告 [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads Web应用程序[xxx]似乎启动了一个名为[client_][generic][T#3]]的线程，但未能停止它。这很可能会造成内存泄漏。线程的堆栈跟踪：[
  sun.misc.Unsafe.park(Native Method)
  java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
@@ -52,9 +52,10 @@ categories:
 [root@localhost ~]# free -h
               total        used        free      shared  buff/cache   available
 Mem:            31G         15G        7.4G         35M        8.0G         14G
-Swap:          2.0G          0B        2.0G    
+Swap:          2.0G          0B        2.0G
+```
 
-
+```bash
 # top看下实时内存使用情况，可以看到total=32778416，free=7819664，可见vm内存够用，同时能够在COMMAND列锁定该java进程pid为30164
 [root@localhost ~]# top
 top - 09:15:10 up 21 days, 22:59,  1 user,  load average: 0.16, 0.23, 0.21
@@ -69,8 +70,10 @@ KiB Swap:  2097148 total,  2097148 free,        0 used. 15711900 avail Mem
 30164 root      20   0   15.4g   7.6g  18000 S   3.2 24.3 540:05.34 java                                                                                                         
     1 root      20   0  194156   7272   4172 S   0.0  0.0   3:44.03 systemd                                                                                                      
     2 root      20   0       0      0      0 S   0.0  0.0   0:03.97 kthreadd     
+```
 
 
+```bash
 # 查看进程下线程状况，可以看到该java进程（或者说jvm进程）下有363个线程，每个线程使用内存24.3
 [root@localhost ~]# top -Hp 30164
 top - 09:14:36 up 21 days, 22:58,  1 user,  load average: 0.16, 0.24, 0.21
@@ -88,40 +91,47 @@ KiB Swap:  2097148 total,  2097148 free,        0 used. 15710884 avail Mem
  3485 root      20   0   15.4g   7.6g  18000 S  0.3 24.3   2:01.18 java                                                                                                          
  3498 root      20   0   15.4g   7.6g  18000 S  0.3 24.3   0:48.24 java                                                                                                          
  4706 root      20   0   15.4g   7.6g  18000 S  0.3 24.3   5:01.12 java      
+```
 
-
+```bash
 # 也可查看当前进程下有多少线程
 [root@localhost ~]# cat /proc/30164/status | grep Threads
 Threads:        363
+```
 
-
-# 查看启动的容器，根据接口和名称锁定容器id，如果无法锁定是哪个容器，inspect下宿主机进程号，如果是30164，就对上了
+```raw
+# 查看启动的容器，根据接口和名称锁定容器id，如果无法锁定是哪个容器，inspect下宿主机进程号，如果是30164，就对上了, xxx可以百度下，这里和markdown语法冲突，没有列出来
 [root@localhost ~]# docker ps
-[root@localhost ~]# docker inspect -f '{{.State.Pid}}' 1d75d7d2abcb
+[root@localhost ~]# docker inspect -f 'xxx' 1d75d7d2abcb
+```
 
-
+```bash
 # 查看该容器挂载点，通常会将容器内的一些目录进行挂载，方便我们直接在宿主机查看
 [root@localhost ~]# docker inspect 1d75d7d2abcb|grep "Mount" -A 30
 "Destination": "/opt/tomcat/tomcat8/webapps"
+```
 
-
+```bash
 # 进入容器
 [root@localhost ~]# docker exec -it 1d75d7d2abcb /bin/bash
+```
 
-
+```bash
 # 尝试看下容器内的jdk，还好是jdk，这样就可以使用jps，jsat，jmap一些命令了
 root@1d75d7d2abcb:/# java -version
 java version "1.8.0_202"
 Java(TM) SE Runtime Environment (build 1.8.0_202-b08)
 Java HotSpot(TM) 64-Bit Server VM (build 25.202-b08, mixed mode)
+```
 
-
+```bash
 # jps看下java进程，定位到容器内进程pid=1
 root@1d75d7d2abcb:/# jps
 1 Bootstrap
 7959 Jps
+```
 
-
+```bash
 # jstat看下该进程堆详细状况，可以看到新生代满了
 # NGCMN：新生代最小容量
 # NGCMX：新生代最大容量  1397760
@@ -148,15 +158,17 @@ root@1d75d7d2abcb:/# jps
 root@1d75d7d2abcb:/# jstat -gccapacity 1
  NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC 
 174592.0 1397760.0 1397760.0 25088.0 23552.0 1349120.0   349696.0  2796544.0  2375680.0  2375680.0      0.0 1751040.0 812632.0      0.0 1048576.0 110208.0   1624   820
+```
 
-
+```bash
 # 知道进程pid了，根据pid确定进程名，其实已经可以肯定是tomcat容器进程了，下面查询都指向了tomcat
 root@1d75d7d2abcb:~# top
 root@1d75d7d2abcb:~# ps -elf|grep java
 root@1d75d7d2abcb:~# ps -elf|grep tomcat
 root@1d75d7d2abcb:~# ps -ef|grep 1
+```
 
-
+```bash
 # 使用jmap dump堆快照，看服务启动时间，我们这边服务启动了几天，生成了1.6G的快照
 root@1d75d7d2abcb:~# jmap -dump:file=dump.hprof 1
 
@@ -173,7 +185,7 @@ root@1d75d7d2abcb:~# jmap -dump:file=dump.hprof 1
 
 # 查看tomcat运存，当前为4G，调整后重启docker容器
 root@1d75d7d2abcb:/usr/local/tomcat# cat bin/catalina.sh |grep "JAVA_OPT"
-JAVA_OPTS="-Xms512m -Xmx4096m -XX:MaxPermSize=256m"。
+JAVA_OPTS="-Xms512m -Xmx4096m -XX:MaxPermSize=256m"
 ```
 
 ## 其他猜测
