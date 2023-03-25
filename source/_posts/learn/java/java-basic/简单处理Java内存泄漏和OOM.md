@@ -14,9 +14,6 @@ categories:
 
 ```bash
 [root@localhost ~]# docker logs -f 1d75d7d2abcb | grep Exception
-```
-
-```raw
 23-Mar-2023 13:12:50.636 警告 [Catalina-utility-1] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesThreads Web应用程序[xxx]似乎启动了一个名为[client_][generic][T#3]]的线程，但未能停止它。这很可能会造成内存泄漏。线程的堆栈跟踪：[
  sun.misc.Unsafe.park(Native Method)
  java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
@@ -54,6 +51,7 @@ categories:
 Mem:            31G         15G        7.4G         35M        8.0G         14G
 Swap:          2.0G          0B        2.0G
 ```
+
 
 ```bash
 # top看下实时内存使用情况，可以看到total=32778416，free=7819664，可见vm内存够用，同时能够在COMMAND列锁定该java进程pid为30164
@@ -99,9 +97,10 @@ KiB Swap:  2097148 total,  2097148 free,        0 used. 15710884 avail Mem
 Threads:        363
 ```
 
-```raw
+```bash
 # 查看启动的容器，根据接口和名称锁定容器id，如果无法锁定是哪个容器，inspect下宿主机进程号，如果是30164，就对上了, xxx可以百度下，这里和markdown语法冲突，没有列出来
 [root@localhost ~]# docker ps
+# 参考：https://blog.csdn.net/m0_45406092/article/details/103671832
 [root@localhost ~]# docker inspect -f 'xxx' 1d75d7d2abcb
 ```
 
