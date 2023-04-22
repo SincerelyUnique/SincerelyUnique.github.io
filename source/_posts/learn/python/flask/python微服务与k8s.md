@@ -241,4 +241,8 @@ kubectl apply -f .\manifests\
 ![img_2.png](../../../../images/micropythonk8s03.png)
 
 
+## Github Repo
 
+https://github.com/SincerelyUnique/python-microservices-k8s-demo
+
+https://github.com/SincerelyUnique/python-microservices-k8s-demo.git
