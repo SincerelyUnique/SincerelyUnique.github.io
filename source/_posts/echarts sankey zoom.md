@@ -28,6 +28,10 @@ valine:
 
 # package.json
 
+├── @types/echarts@4.6.3
+├── echarts@5.2.2
+├── vue-echarts@6.0.0
+
 ```json 
 {
   "dependencies": {
