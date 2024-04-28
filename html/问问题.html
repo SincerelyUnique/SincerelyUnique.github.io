@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>快问我问题</title>
+    <script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+</head>
+<script>
+    $(function () {
+        $("#button").click(function(){
+            $("#answer").text("让我先思考一下哈... ...");
+            let obj = {
+                "questionText": $('#question').val()
+            };
+            let url = "https://";
+            url = url + "cmc" + ".";
+            url = url + "jalen" + ".";
+            url = url + "site"
+            url = url + '/chat';
+            $.ajax({
+                url: url,
+                data: JSON.stringify(obj), //方法二   测试ok
+                method: "post",
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log(data)
+                    $("#answer").text(data.message);
+                }
+            });
+        });
+    });
+</script>
+<body>
+    <div style="align-content: center;text-align: center">
+        <h1>智能问答小助理</h1>
+        <label for="question">请问我问题 ^_^</label>&emsp;<br>
+        <input id="question" name="question" type="text" value="" size="50"><br>
+        <button id="button">提交</button><br><br>
+
+        <label for="answer">回答 :)</label><br>
+        <textarea id="answer" rows="30" cols="90"></textarea>
+    </div>
+</body>
+</html>
