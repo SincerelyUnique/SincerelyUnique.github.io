@@ -21,7 +21,7 @@ import pandas as pd
  
 def send_email():
     data = [{'name': 'jalen', 'link': 'www.baidu.com'},
-            {'name': 'kitty', 'link': '<a href="" style="color: red;">http://jalen.site</a>'}]
+            {'name': 'kitty', 'link': '<a href="" style="color: red;">http://mingcheng.site</a>'}]
     df_report = pd.DataFrame(data)
     report_html = df_report.to_html(index=False, border=1, justify='center', na_rep="", escape=False)
     report_html = report_html.replace('class', 'cellspacing=\"0\" class')

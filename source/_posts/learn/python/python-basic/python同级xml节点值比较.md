@@ -33,7 +33,7 @@ def compare_xml(left_nodes, right_nodes, key_info='.'):
 if __name__ == '__main__':
     xml_str1 = "<site>" \
                "     <tools>" \
-               "         <name>jalen.site</name>" \
+               "         <name>mingcheng.site</name>" \
                "     </tools>" \
                "     <metaData>" \
                "         <server>aliyun</server>" \
@@ -41,10 +41,10 @@ if __name__ == '__main__':
                "</site>"
     xml_str2 = "<site>" \
                "     <metaData>" \
-               "         <server><name>jalen.site11</name></server>" \
+               "         <server><name>mingcheng.site11</name></server>" \
                "     </metaData>" \
                "     <tools>" \
-               "         <name>jalen.site</name>" \
+               "         <name>mingcheng.site</name>" \
                "     </tools>" \
                "</site>"
     left_root = ElementTree.fromstring(xml_str1)

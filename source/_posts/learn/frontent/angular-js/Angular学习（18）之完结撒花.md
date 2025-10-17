@@ -16,5 +16,5 @@ valine:
 
 代码地址：https://github.com/SincerelyUnique/angularjs-learn-demo
 
-学习笔记：https://jalen.site/learn/frontent/angular-js/Angular%E5%AD%A6%E4%B9%A0%EF%BC%881%EF%BC%89%E4%B9%8B%E7%AE%80%E4%BB%8B/
+学习笔记：https://mingcheng.site/learn/frontent/angular-js/Angular%E5%AD%A6%E4%B9%A0%EF%BC%881%EF%BC%89%E4%B9%8B%E7%AE%80%E4%BB%8B/
 

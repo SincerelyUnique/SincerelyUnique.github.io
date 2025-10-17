@@ -13,7 +13,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://jalen.site
+url: http://mingcheng.site
 permalink: :title/ # edit for Theme.shoka
 permalink_defaults:
 pretty_urls:

@@ -15,7 +15,7 @@ valine:
 ```xml
 <site> 
   <tools> 
-    <name>jalen.site</name> 
+    <name>mingcheng.site</name> 
   </tools>  
   <tools> 
     <server>aliyun</server> 
@@ -28,7 +28,7 @@ valine:
 ```xml
 <site> 
   <tools>
-    <name>jalen.site</name>  
+    <name>mingcheng.site</name>  
     <server>aliyun</server> 
   </tools>
 </site>
@@ -64,7 +64,7 @@ def test_et(xml_str):
 if __name__ == '__main__':
     xml_str = "<site>" \
               "     <tools>" \
-              "         <name>jalen.site</name>" \
+              "         <name>mingcheng.site</name>" \
               "     </tools>" \
               "     <tools>" \
               "         <server>aliyun</server>" \
@@ -75,7 +75,7 @@ if __name__ == '__main__':
  
     xml_str = "<site>" \
               "     <tools>" \
-              "         <name>jalen.site</name>" \
+              "         <name>mingcheng.site</name>" \
               "     </tools>" \
               "     <tools>" \
               "         <server>aliyun1</server>" \
@@ -92,7 +92,7 @@ if __name__ == '__main__':
  
     xml_str = "<site>" \
               "     <tools>" \
-              "         <name>jalen.site</name>" \
+              "         <name>mingcheng.site</name>" \
               "     </tools>" \
               "     <tools>" \
               "         <server>aliyun1</server>" \
@@ -109,7 +109,7 @@ if __name__ == '__main__':
  
     xml_str = "<site>" \
               "     <tools>" \
-              "         <name>jalen.site</name>" \
+              "         <name>mingcheng.site</name>" \
               "     </tools>" \
               "     <tools>" \
               "         <server>aliyun1</server>" \

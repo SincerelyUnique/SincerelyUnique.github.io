@@ -8,7 +8,7 @@ copyright: false
 # 本站信息
 - 站名： Jalen's Blog
 - 站长： Jalen
-- 地址： https://jalen.site
+- 地址： https://mingcheng.site
 - 标志： ![Jalen](https://ae01.alicdn.com/kf/U39cf0177bf5f4d62974408629c0b6d63b.png){height="100" width="100"}
 - 简介： Jalen的生活 & 编程笔记
 
