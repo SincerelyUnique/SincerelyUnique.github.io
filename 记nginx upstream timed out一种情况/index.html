@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="nginx"><link rel="canonical" href="http://mingcheng.site/%E8%AE%B0nginx%20upstream%20timed%20out%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5/"><title>记 nginx upstream timed out 一种情况 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">记 nginx upstream timed out 一种情况</h1><div class="meta"><span class="item" title="创建时间：2020-12-16 22:04:09"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2020-12-16T22:04:09+08:00">2020-12-16</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>5.9k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>5 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/faPC8BdzLSIrVZi.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/HZCYqfsMlE61Uh8.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/43uIPsaBl6tKohV.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/QSqg3he6vwClUT2.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/TVG6IvNdyF92bRe.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/c2Af7rxKodnCkbt.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/%E8%AE%B0nginx%20upstream%20timed%20out%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><pre><code>1.问题描述
+前端vue访问nginx，nginx访问后端，发现前端请求需要等待很久才能到达后端
+接口，并且nginx存在upstream timed out错误log。
+（1）nginx配置（version：1.15.8）
+    server &#123;
+        listen       8989;
+        server_name  localhost;
+		
+        location / &#123;
+          proxy_pass http://localhost:9999;
+        &#125;
+ 
+        location /api/ &#123;
+          proxy_pass http://localhost:8080/;
+          proxy_read_timeout      500;
+        &#125;
+		
+	    # ... ...
+     &#125;
+（2）nginx日志（nginx-1.15.8\logs\error.log）
+2020/12/16 07:23:59 [error] 2592#13852: *1 upstream timed out (10060: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond) while connecting to upstream, client: 127.0.0.1, server: localhost, request: &quot;GET /feature/index HTTP/1.1&quot;, upstream: &quot;http://[::1]:9999/feature/index&quot;, host: &quot;localhost:8989&quot;
+2020/12/16 07:25:05 [error] 2592#13852: *8 upstream timed out (10060: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond) while connecting to upstream, client: 127.0.0.1, server: localhost, request: &quot;POST /api/feature/releasedfeature HTTP/1.1&quot;, upstream: &quot;http://[::1]:8080/feature/releasedfeature&quot;, host: &quot;localhost:8989&quot;, referrer: &quot;http://localhost:8989/feature/index&quot;
+ 
+通过网络搜索nginx upstream timed out问题看到一篇博客，结合日志中(比如
+client: 127.0.0.1, server: localhost..以及[::1]）猜测上面描述的问题有
+可能是ipv6对localhost的解析问题导致，而在我的nginx配置里，大部
+分地址都是采用localhost配置的，比如server_name配置为localhost，或者
+location代理路径url也是填写的localhost，故而尝试将nginx配置文件中所有
+localhost修改为127.0.0.1，修改后重启nginx，发现前端访问能够很快到达后端，
+不会再出现延迟的情况了。
+ 
+但是后续偶尔还是会在log里发现类似error，log如下：
+2020/12/16 12:00:58 [error] 13424#25016: *7 upstream timed out (10060: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond) while reading response header from upstream, client: 127.0.0.1, server: 127.0.0.1, request: &quot;POST /api/feature/sp HTTP/1.1&quot;, upstream: &quot;http://127.0.0.1:8080/feature/sp&quot;, host: &quot;localhost:8989&quot;, referrer: &quot;http://localhost:8989/feature/fed&quot;
+可以看到这条log的client和server都是127.0.0.1：client: 127.0.0.1, server: 127.0.0.1
+但是host却是localhost的：host: &quot;localhost:8989&quot;（这个有些奇怪，估计哪里用了localhost没有修改，以后再查吧）
+ 
+这个猜测也可能具体和nginx的实现有些关系，比如有可能app不支持ipv6访问，所以nginx访问超时了，超时之后
+nginx又尝试使用IPv4访问，然后正常了
+ 
+或者也可以尝试配置nginx ipv6 listen（未尝试），如：
+listen 80;
+listen [::]:80 ipv6only=on;
+ 
+ 
+ 
+2.验证localhost在ipv4环境和ipv6环境下的不同
+（1）在ipv4网络环境中使用ping命令ping本地执行返回的是（ipv6切换ipv4参考下面附录）：
+     C:\Users\jalchu&gt;ping localhost
+     Pinging JALCHU-6JT6N.xxx.com [127.0.0.1] with 32 bytes of data:
+     Reply from 127.0.0.1 time&lt;1ms
+     Reply from 127.0.0.1 time=1ms
+     Reply from 127.0.0.1 time&lt;1ms
+     Reply from 127.0.0.1 time=1ms
+ 
+     Ping statistics for 127.0.0.1:
+         Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+     Approximate round trip times in milli-seconds:
+         Minimum = 0ms, Maximum = 1ms, Average = 0ms
+     C:\Users\jalchu&gt;
+（2）在ipv6网络环境中使用ping命令ping本地执行返回的是：
+     C:\Users\jalchu&gt;ping localhost
+     Pinging JALCHU-6JT6N.xxx.com [::1] with 32 bytes of data:
+     Reply from ::1: time&lt;1ms
+     Reply from ::1: time=1ms
+     Reply from ::1: time&lt;1ms
+     Reply from ::1: time=1ms
+ 
+     Ping statistics for ::1:
+         Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+     Approximate round trip times in milli-seconds:
+         Minimum = 0ms, Maximum = 1ms, Average = 0ms
+     C:\Users\jalchu&gt;
+（3）由上可知在两个网络环境下localhost解析是不同的，ipv4指向127.0.0.1，
+     而ipv6指向::1:，也就是说localhost在ipv4环境下解析后的loopback address
+     是 127.0.0.1，在ipv6环境下解析后的loopback address是::1。
+ 
+     在计算机网络中，localhost是一个主机名，它用于访问它的当前计算机。
+     通过环回网络接口访问主机上运行的网络服务。使用该接口可绕过各种本
+     地网络接口硬件（即无需物理网络接口，无需网络服务，就像我们可以
+     直接通过http://localhost从浏览器访问页面一样）。--wiki
+ 
+     ipv4 loopback address 为127.0.0.0/8 （A类地址），eg：127.0.0.1
+     ipv6 loopback address 为::1/128，eg：::1:
+ 
+ 
+ 
+3.IPV4简介
+ipv4：第四代网络协议，这个协议第一个版本应用于1982年的SATNET和1983年的ARPANET，
+它使用32位地址空间，提供了4,294,967,296（2的32次方，约43亿）个唯一地址，并且为
+一些专用网络保留一部分特殊的地址块，如：
+（1）private networks（LAN）：1800w
+（2）multicast（多播） addresses：27000w
+ 
+ip地址空间由IANA管理，指定由5个RIR（regional Internet registries）负责分配给
+终端用户或者下级ISP供应商，加速IPv4地址耗尽的主要原因包括迅速增长的Internet用户
+及始终在线的设备（包括各种移动设备）等，地址耗尽时间（或者可以理解为每个RIR ip 
+address pool的耗尽（预期）时间）：
+（*）Global level（全球级别-顶级）：2011.1.31
+（1）Asia-Pacific (APNIC)： 2011.4.15
+（2）Latin America and the Caribbean (LACNIC)：2014.6.10
+（3）North America (ARIN)：2015.9.24
+（4）Africa (AfriNIC)：2017.4.21
+（5）Europe, Middle East and Central Asia (RIPE NCC)：2019.11.25
+当然，这些RIR仍然可以分配已恢复的地址，或者因为特殊目的而保留的地址。
+（各个ISP仍具有未分配的IP地址池，并且可以回收用户不再需要的地址）
+ 
+ 
+ 
+4.IPV5简介
+介于IPv4和IPv6之间，1979年将版本5分配给实验性Internet流协议，
+曾经打算替代IPV4，但是事实上从未真正履行甚至并不将其称之为IPv5。
+IPv5又称因特网流协议，是一个资源协议，即因特网流协议(ST)。
+该协议从未被接受为正式的互联网协议，这主要是由于 32 位限制。
+IPV5 使用与 IPv4 相同的寻址系统。每个地址由 0 到 255 之间的四组数字组成。
+这将可能的地址数量限制为 43 亿个。
+但是IPv5 奠定了 VoIP 的基础，而该技术已被我们用于当今世界范围内的通信，在某种
+程度上，可以说 IPv5 仍然保留到了今天。
+ 
+ 
+ 
+5.IPV6简介
+IPV6是网际协议的最新版本，主要用它来取代IPv4主要是为了解决IPv4地址枯竭
+问题，同时它也在其他方面对于IPv4有许多改进（更确切讲是对IPv4的一种保守的扩展）。
+比如使用新的分组格式，最小化路由器处理的消息标头（IPv4消息和IPv6消息标头有很大不同，
+无法互操作）、扩大地址空间等。
+ 
+IPv6采用128位的地址（区别于ipv4的32位），IPv6地址的表达形式一般采用32个十六进制数。
+ 
+在很多场合，IPv6地址由两个逻辑部分组成：一个64位的网络前缀和一个64位的主机地址，
+主机地址通常根据物理地址自动生成，叫做EUI-64（或者64-位扩展唯一标识）。
+ 
+IPv6地址可分为三种：单播（unicast）地址、任播（anycast）地址、多播（multicast）地址
+ 
+在2019年12月，透过IPv6使用Google服务的用户百分率首次超过30%，正符合最后一个RIR
+宣布资源枯竭的时间。
+ 
+ 
+ 
+ 
+附录
+1.windows10设置ipv4的优先级
+win10默认的是ipv6的解析，而ipv6默认解析到[::1]而不是127.0.0.1，可以去注册表修改ipv4的优先级
+（1）cmd输入regedit进入注册表
+（2）HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\tcpip6\Parameters，右键
+     Parameters新建&lt;DWORD(32位)值(D)&gt;，名称修改为DisabledComponents，数据改为20
+（3）重启电脑后尝试ping localhost
+ 
+ 
+ 
+参考：
+https://blog.csdn.net/u010267491/article/details/52775115 （搜索nginx upstream问题定位到这篇博客）
+https://en.wikipedia.org/wiki/IPv4 （ipv4简介）
+https://tools.ietf.org/html/rfc791 （ipv4描述）
+https://en.wikipedia.org/wiki/Private_network  （私有网络简介）
+https://en.wikipedia.org/wiki/Multicast （网络多播）
+https://www.jianshu.com/p/164ab8a6e6a9 （网络单播、多播、广播区别参考）
+https://tools.ietf.org/html/rfc1918 （私有网络地址分配参考）
+https://tools.ietf.org/html/rfc4193 （ipv6地址）
+https://en.wikipedia.org/wiki/Localhost （wiki对localhost的解释）
+https://en.wikipedia.org/wiki/IPv4_address_exhaustion （ipv4地址耗尽）
+https://zh.wikipedia.org/wiki/IPv4%E4%BD%8D%E5%9D%80%E6%9E%AF%E7%AB%AD （ipv4地址枯竭）
+https://zhuanlan.zhihu.com/p/137385830 （为什么没有ipv5）
+https://zh.wikipedia.org/wiki/IPv6 （IPV6）
+https://www.google.com/intl/en/ipv6/statistics.html （google ipv6使用率统计）
+ 
+ 
+ 
+</code></pre><div class="tags"><a href="/tags/nginx/" rel="tag"><i class="ic i-tag"></i> nginx</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="记nginx upstream timed out一种情况/" class="item leancloud_visitors" data-flag-title="记 nginx upstream timed out 一种情况" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/%E8%AE%B0nginx%20upstream%20timed%20out%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5/" title="记 nginx upstream timed out 一种情况">http://mingcheng.site/记nginx upstream timed out一种情况/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/database/oracle/oracle%E4%B8%80%E5%88%97%E6%8B%86%E5%A4%9A%E5%88%97/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;6BVdFcJpCO1I8nq.jpg" title="oracle一列拆多列"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Oracle</span><h3>oracle一列拆多列</h3></a></div><div class="item right"><a href="/learn/middleware/nginx-document/01%20install(centos7)/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;ZbXgfLPpyrt5vSi.jpg" title="(1) Install(Centos7)"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Nginx 文档学习</span><h3>(1) Install(Centos7)</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/database/oracle/oracle%E4%B8%80%E5%88%97%E6%8B%86%E5%A4%9A%E5%88%97/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/middleware/nginx-document/01%20install(centos7)/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/algorithm/" title="分类于 算法与面试题">算法与面试题</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/algorithm/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a></div><span><a href="/learn/algorithm/practise/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E4%B8%8E%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E4%B8%8E%E4%B9%98%E6%B3%95%E8%A1%A8%E6%89%93%E5%8D%B0/" title="二分查找">二分查找</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/" title="分类于 数据库学习">数据库学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/Oracle%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="分类于 Oracle 问题记录">Oracle 问题记录</a></div><span><a href="/learn/database/oracle-issue/oracle%20A%20connection%20attempt%20failed%20because%20the%20connected%20party%20did%20not%20properly%20respond%20after%20a%20per/" title="oracle A connection attempt failed because the connected party did not properly respond after a per">oracle A connection attempt failed because the connected party did not properly respond after a per</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/VueJS/" title="分类于 VueJS">VueJS</a></div><span><a href="/learn/frontent/vue-js/vue%20excel%20download%20upload/" title="vue excel download upload">vue excel download upload</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E5%88%A9%E7%94%A8freemarker%E5%AF%BC%E5%87%BAExcel%EF%BC%88%E6%A0%BC%E5%BC%8F%E8%87%AA%E5%AE%9A%E4%B9%89%EF%BC%89/" title="利用freemarker导出Excel（格式自定义）">利用freemarker导出Excel（格式自定义）</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E4%BD%BF%E7%94%A8@InitBinder%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2/" title="使用@InitBinder进行数据转换">使用@InitBinder进行数据转换</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" title="分类于 Java 开发规范">Java 开发规范</a></div><span><a href="/learn/java/dev-spec/java%20web%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86%E8%A7%84%E8%8C%83/" title="java web并发处理规范">java web并发处理规范</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/" title="分类于 中间件学习">中间件学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/Zookeeper/" title="分类于 Zookeeper">Zookeeper</a></div><span><a href="/learn/middleware/zookeeper/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3Zookeeper/" title="简单了解Zookeeper">简单了解Zookeeper</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" title="分类于 Java 开发规范">Java 开发规范</a></div><span><a href="/learn/java/dev-spec/java%E4%BB%A3%E7%A0%81%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83/" title="java代码注释规范">java代码注释规范</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/tag-plugins/" title="Tag Plugins">Tag Plugins</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/AngularJS/" title="分类于 AngularJS">AngularJS</a></div><span><a href="/learn/frontent/angular-js/Angular%E5%AD%A6%E4%B9%A0%EF%BC%8814%EF%BC%89%E4%B9%8B%E8%B7%AF%E7%94%B1/" title="Angular学习（14）之路由">Angular学习（14）之路由</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"记nginx upstream timed out一种情况/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

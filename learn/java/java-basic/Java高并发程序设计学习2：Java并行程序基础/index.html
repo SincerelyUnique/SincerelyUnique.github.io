@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="http://mingcheng.site/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A02%EF%BC%9AJava%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/"><title>Java 高并发程序设计学习 2：Java 并行程序基础 - Java - Java 语言学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">Java 高并发程序设计学习 2：Java 并行程序基础</h1><div class="meta"><span class="item" title="创建时间：2017-02-23 08:46:45"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2017-02-23T08:46:45+08:00">2017-02-23</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>9.2k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>8 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/xEI7gXWwnuCmHO4.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/dBKoQn2tYmyTHZF.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/vnoZRScYWLU6z7G.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/tpqNusmwczJ6Cgd.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/OxyCZ8lFfqgm5AR.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/LYR8lwPeBzQasmC.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" itemprop="item" rel="index" title="分类于 Java 语言学习"><span itemprop="name">Java 语言学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/java/Java/" itemprop="item" rel="index" title="分类于 Java"><span itemprop="name">Java</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A02%EF%BC%9AJava%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><ol><li>线程的母亲：进程</li><li>进程：<br>系统进行资源分配和调度的基本单位；<br>操作系统结构的基础；<br>是线程的容器；<br>是程序的实体；<br>例如：windows 的.exe 文件，点击运行便是一个进程<br><span id="more"></span></li><li>线程<br>不可见，可使用工具查看；<br>轻量级进程，程序执行最小单位；<br>生命周期在 Thread 中 State 枚举中定义：<br>NEW，start()<br>RUNNABLE，<br>BLOCKED，synchronized<br>WAITING，进入无时间限制的等待<br>TIMED_WAITING，进入有时间限制的等待<br>TERMINATED，线程执行完毕</li><li>新建线程<br>继承 Thread，注意启动线程用 start (), 不要直接调用 run ()；<br>实现 Runnable，较继承 Thread 要好；<br>实现 Callable&lt;V&gt;，Call () 方法可返回值；</li><li>终止线程<br>错误做法：stop () 方法，暴力终止，释放所有锁，慎用，一旦出错不会返回任何错误信息，当前标识已废弃；<br>正确做法：</li></ol><pre><code>public void stopMe()&#123;
+	stopme = true;
+&#125;
+</code></pre><p>当调用 stopMe () 方法获取 stopme 值为 true 时，跳出线程</p><pre><code>if(stopme)&#123;
+	break;
+&#125;
+</code></pre><ol start="6"><li>线程中断<br>线程中断并不会使线程立即退出，由目标线程自行决定，线程中断提供了 3 个方法：<br>public void Thread.interrupt ():	// 中断线程<br>public boolean Thread.isInterrupted ();	// 判断是否被中断<br>public static boolean Thread.interrupted ()	// 判断是否被中断，并清除当前中断状态<br>一下这段代码并未成功中断</li></ol><pre><code>public class ThreadInterrupt &#123;
+
+	public static void main(String[] args) throws InterruptedException&#123;
+		Thread t1 = new Thread()&#123;
+			@Override
+			public void run() &#123;
+				while(true)&#123;
+					Thread.yield();
+				&#125;
+			&#125;
+		&#125;;
+		t1.start();
+		Thread.sleep(2000);
+		t1.interrupt();
+	&#125;
+&#125;
+</code></pre><p>需要改成</p><pre><code>public class ThreadInterrupt &#123;
+
+	public static void main(String[] args) throws InterruptedException&#123;
+		Thread t1 = new Thread()&#123;
+			@Override
+			public void run() &#123;
+				while(true)&#123;
+					if(Thread.currentThread().interrupted())&#123;
+						System.out.println(&quot;Interrupt!&quot;);
+						break;
+					&#125;
+					Thread.yield();
+				&#125;
+			&#125;
+		&#125;;
+		t1.start();
+		Thread.sleep(2000);
+		t1.interrupt();
+	&#125;
+&#125;
+</code></pre><p>这段代码类似上面的 stopme 中断，但要优于 stopme。</p><ol start="5"><li>Thread.sleep () 休眠中断会强制抛出异常：InterruptException，必须捕获并处理它</li></ol><pre><code>public class ThreadInterrupt &#123;
+
+	public static void main(String[] args) throws InterruptedException&#123;
+		Thread t1 = new Thread()&#123;
+			@Override
+			public void run() &#123;
+				while(true)&#123;
+					if(Thread.currentThread().interrupted())&#123;
+						System.out.println(&quot;Interrupt!&quot;);
+						break;
+					&#125;
+					try &#123;
+						Thread.sleep(2000);
+					&#125; catch (InterruptedException e) &#123;
+						System.out.println(&quot;Interrupt when sleep!&quot;);
+						//设置中断状态,再次设置中断标记位，如果不加处理，下次循环开始时无法捕获这个中断
+						Thread.currentThread().interrupt();
+					&#125;
+					Thread.yield();
+				&#125;
+			&#125;
+		&#125;;
+		t1.start();
+		Thread.sleep(2000);
+		t1.interrupt();
+	&#125;
+&#125;
+</code></pre><ol start="6"><li>object.wait ()，线程进入 object 对象的等待队列，并不可以随便调用，必须包含在 synchronized 语句中，无论是 wait () 或者 notify () 都需要首先获得目标对象的一个监视器<br>当调用 object.notify ()，随机唤醒一个线程（注意是随机，并不一定是之前先等待的线程，这是不公平的）<br>当调用 object.notifyAll ()，唤醒所有等待线程</li></ol><pre><code>public class WaitAndNotify &#123;
+	final static Object object = new Object();
+	public static class T1 extends Thread&#123;
+		@Override
+		public void run() &#123;
+			synchronized (object) &#123;
+				System.out.println(System.currentTimeMillis()+&quot;:T1 start&quot;);
+				try &#123;
+					System.out.println(System.currentTimeMillis()+&quot;:T1 wait&quot;);
+					object.wait();
+				&#125; catch (InterruptedException e) &#123;
+					e.printStackTrace();
+				&#125;
+				System.out.println(System.currentTimeMillis()+&quot;:T1 end&quot;);
+			&#125;
+		&#125;
+	&#125;
+	
+	public static class T2 extends Thread&#123;
+		@Override
+		public void run() &#123;
+			synchronized (object) &#123;
+				System.out.println(System.currentTimeMillis()+&quot;:T2 start&quot;);
+				object.notify();
+				try &#123;
+					Thread.sleep(2000);
+				&#125; catch (InterruptedException e) &#123;
+					e.printStackTrace();
+				&#125;
+				System.out.println(System.currentTimeMillis()+&quot;:T2 end&quot;);
+			&#125;
+		&#125;
+	&#125;
+	
+	public static void main(String[] args) &#123;
+		Thread t1 = new T1();
+		Thread t2 = new T2();
+		t1.start();
+		t2.start();
+	&#125;
+&#125;
+</code></pre><p>输出：</p><pre><code>1487814788060:T1 start
+1487814788061:T1 wait
+1487814788063:T2 start
+1487814790063:T2 end
+1487814790064:T1 end
+</code></pre><p>上面程序中 T2 通知 T1 后并不能立即执行 T1，而是等待 2 秒中 T2 释放 object 的锁，可见 wait () 会释放锁，而 sleep () 不会释放锁。</p><ol start="7"><li><p>线程挂起：Thread.currentThread ().suspend (), 不释放任何锁资源<br>继续执行：Thread.resume ()，与 suspend 相对，都已废弃。</p></li><li><p>等待线程结束 join 和谦让 yield<br>join():<br>应用场景：一个线程的输入可能依赖于另外一个或者多个线程的输出，此时这个线程需要等待依赖的线程执行完毕<br>两个方法：<br>无限等待<br>public final void join () throws InterruptException<br>存在等待时间<br>public final synchronized void join(long millis) throws InterruptException</p></li></ol><pre><code>/**
+ * 不适用join，主线程不等待AddThread线程，输出为0；
+ * 使用join，主线程等待AddThread线程执行完毕，输出位100000；
+ * */
+public class Join &#123;
+	//用volatile修饰的变量，线程在每次使用变量的时候，都会读取变量修改后的最的值。volatile很容易被误用，用来进行原子性操作。
+	public volatile static int i = 0;
+	
+	public static class AddThread extends Thread&#123;
+		@Override
+		public void run() &#123;
+			for(i=0;i&lt;100000;i++);
+		&#125;
+	&#125;
+	
+	public static void main(String[] args) throws InterruptedException &#123;
+		AddThread at = new AddThread();
+		at.start();
+		at.join();
+		System.out.println(i);
+	&#125;
+&#125;
+</code></pre><p>yield():<br>方法：public static native void yield ()<br>场景：适用于优先级低的线程，一旦执行，让出 CPU，但并不意味着不执行，还会与其他线程进行 CPU 的争夺</p><ol start="9"><li><p>volatile 与 java 内存模型（JMM）<br>JMM：原子性，有序性，可见性<br>volatile：<br>场景：使用 volatile 声明的变量，说明它极有可能被其他线程修改，为保证所有线程能够看到这个修改的动作，它会通知其他线程，以保证可见性和有序性<br>注意：volatile 并不能代替锁，也无法保证一些复合操作的原子性</p></li><li><p>线程组<br>相同功能的线程放置在一个线程组里</p></li></ol><pre><code>public class ThreadGroupName implements Runnable&#123;
+
+	@Override
+	public void run() &#123;
+		String groupAndName = Thread.currentThread().getThreadGroup().getName() + &quot;-&quot; + Thread.currentThread().getName();
+		while(true)&#123;
+			System.out.println(&quot;I am &quot;+ groupAndName );
+			try &#123;
+				Thread.sleep(3000);
+			&#125; catch (InterruptedException e) &#123;
+				e.printStackTrace();
+			&#125;
+		&#125;
+	&#125;
+
+	public static void main(String[] args) &#123;
+		ThreadGroup tg = new ThreadGroup(&quot;PrintGroup&quot;);
+		//使用Thread构造函数分配到线程组
+		Thread t1 = new Thread(tg,new ThreadGroupName(),&quot;T1&quot;);
+		Thread t2 = new Thread(tg,new ThreadGroupName(),&quot;T2&quot;);
+		t1.start();
+		t2.start();
+		//获得活动线程的总数，因为线程是动态的，所以这个值只是一个估计值，不精确
+		System.out.println(tg.activeCount());
+		//打印这个线程组里面所有线程信息
+		tg.list();
+	&#125;
+&#125;
+</code></pre><p>线程组也可以使用 stop () 停止组内所有线程，但要谨慎使用</p><ol start="11"><li>守护线程：Daemon<br>例如：垃圾回收线程，JIT 线程等，与之对应称用户线程<br>守护线程应该在 start () 之前设置</li></ol><pre><code>/**
+ * 守护线程
+ * */
+public class DaemonThread &#123;
+	public static class DaemonT extends Thread&#123;
+		@Override
+		public void run() &#123;
+			while(true)&#123;
+				System.out.println(&quot;I am alive!&quot;);
+				try &#123;
+					Thread.sleep(1000);
+				&#125; catch (InterruptedException e) &#123;
+					e.printStackTrace();
+				&#125;
+			&#125;
+		&#125;
+	&#125;
+	
+	public static void main(String[] args) throws InterruptedException &#123;
+		Thread t = new DaemonT();
+		t.setDaemon(true);
+		t.start();
+		
+		Thread.sleep(2000);
+	&#125;
+&#125;
+</code></pre><ol start="12"><li>线程优先级<br>描述：使用 1-10 标识线程的优先级，数字越大优先级越高<br>静态标量：<br>public final static int MIN_PRIORITY = 1;<br>public final static int NORM_PRIORITY = 5;<br>public final static int MAX_PRIORITY = 10;</li></ol><pre><code>/**
+ * 线程优先级
+ * */
+public class ThreadPriority &#123;
+	public static class HighPriority extends Thread&#123;
+		static int count = 0;
+		
+		@Override
+		public void run() &#123;
+			while(true)&#123;
+				synchronized (ThreadPriority.class) &#123;
+					count++;
+					if(count&gt;100)&#123;
+						System.out.println(&quot;High priority thread break&quot;);
+						break;
+					&#125;
+				&#125;
+			&#125;
+		&#125;
+	&#125;
+	
+	public static class LowPriority extends Thread&#123;
+		static int count = 0;
+		
+		@Override
+		public void run() &#123;
+			while(true)&#123;
+				synchronized (ThreadPriority.class) &#123;
+					count++;
+					if(count&gt;100)&#123;
+						System.out.println(&quot;Low priority thread break&quot;);
+						break;
+					&#125;
+				&#125;
+			&#125;
+		&#125;
+	&#125;
+
+	public static void main(String[] args) &#123;
+		Thread high = new HighPriority();
+		LowPriority low = new LowPriority();
+		high.setPriority(Thread.MAX_PRIORITY);
+		low.setPriority(Thread.MIN_PRIORITY);
+		//怎么是谁先start谁快呢
+		low.start();
+		high.start();
+	&#125;
+&#125;
+</code></pre><ol start="13"><li>线程安全与 synchroized<br>线程不安全示例：</li></ol><pre><code>/**
+ * 两个线程写入i的值时候产生冲突，即当t1执行i++时，i的值为1，同一时间t2执行i++，因为没有读取已经改变的值，i++也会为1
+ * 冲突导致线程不安全，最终输出结果不一定是20000
+ * */
+public class ThreadUnsafe implements Runnable&#123;
+
+	static public ThreadUnsafe instance = new ThreadUnsafe();
+	static volatile int i = 0;
+	
+	public static void increase()&#123;
+		i ++;
+	&#125;
+	
+	@Override
+	public void run() &#123;
+		for(int j=0;j&lt;10000;j++)&#123;
+			increase();
+		&#125;
+	&#125;
+	
+	public static void main(String[] args) throws InterruptedException &#123;
+		Thread t1 = new Thread(instance);
+		Thread t2 = new Thread(instance);
+		t1.start();t2.start();
+		t1.join();t2.join();
+		System.out.println(i);
+	&#125;
+	
+&#125;
+</code></pre><p>使用 synchronized 实现线程间同步<br>指定加锁对象，进入同步代码前需要获得给定对象的锁<br>直接作用于实例方法，当前实例加锁<br>直接作用于静态方法，当前类加锁</p><pre><code>/**
+ * 为了线程安全，添加锁
+ * */
+public class ThreadSafe implements Runnable&#123;
+
+	static public ThreadUnsafe instance = new ThreadUnsafe();
+	//这里去掉volatile
+	static int i = 0;
+	
+	//方法一
+	/*public synchronized void increase()&#123;
+		i ++;
+	&#125;
+	
+	@Override
+	public void run() &#123;
+		for(int j=0;j&lt;10000;j++)&#123;
+			increase();
+		&#125;
+	&#125;*/
+	
+	//方法二
+	@Override
+	public void run() &#123;
+		for(int j=0;j&lt;10000;j++)&#123;
+			synchronized(instance)&#123;
+				i++;
+			&#125;
+		&#125;
+	&#125;
+	
+	public static void main(String[] args) throws InterruptedException &#123;
+		//注意这里t1和t2指向同一个实例		
+		Thread t1 = new Thread(instance);
+		Thread t2 = new Thread(instance);
+		t1.start();t2.start();
+		t1.join();t2.join();
+		System.out.println(i);
+	&#125;
+	
+&#125;
+
+</code></pre><ol start="14"><li>注意程序是否有溢出</li></ol><pre><code>/**
+ * 输出：-894784850，为负数，因为int类型溢出
+ * */
+public class OutTo &#123;
+	public static void main(String[] args) &#123;
+		int v1 = 1073741827;
+		int v2 = 1431655768;
+		int ave = (v1+v2)/2;
+		System.out.println(ave);
+	&#125;
+&#125;
+</code></pre><ol start="15"><li>并发下 ArrayList 注意</li></ol><pre><code>import java.util.ArrayList;
+
+/**
+ * ArrayList是一个线程不安全容器，多线程中使用易错但不易表现出来，多线程访问冲突
+ * 错误1：打印结果可能不是20000
+ * 错误2：抛出ArrayIndexOutOfBoundsException
+ * */
+public class ArrayListNotSafe &#123;
+	static ArrayList&lt;Integer&gt; a1 = new ArrayList&lt;Integer&gt;(10);
+	
+	public static class AddThread implements Runnable&#123;
+		@Override
+		public void run() &#123;
+			for(int i = 0;i&lt;1000000;i++)&#123;
+				a1.add(i);
+			&#125;
+		&#125;
+	&#125;
+	
+	public static void main(String[] args) throws InterruptedException &#123;
+		Thread t1 = new Thread(new AddThread());
+		Thread t2 = new Thread(new AddThread());
+		t1.start();
+		t2.start();
+		t1.join();t2.join();
+		System.out.println(a1.size());
+	&#125;
+&#125;
+</code></pre><ol start="16"><li>并发下 HashMap</li></ol><pre><code>import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 情形1：为100000，正好
+ * 情形2：&lt;100000,
+ * 情形3：线程不会终止
+ * */
+public class HashMapNotSafe &#123;
+	static Map&lt;String,String&gt; map = new HashMap&lt;String,String&gt;();
+	
+	public static class AddThread implements Runnable&#123;
+		int start = 0;
+		
+		public AddThread(int start) &#123;
+			this.start = start;
+		&#125;
+		
+		@Override
+		public void run() &#123;
+			for(int i = start;i&lt;100000;i=i+2)&#123;
+				map.put(Integer.toString(i), Integer.toBinaryString(i));
+			&#125;
+		&#125;
+		
+	&#125;
+	
+	public static void main(String[] args) throws InterruptedException &#123;
+		Thread t1 = new Thread(new HashMapNotSafe.AddThread(0));
+		Thread t2 = new Thread(new HashMapNotSafe.AddThread(1));
+		t1.start();
+		t2.start();
+		t1.join();t2.join();
+		System.out.println(map.size());
+	&#125;
+&#125;
+</code></pre></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/java/java-basic/Java高并发程序设计学习2：Java并行程序基础/" class="item leancloud_visitors" data-flag-title="Java 高并发程序设计学习 2：Java 并行程序基础" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A02%EF%BC%9AJava%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/" title="Java 高并发程序设计学习 2：Java 并行程序基础">http://mingcheng.site/learn/java/java-basic/Java高并发程序设计学习2：Java并行程序基础/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0-1/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;eaTIyAMYK9Skz8c.jpg" title="Java高并发程序设计学习1：走入并行世界"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Java</span><h3>Java高并发程序设计学习1：走入并行世界</h3></a></div><div class="item right"><a href="/life/nous/%E8%AF%BB%E5%88%B6%E9%80%A0%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;Iopz7v9tlHxFuQR.jpg" title="读《制造执行系统实现原理与技术》的一些问题"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> 常识</span><h3>读《制造执行系统实现原理与技术》的一些问题</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/java/java-basic/Java%20Annotation/" rel="bookmark" title="Java Annotation">Java Annotation</a></li><li><a href="/learn/java/java-basic/javax-crypto%E4%B8%8D%E5%AD%98%E5%9C%A8/" rel="bookmark" title="javax crypto不存在">javax crypto不存在</a></li><li><a href="/learn/java/java-basic/Java%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Java任务调度学习">Java任务调度学习</a></li><li><a href="/learn/java/java-basic/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E9%87%8C%E9%9D%A2super-%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="bookmark" title="Java构造方法里面super()的使用">Java构造方法里面super()的使用</a></li><li><a href="/learn/java/java-basic/Java%E5%86%85%E5%AD%98%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Java内存学习">Java内存学习</a></li><li><a href="/learn/java/java-basic/Java%E8%8E%B7%E5%8F%96%E8%B7%AF%E5%BE%84/" rel="bookmark" title="Java获取路径">Java获取路径</a></li><li><a href="/learn/java/java-basic/java%E8%8E%B7%E5%8F%96spring-bean%E9%87%8C%E9%9D%A2%E7%9A%84properties%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" rel="bookmark" title="java获取spring bean里面的properties文件属性">java获取spring bean里面的properties文件属性</a></li><li><a href="/learn/java/java-basic/jdbc%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/" rel="bookmark" title="jdbc数据库连接执行查询">jdbc数据库连接执行查询</a></li><li><a href="/learn/java/java-basic/java%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA3%E7%A7%8D%E6%96%B9%E5%BC%8F/" rel="bookmark" title="java线程创建3种方式">java线程创建3种方式</a></li><li><a href="/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0-1/" rel="bookmark" title="Java高并发程序设计学习1：走入并行世界">Java高并发程序设计学习1：走入并行世界</a></li><li class="active"><a href="/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A02%EF%BC%9AJava%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/" rel="bookmark" title="Java高并发程序设计学习2：Java并行程序基础">Java高并发程序设计学习2：Java并行程序基础</a></li><li><a href="/learn/java/java-basic/Java%E5%B9%B6%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Java并发和多线程学习">Java并发和多线程学习</a></li><li><a href="/learn/java/java-basic/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%AE%80%E4%BB%8B/" rel="bookmark" title="java线程池简介">java线程池简介</a></li><li><a href="/learn/java/java-basic/java%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84%E4%B9%8BArrays/" rel="bookmark" title="java操作数组之Arrays">java操作数组之Arrays</a></li><li><a href="/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95/" rel="bookmark" title="java8新特性学习-接口扩展">java8新特性学习-接口扩展</a></li><li><a href="/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/" rel="bookmark" title="java8新特性学习-Lambda">java8新特性学习-Lambda</a></li><li><a href="/learn/java/java-basic/java%E4%BD%BF%E7%94%A8Freemarker%E6%A8%A1%E6%9D%BF%E5%8F%91%E9%80%81%E5%9B%BA%E5%AE%9A%E6%A0%BC%E5%BC%8F%E9%82%AE%E4%BB%B6/" rel="bookmark" title="java使用Freemarker模板发送固定格式邮件">java使用Freemarker模板发送固定格式邮件</a></li><li><a href="/learn/java/java-basic/java%E5%B1%9E%E6%80%A7copy%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="bookmark" title="java属性copy简单使用">java属性copy简单使用</a></li><li><a href="/learn/java/java-basic/java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Btransient/" rel="bookmark" title="java序列化之transient">java序列化之transient</a></li><li><a href="/learn/java/java-basic/java%E8%BF%90%E7%AE%97%E4%BF%9D%E7%95%99%E4%B8%A4%E4%BD%8D%E5%B0%8F%E6%95%B0/" rel="bookmark" title="java运算保留两位小数">java运算保留两位小数</a></li><li><a href="/learn/java/java-basic/java%E7%BC%96%E8%AF%91%E6%97%B6%E4%BC%98%E5%8C%96%E7%9A%84%E9%83%A8%E5%88%86%E4%BD%93%E7%8E%B0/" rel="bookmark" title="java编译时优化的部分体现">java编译时优化的部分体现</a></li><li><a href="/learn/java/java-basic/java%E4%BA%A4%E6%8D%A2%E5%8F%98%E9%87%8F%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" rel="bookmark" title="java交换变量值的几种方法">java交换变量值的几种方法</a></li><li><a href="/learn/java/java-basic/java%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" rel="bookmark" title="java进制转换">java进制转换</a></li><li><a href="/learn/java/java-basic/java%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1%E4%B8%8D%E5%8F%AF%E9%81%BF%E5%85%8D%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" rel="bookmark" title="java自动拆装箱不可避免遇到的一些问题">java自动拆装箱不可避免遇到的一些问题</a></li><li><a href="/learn/java/java-basic/java%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/" rel="bookmark" title="java是值传递还是引用传递">java是值传递还是引用传递</a></li><li><a href="/learn/java/java-basic/java%E8%87%AA%E5%B8%A6%E7%9A%84%E6%8E%92%E5%BA%8F%E5%B7%A5%E5%85%B7/" rel="bookmark" title="java自带的排序工具">java自带的排序工具</a></li><li><a href="/learn/java/java-basic/java%20swing%E8%BF%90%E8%A1%8Cmain%E6%96%B9%E6%B3%95%E6%97%B6%E9%81%87%E5%88%B0NPE/" rel="bookmark" title="java swing运行main方法时遇到NPE">java swing运行main方法时遇到NPE</a></li><li><a href="/learn/java/java-basic/java%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E6%B5%8B%E8%AF%95%20/" rel="bookmark" title="java字符串长度测试">java字符串长度测试</a></li><li><a href="/learn/java/java-basic/Java%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%80%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="bookmark" title="Java修改文件中某一行字符串">Java修改文件中某一行字符串</a></li><li><a href="/learn/java/java-basic/java%E5%88%9B%E5%BB%BAshell%E8%84%9A%E6%9C%AC/" rel="bookmark" title="java创建shell脚本">java创建shell脚本</a></li><li><a href="/learn/java/java-basic/%E7%AE%80%E5%8D%95%E5%A4%84%E7%90%86Java%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%92%8COOM/" rel="bookmark" title="简单处理Java内存泄漏与OOM">简单处理Java内存泄漏与OOM</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0-1/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/life/nous/%E8%AF%BB%E5%88%B6%E9%80%A0%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/windows%E8%8E%B7%E5%8F%96linux%20server%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/" title="windows获取linux server日志文件">windows获取linux server日志文件</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python%E6%97%A5%E8%AE%B0/" title="分类于 Python 日记">Python 日记</a></div><span><a href="/learn/python/learn-python/02%20%E8%83%8C%E6%99%AF/" title="(2) 背景">(2) 背景</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Ubuntu/" title="分类于 Ubuntu">Ubuntu</a></div><span><a href="/learn/devops/ubuntu/ubuntu%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4(%E8%BD%AC+%E6%94%B6%E8%97%8F)/" title="ubuntu解压缩命令(转+收藏)">ubuntu解压缩命令(转+收藏)</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Pandas/" title="分类于 Pandas">Pandas</a></div><span><a href="/learn/python/pandas/pandas%20date_range/" title="pandas date_range">pandas date_range</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/Python%E5%88%9D%E5%AD%A6%EF%BC%881%EF%BC%89%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="Python初学（1）基础语法">Python初学（1）基础语法</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/principle/" title="分类于 设计模式">设计模式</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/principle/HeadFirst%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="分类于 HeadFirst 设计模式">HeadFirst 设计模式</a></div><span><a href="/learn/principle/head-first-design-pattern/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/" title="模板方法模式">模板方法模式</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/JPA%E7%BB%93%E5%90%88Hibernate%E5%AE%9A%E4%B9%89%E4%B8%BB%E9%94%AE/" title="JPA结合Hibernate定义主键">JPA结合Hibernate定义主键</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/" title="分类于 中间件学习">中间件学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/ELK/" title="分类于 ELK">ELK</a></div><span><a href="/learn/middleware/elk/ES%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB(ES%20to%20ES)/" title="ES数据迁移（ES to ES）">ES数据迁移（ES to ES）</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="分类于 深入理解 Java 虚拟机">深入理解 Java 虚拟机</a></div><span><a href="/learn/java/deep-understand-jvm/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/" title="(4) 虚拟机性能监控与故障处理工具">(4) 虚拟机性能监控与故障处理工具</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Spring/" title="分类于 Spring">Spring</a></div><span><a href="/learn/java/spring/spring%20boot%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E6%9C%8D%E5%8A%A1/" title="spring boot发送短信服务">spring boot发送短信服务</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/java/java-basic/Java高并发程序设计学习2：Java并行程序基础/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(a){return a.includes("#")},function(a){return new RegExp(LOCAL.path+"$").test(a)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

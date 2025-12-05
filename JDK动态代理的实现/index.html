@@ -1,0 +1,291 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="http://mingcheng.site/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0/"><title>jdk 动态代理 - Java | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">jdk 动态代理</h1><div class="meta"><span class="item" title="创建时间：2017-03-09 12:19:15"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2017-03-09T12:19:15+08:00">2017-03-09</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>7.1k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>6 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/OxyCZ8lFfqgm5AR.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/6AF281xXNmcJ5iW.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/EVNnvjpT5GAwhIJ.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/jYLZn5OTalvXDhr.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/zXPJsr9V3c7YfoG.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/5PAzie6YZsDBROM.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/Java/" itemprop="item" rel="index" title="分类于 Java"><span itemprop="name">Java</span></a><meta itemprop="position" content="1"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><p>一。动态代理的基本实现</p><ol><li>首先创建一个类，觉得可以叫工具类，让它实现InvocationHandler接口，这个接口呢会自动实现一个方法，就是invoke()方法，注意，这个invoke方法的参数含有一个动态代理对象，一个反射的方法名，还有一组对象数组，<span id="more"></span>OK，然后写一个方法获取你设置的目标对象的代理对象，代码如下：</li></ol><pre><code>package demo4.dynamicproxy;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class MyInvocationHandler implements InvocationHandler
+&#123; 
+    private Object target;
+      
+    public MyInvocationHandler(Object target) 
+    &#123;
+        super();
+        this.target = target;
+    &#125;
+	
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable 
+	&#123;
+		// 在目标对象的方法执行之前简单的打印一下  
+        	System.out.println(&quot;------------------before------------------&quot;);
+        
+        	// 执行目标对象的方法
+        	Object result = method.invoke(target, args); 
+        
+        	// 在目标对象的方法执行之后简单的打印一下  
+        	System.out.println(&quot;-------------------after------------------&quot;);  
+        
+		return result;
+	&#125;
+	
+	/** 
+         * 获取目标对象的代理对象 
+         * @return 代理对象 
+         */
+	public Object getProxy()&#123;
+		return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), target.getClass().getInterfaces(), this);
+	&#125;
+&#125;
+</code></pre><ol start="2"><li>创建你的代理对象，我们这里创建的是一个接口（在我们的业务逻辑中会有好多接口和实现类），以此作为目标对象接口，其实就是它的实现类作为目标对象啦，记住，jdk 生成代理对象一定要实现一个接口，因为这个接口在上面代码的 getProxy 方法里要用到啊，好了，接口如下：</li></ol><pre><code>package demo4.dynamicproxy;
+
+public interface UserService &#123;
+	public abstract void add(); 
+&#125;
+</code></pre><ol start="3"><li>接口实现类，超简单</li></ol><pre><code>package demo4.dynamicproxy;
+
+public class UserServiceImpl implements UserService &#123;
+	@Override
+	public void add() &#123;
+		System.out.println(&quot;--------------------add---------------&quot;); 
+	&#125;
+&#125;
+</code></pre><ol start="4"><li>下面我们用 junit 来做个测试</li></ol><pre><code>package demo4.dynamicproxy;
+
+import org.junit.Test;
+
+public class ProxyTest 
+&#123;
+	@Test
+	public void testProxy() throws Throwable 
+	&#123;
+		// 实例化目标对象  
+        UserService userService = new UserServiceImpl();  
+        
+        // 实例化InvocationHandler  
+        MyInvocationHandler invocationHandler = new MyInvocationHandler(userService);
+        
+        // 根据目标对象生成代理对象  
+        UserService userServiceProxy = (UserService) invocationHandler.getProxy();
+        
+        // 调用代理对象的方法  
+        userServiceProxy.add();
+	&#125;
+&#125;
+</code></pre><ol start="5"><li>瞧一瞧输出了什么，这不就是 spring 的 aop 嘛，通过动态代理的方式，切入到我们的业务逻辑中，其实 spring AOP 的实现也是使用了 Proxy 和 InvocationHandler 这俩东西</li></ol><pre><code>------------------before------------------
+--------------------add---------------
+-------------------after------------------
+</code></pre><p>二。看一下 jdk 怎么生成代理对象的，就是怎么根据目标对象生成代理对象的，这就要进去看看源码了</p><ol><li>上面主要用到了一个 Proxy 的 newProxyInstance 方法创建的，所以我们进去看它，里面有 3 个参数，就是这样</li></ol><pre><code>/** 
+ * loader:类加载器 
+ * interfaces:目标对象实现的接口 
+ * h:InvocationHandler的实现类 
+ */ 
+public static Object newProxyInstance(ClassLoader loader,  Class&lt;?&gt;[] interfaces,  InvocationHandler h)  throws IllegalArgumentException &#123;
+	if (h == null) &#123;  
+        	throw new NullPointerException();
+	&#125;
+
+	Class cl = getProxyClass(loader, interfaces);
+
+	try &#123;  
+            	// 调用代理对象的构造方法（也就是$Proxy0(InvocationHandler h)）  
+        	Constructor cons = cl.getConstructor(constructorParams);  
+            	// 生成代理类的实例并把MyInvocationHandler的实例传给它的构造方法  
+        	return (Object) cons.newInstance(new Object[] &#123; h &#125;);  
+    	&#125; catch (NoSuchMethodException e) &#123;  
+        	throw new InternalError(e.toString());  
+    	&#125; catch (IllegalAccessException e) &#123;  
+        throw new InternalError(e.toString());  
+    	&#125; catch (InstantiationException e) &#123;  
+        	throw new InternalError(e.toString());  
+    	&#125; catch (InvocationTargetException e) &#123;  
+        	throw new InternalError(e.toString());  
+    	&#125; 
+&#125;
+</code></pre><p>这里面调用了 getProxyClass () 方法，我们进去看看</p><pre><code>public static Class&lt;?&gt; getProxyClass(ClassLoader loader,  Class&lt;?&gt;... interfaces)  throws IllegalArgumentException&#123;
+	// 如果目标类实现的接口数大于65535个则抛出异常（我XX，谁会写这么NB的代码啊？）  
+    	if (interfaces.length &gt; 65535) &#123;  
+        	throw new IllegalArgumentException(&quot;interface limit exceeded&quot;);  
+    	&#125;
+
+	// 声明代理对象所代表的Class对象（有点拗口）  
+    	Class proxyClass = null;  
+  
+    	String[] interfaceNames = new String[interfaces.length];  
+  
+    	Set interfaceSet = new HashSet();   // for detecting duplicates  
+  
+    	// 遍历目标类所实现的接口  
+    	for (int i = 0; i &lt; interfaces.length; i++) &#123;  
+          
+        	// 拿到目标类实现的接口的名称  
+        	String interfaceName = interfaces[i].getName();  
+        	Class interfaceClass = null;  
+		try &#123;  
+			// 加载目标类实现的接口到内存中  
+			interfaceClass = Class.forName(interfaceName, false, loader);  
+		&#125; catch (ClassNotFoundException e) &#123;  
+		
+		&#125;  
+		if (interfaceClass != interfaces[i]) &#123;  
+			throw new IllegalArgumentException( interfaces[i] + &quot; is not visible from class loader&quot;);  
+		&#125;  
+	  
+		// 中间省略了一些无关紧要的代码 .......  
+		  
+		// 把目标类实现的接口代表的Class对象放到Set中  
+		interfaceSet.add(interfaceClass);  
+	  
+		interfaceNames[i] = interfaceName;  
+    	&#125;
+
+    	// 把目标类实现的接口名称作为缓存（Map）中的key  
+    	Object key = Arrays.asList(interfaceNames);  
+  
+    	Map cache;  
+      
+    	synchronized (loaderToCache) &#123;  
+        	// 从缓存中获取cache  
+        	cache = (Map) loaderToCache.get(loader);  
+        	if (cache == null) &#123;  
+        	// 如果获取不到，则新建地个HashMap实例  
+        	cache = new HashMap();  
+        	// 把HashMap实例和当前加载器放到缓存中  
+        	loaderToCache.put(loader, cache);  
+        	&#125;  
+  
+    	&#125;
+
+    	synchronized (cache) &#123;  
+  
+        	do &#123;  
+        		// 根据接口的名称从缓存中获取对象  
+        		Object value = cache.get(key);  
+        	if (value instanceof Reference) &#123;  
+            		proxyClass = (Class) ((Reference) value).get();  
+        	&#125;  
+        	if (proxyClass != null) &#123;  
+            		// 如果代理对象的Class实例已经存在，则直接返回  
+            		return proxyClass;  
+        	&#125; else if (value == pendingGenerationMarker) &#123;  
+            		try &#123;  
+            			cache.wait();  
+            		&#125; catch (InterruptedException e) &#123;  
+
+            		&#125;  
+            		continue;  
+        	&#125; else &#123;  
+            		cache.put(key, pendingGenerationMarker);  
+            		break;  
+        	&#125;  
+        	&#125; while (true);  
+    	&#125;
+
+	try &#123;  
+        	// 中间省略了一些代码 .......  
+          
+        	// 这里就是动态生成代理对象的最关键的地方  
+        	byte[] proxyClassFile = ProxyGenerator.generateProxyClass(  proxyName, interfaces);  
+        	try &#123;  
+            		// 根据代理类的字节码生成代理类的实例  
+            		proxyClass = defineClass0(loader, proxyName,  proxyClassFile, 0, proxyClassFile.length);  
+        	&#125; catch (ClassFormatError e) &#123;  
+            		throw new IllegalArgumentException(e.toString());  
+        	&#125;  
+        	&#125;  
+        	// add to set of all generated proxy classes, for isProxyClass  
+        	proxyClasses.put(proxyClass, null);  
+  
+    		&#125;   
+    		// 中间省略了一些代码 .......  
+      
+    		return proxyClass;  
+    	&#125;
+&#125;
+</code></pre><p>注意结尾 ProxyGenerator 的 generateProxyClass () 方法，这里面才是真正生成 proxy 字节码的地方</p><pre><code>public static byte[] generateProxyClass(final String name,  Class[] interfaces)  
+&#123;  
+       ProxyGenerator gen = new ProxyGenerator(name, interfaces);  
+    	// 这里动态生成代理类的字节码，由于比较复杂就不进去看了
+       final byte[] classFile = gen.generateClassFile();  
+  
+    	// 如果saveGeneratedFiles的值为true，则会把所生成的代理类的字节码保存到硬盘上  
+       if (saveGeneratedFiles) &#123;  
+           java.security.AccessController.doPrivileged(
+           new java.security.PrivilegedAction&lt;Void&gt;() &#123;  
+               public Void run() &#123;  
+                   try &#123;  
+                       FileOutputStream file =  
+                           new FileOutputStream(dotToSlash(name) + &quot;.class&quot;);  
+                       file.write(classFile);  
+                       file.close();  
+                       return null;  
+                   &#125; catch (IOException e) &#123;  
+                       throw new InternalError(  
+                           &quot;I/O exception saving generated file: &quot; + e);  
+                   &#125;  
+               &#125;  
+           &#125;);  
+       &#125;  
+  
+    	// 返回代理类的字节码  
+       return classFile;  
+&#125;
+</code></pre><p>三。是谁调用了 InvocationHandler 的 invoke 方法呢？</p><pre><code>package demo4.dynamicproxy;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import sun.misc.ProxyGenerator;  
+
+public class ProxyGeneratorUtils &#123;
+	/** 
+     * 把代理类的字节码写到硬盘上 
+     * @param path 保存路径 
+     */  
+    public static void writeProxyClassToHardDisk(String path) &#123;  
+        // 第一种方法，这种方式在刚才分析ProxyGenerator时已经知道了  
+        // System.getProperties().put(&quot;sun.misc.ProxyGenerator.saveGeneratedFiles&quot;, true);  
+          
+        // 第二种方法  
+          
+        // 获取代理类的字节码  
+        byte[] classFile = ProxyGenerator.generateProxyClass(&quot;Proxy11&quot;, UserServiceImpl.class.getInterfaces());  
+          
+        FileOutputStream out = null;  
+          
+        try &#123;  
+            out = new FileOutputStream(path);  
+            out.write(classFile);  
+            out.flush();  
+        &#125; catch (Exception e) &#123;  
+            e.printStackTrace();  
+        &#125; finally &#123;  
+            try &#123;  
+                out.close();  
+            &#125; catch (IOException e) &#123;  
+                e.printStackTrace();  
+            &#125;  
+        &#125;  
+    &#125;
+&#125;
+</code></pre><pre><code>    @Test  
+    public void testGenerateProxyClass() &#123;  
+        ProxyGeneratorUtils.writeProxyClassToHardDisk(&quot;/home/jalenchu/jalen_chu/Proxy11.class&quot;);  
+    &#125;
+</code></pre><p>反编译一下</p><pre><code>/** 
+     * 这个方法是关键部分 
+     */  
+    public final void add()  
+    &#123;  
+        try  
+        &#123;  
+            // 实际上就是调用MyInvocationHandler的public Object invoke(Object proxy, Method method, Object[] args)方法，第二个问题就解决了  
+            super.h.invoke(this, m3, null);  
+            return;  
+        &#125;  
+        catch(Error _ex) &#123; &#125;  
+        catch(Throwable throwable)  
+        &#123;  
+            throw new UndeclaredThrowableException(throwable);  
+        &#125;  
+    &#125; 
+</code></pre></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="JDK动态代理的实现/" class="item leancloud_visitors" data-flag-title="jdk 动态代理" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0/" title="jdk 动态代理">http://mingcheng.site/JDK动态代理的实现/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/java/java-basic/Java%E5%B9%B6%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;9qrzMg5QRWevBYN.jpg" title="Java并发和多线程学习"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Java</span><h3>Java并发和多线程学习</h3></a></div><div class="item right"><a href="/cglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;HZCYqfsMlE61Uh8.jpg" title="cglib动态代理"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Java</span><h3>cglib动态代理</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/%E7%BC%93%E5%AD%98%E4%B8%8E%E8%BF%9E%E6%8E%A5%E6%B1%A0/" rel="bookmark" title="缓存与连接池">缓存与连接池</a></li><li><a href="/%E4%BB%A3%E7%A0%81%E4%B8%AD%E6%96%87%E4%BB%B6%E5%BC%95%E5%85%A5%E9%97%AE%E9%A2%98/" rel="bookmark" title="代码中文件引入问题">代码中文件引入问题</a></li><li><a href="/log4j%E7%9A%84%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/" rel="bookmark" title="log4j的设置与应用">log4j的设置与应用</a></li><li class="active"><a href="/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0/" rel="bookmark" title="jdk动态代理">jdk动态代理</a></li><li><a href="/cglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" rel="bookmark" title="cglib动态代理">cglib动态代理</a></li><li><a href="/%E5%88%9B%E5%BB%BAlist%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/" rel="bookmark" title="创建list的两种方式">创建list的两种方式</a></li><li><a href="/learn/algorithm/practise/%E4%B8%A4%E9%81%93String%E7%B1%BB%E5%9E%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="bookmark" title="两道String类型面试题">两道String类型面试题</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/java/java-basic/Java%E5%B9%B6%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/cglib%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Spring/" title="分类于 Spring">Spring</a></div><span><a href="/learn/java/spring/spring%20jdbctemplate%E7%9A%84%E4%BD%BF%E7%94%A8/" title="spring jdbctemplate的使用">spring jdbctemplate的使用</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Linux/" title="分类于 Linux">Linux</a></div><span><a href="/learn/devops/linux/%E4%BD%BF%E7%94%A8vi%E7%BC%96%E8%BE%91%E6%97%B6%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3%E6%96%B9%E5%90%91%E9%94%AE%E8%A2%AB%E8%BD%AC%E5%8C%96%E4%B8%BAA%E3%80%81B%E3%80%81C%E3%80%81D%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/" title="使用vi编辑时上下左右方向键被转化为A、B、C、D怎么办？">使用vi编辑时上下左右方向键被转化为A、B、C、D怎么办？</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/1-%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE/" title="空模板">空模板</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="分类于 深入理解 Java 虚拟机">深入理解 Java 虚拟机</a></div><span><a href="/learn/java/deep-understand-jvm/%E7%AC%AC%E4%B8%83%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" title="(7) 虚拟机类加载机制">(7) 虚拟机类加载机制</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/algorithm/" title="分类于 算法与面试题">算法与面试题</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/algorithm/%E7%AE%97%E6%B3%95%E9%A2%98/" title="分类于 算法题">算法题</a></div><span><a href="/learn/algorithm/practise/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/" title="二维数组中的查找">二维数组中的查找</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/ExtJS/" title="分类于 ExtJS">ExtJS</a></div><span><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%889%EF%BC%89-Working-with-Grids-%E7%BD%91%E6%A0%BC/" title="SenchaCmd学习笔记（9）:Working with Grids(网格)">SenchaCmd学习笔记（9）:Working with Grids(网格)</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/VueJS/" title="分类于 VueJS">VueJS</a></div><span><a href="/learn/frontent/vue-js/%E8%87%AA%E5%AE%9A%E4%B9%89vue%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81%E6%8F%90%E7%A4%BA%E6%B6%88%E6%81%AF/" title="自定义vue表单验证提示消息">自定义vue表单验证提示消息</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/Activiti%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BA%BA%E5%91%98%E5%B9%B6%E8%A1%8C%E5%AE%A1%E6%A0%B8%E9%85%8D%E7%BD%AEBPMN/" title="Activiti工作流人员并行审核配置BPMN">Activiti工作流人员并行审核配置BPMN</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/pycharm%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE/" title="Pycharm远程调试配置">Pycharm远程调试配置</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/Java/" title="分类于 Java">Java</a></div><span><a href="/log4j%E7%9A%84%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%BA%94%E7%94%A8/" title="log4j的设置与应用">log4j的设置与应用</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"JDK动态代理的实现/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

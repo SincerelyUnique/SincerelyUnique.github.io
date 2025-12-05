@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="linux,redis"><link rel="canonical" href="http://mingcheng.site/learn/devops/centos/centos8%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85redis%E5%92%8C%E6%A8%A1%E6%8B%9F%E9%9B%86%E7%BE%A4/"><title>centos8 简单安装 redis 和模拟集群 - CentOS - DevOPS - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">centos8 简单安装 redis 和模拟集群</h1><div class="meta"><span class="item" title="创建时间：2020-06-16 22:37:25"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2020-06-16T22:37:25+08:00">2020-06-16</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>21k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>19 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/VJsRFDWdAuMoCkw.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/L8J1mc6iu5G7OqR.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/i6VqYjfsF7IzlWU.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/xEI7gXWwnuCmHO4.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/uwWaizPO9gQqmhZ.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/6aZYmqOpinP8eFN.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/devops/" itemprop="item" rel="index" title="分类于 DevOPS"><span itemprop="name">DevOPS</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/devops/CentOS/" itemprop="item" rel="index" title="分类于 CentOS"><span itemprop="name">CentOS</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/devops/centos/centos8%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85redis%E5%92%8C%E6%A8%A1%E6%8B%9F%E9%9B%86%E7%BE%A4/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><pre><code>说明：redis集群的安装最好参考官网，讲的很详细的（https://redis.io/topics/cluster-tutorial）
+redis集群至少3个master节点和3个slave节点共6个节点，我们可以用1台server开启6个redis端口模拟，在redis开启集群时会提示我们当前master和slave在同一台机器上，忽略即可
+（本来是装了6台虚拟机，想绑定6个ip的，真实模拟一下，但是虚拟机同时打开电脑真的带不动, 所以虚拟机网络设置和修改虚拟机ip地址这些环节可以忽略）
+ 
+环境：
+windows10 x64 
+VMware Workstation Pro15.5.1  （VMware-workstation-full-15.5.1-15018445.exe,  500M+）
+Centos8  (CentOS-8.1.1911-x86_64-dvd1.iso,   7G+)
+redis6.0.5 (stable， 2M+)
+ 
+1. 安装centos8镜像（注：第一次安装可能会报pane is dead，此时先将当前虚拟机关闭，右键该虚拟机-&gt;设置-&gt;CD/DVD不要选择autoinst.iso，切换为我们自己下载的iso镜像，重启）
+2. 虚拟机网络设置：vmware-&gt;我的计算机下右键虚拟机-&gt;设置-&gt;网络适配器-&gt;网络连接-&gt;桥接模式（不要使用NAT模式，或者设置为自定义中的vmnet0--未尝试）
+3. 修改虚拟机ip地址：
+（1）sudo vi /etc/sysconfig/network-scripts/ifcfg-ens33 
+	BOOTPROTO=static       （默认是dhcp，改为static，即使用静态ip）
+	ONBOOT=yes      （默认是no，改为yes，设置为开机生效）
+	IPADDR=192.168.2.191     （新增，自定义ip地址）
+	NETMASK=255.255.255.0     （新增，和windows主机子网掩码一致）
+	GATEWAY=192.168.2.1     （新增，和windows主机默认网关一致）
+	DNS1=114.114.114.114     （新增DNS）
+	DNS2=8.8.8.8     （新增DNS）
+（2）重启虚拟机，使用ifconfig查看ip是否修改成功，修改成功后使用windows主机ping虚拟机ip, 再尝试使用虚拟机ip去ping windows主机。
+     （如果虚拟机ping windows发现ping后很久没有response，则尝试修改windows系统防火墙-&gt;高级设置-&gt;入站规则-&gt;文件和打印机共享(回显请求 - ICMPv4-In)-&gt;开启，
+        ICMPv4-In我这边有2个，都打开即可）
+4. 安装redis
+（1）各版本镜像地址：http://download.redis.io/releases/，复制想要下载的地址链接，我选择的是最下面的stable稳定版本
+（2）我自己下载该镜像时特别慢，我选择把下载链接贴到迅雷，下好后，使用sftp传到虚拟机，可安装xshell&amp;xftp工具   
+        $ wget http://download.redis.io/releases/redis-stable.tar.gz 
+        $  cd /usr/local
+        $ mkdir redis
+        $ cp redis-stable.tar.gz /usr/local/redis
+        $ chmod -R 777 redis-stable.tar.gz
+        $ tar -zxvf redis-stable.tar.gz
+        $ cd redis-stable
+        $ make
+        $ cd src
+        $ ./redis-server ../redis.conf
+        $ ./redis-cli
+        输入info
+5. 集群 
+（1）创建文件夹redis-cluster, 在里面创建6个子文件夹
+          $ mkdir redis-cluster
+          $ cd redis-cluster
+          $ mkdir 7001 7002 7003 7004 7005 7006
+（2）在7001文件夹创建文件redis.conf,编辑redis.conf（内容如下）, 其他7002、7003... 类似，按对应文件夹名改下端口号，保持一致即可
+         port 7001
+         cluster-enabled yes
+         cluster-config-file nodes.conf
+         cluster-node-timeout 5000
+         appendonly yes
+（3）将第四步安装好的redis-server和redis-cli复制到redis-cluster目录下
+（4）打开6个终端，使用redis-server redis.conf依次启动，启动后对应7001~7006目录下分别生成nodes.conf(注意这里有节点的唯一id)和appendonly.aof, 使用ps查看下redis进程是否正常
+（5）redis3/4启动集群：需要执行redis-trib.rb，依赖ruby环境，yum install ruby，同时下载gem，https://rubygems.org/gems/redis/versions/4.1.3，gem install redis-4.1.3.gem  (未测试)
+         $ cp redis-stable/src/redis-trib.rb redis-cluster
+         $ ./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006
+（6）redis5/6启动集群：执行redis-cli，输入yes（我这边默认将前7001/7002/7003作为master，后三个作为master对应的slave），最终输出All 16384 slots covered
+         $ ./redis-cli --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 --cluster-replicas 1
+（7）测试集群
+        [root@localhost redis-cluster]# ./redis-cli -c -p 7001
+        127.0.0.1:7001&gt; set name jalen
+        -&gt; Redirected to slot [5798] located at 127.0.0.1:7002
+        OK
+        127.0.0.1:7002&gt; get name
+        &quot;jalen&quot;
+        127.0.0.1:7002&gt; exit
+        [root@localhost redis-cluster]# ./redis-cli -c -p 7006
+        127.0.0.1:7006&gt; get name
+        -&gt; Redirected to slot [5798] located at 127.0.0.1:7002
+        &quot;jalen&quot;
+        127.0.0.1:7002&gt; 
+（8）ctrl + c 关闭redis 7001 master节点，可以看到7005节点log： Failover election won: I'm the new master.
+（9）ctrl + c 关闭redis 7006 slave节点，可以看到其他几个节点有较少log刷新，说明7006节点关掉了
+（10）重新打开7001节点，发现7001不再是master节点，沦为7005的slave节点
+ 
+ 
+ 
+问题一：新装的centos make命令不能用，解决：yum -y install gcc automake autoconf libtool make
+[root@localhost redis-stable]# make
+bash: make: command not found...
+Failed to search for file: Cannot update read-only repo
+ 
+问题二：集群执行后返回All 16384 slots covered，为什么redis集群的最大槽数是16384个
+redis作者回复：https://github.com/antirez/redis/issues/2576
+ 
+问题三：使用aliyun安装执行make编译时报很多类似：error: ‘struct redisServer’ has no member named ‘sentinel_mode’的错（参考https://blog.csdn.net/hello_cmy/article/details/106062327）
+$ yum -y install centos-release-scl
+$ yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils
+$ scl enable devtoolset-9 bash
+$ echo &quot;source /opt/rh/devtoolset-9/enable&quot; &gt;&gt;/etc/profile
+ 
+ 
+ 
+参考：
+1. vmware安装centos8网络设置：https://blog.csdn.net/qq_25650463/article/details/103436611
+2. redis集群搭建：https://blog.csdn.net/qq_42815754/article/details/82912130
+3. https://redis.io/topics/cluster-tutorial
+ 
+ 
+ 
+ 
+ 
+ 
+[root@localhost redis-cluster]# ps -efl|grep redis
+4 S root       4098   4052  0  80   0 - 16086 do_epo 08:51 pts/1    00:00:06 ../redis-server *:7001 [cluster]
+4 S root       4114   4077  0  80   0 - 16086 do_epo 08:51 pts/0    00:00:06 ../redis-server *:7002 [cluster]
+4 S root       4146   4128  0  80   0 - 16086 do_epo 08:52 pts/2    00:00:05 ../redis-server *:7003 [cluster]
+4 S root       4175   4157  0  80   0 - 16086 do_epo 08:52 pts/3    00:00:05 ../redis-server *:7004 [cluster]
+4 S root       4212   4186  0  80   0 - 16086 do_epo 08:52 pts/4    00:00:05 ../redis-server *:7005 [cluster]
+4 S root       4244   4223  0  80   0 - 16086 do_epo 08:52 pts/5    00:00:05 ../redis-server *:7006 [cluster]
+0 R root       5205   4592  0  80   0 -  3027 -      09:42 pts/6    00:00:00 grep --color=auto redis
+[root@localhost redis-cluster]# 
+ 
+[root@localhost redis-cluster]# cat redis-cluster/7001/nodes.conf
+d524b262c27ee7f39c1dd02e5276c9be78b0e633 :0@0 myself,master - 0 0 0 connected
+vars currentEpoch 0 lastVoteEpoch 0
+[root@localhost redis-cluster]# cat redis-cluster/7002/nodes.conf
+49dd9632954d0f6900277156a7be208246e823ce :0@0 myself,master - 0 0 0 connected
+vars currentEpoch 0 lastVoteEpoch 0
+[root@localhost redis-cluster]# cat redis-cluster/7003/nodes.conf
+c51c2ed0242810d9a37baf2b26ce7db2050fb799 :0@0 myself,master - 0 0 0 connected
+vars currentEpoch 0 lastVoteEpoch 0
+[root@localhost redis-cluster]# cat redis-cluster/7004/nodes.conf
+b28ebbee0994c5a94aa242257de7acedbfdd19b5 :0@0 myself,master - 0 0 0 connected
+vars currentEpoch 0 lastVoteEpoch 0
+[root@localhost redis-cluster]# cat redis-cluster/7005/nodes.conf
+fc4b812fdb411aaf94088670f76975e0a6f99330 :0@0 myself,master - 0 0 0 connected
+vars currentEpoch 0 lastVoteEpoch 0
+[root@localhost redis-cluster]# cat redis-cluster/7006/nodes.conf
+1a80b0716569940635f81d73711a86ec2cafeea6 :0@0 myself,master - 0 0 0 connected
+vars currentEpoch 0 lastVoteEpoch 0
+ 
+[root@localhost redis-cluster]# ./redis-cli --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 --cluster-replicas 1
+&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...
+Master[0] -&gt; Slots 0 - 5460
+Master[1] -&gt; Slots 5461 - 10922
+Master[2] -&gt; Slots 10923 - 16383
+Adding replica 127.0.0.1:7005 to 127.0.0.1:7001
+Adding replica 127.0.0.1:7006 to 127.0.0.1:7002
+Adding replica 127.0.0.1:7004 to 127.0.0.1:7003
+&gt;&gt;&gt; Trying to optimize slaves allocation for anti-affinity
+[WARNING] Some slaves are in the same host as their master
+M: d524b262c27ee7f39c1dd02e5276c9be78b0e633 127.0.0.1:7001
+   slots:[0-5460] (5461 slots) master
+M: 49dd9632954d0f6900277156a7be208246e823ce 127.0.0.1:7002
+   slots:[5461-10922] (5462 slots) master
+M: c51c2ed0242810d9a37baf2b26ce7db2050fb799 127.0.0.1:7003
+   slots:[10923-16383] (5461 slots) master
+S: b28ebbee0994c5a94aa242257de7acedbfdd19b5 127.0.0.1:7004
+   replicates c51c2ed0242810d9a37baf2b26ce7db2050fb799
+S: fc4b812fdb411aaf94088670f76975e0a6f99330 127.0.0.1:7005
+   replicates d524b262c27ee7f39c1dd02e5276c9be78b0e633
+S: 1a80b0716569940635f81d73711a86ec2cafeea6 127.0.0.1:7006
+   replicates 49dd9632954d0f6900277156a7be208246e823ce
+Can I set the above configuration? (type 'yes' to accept): yes
+&gt;&gt;&gt; Nodes configuration updated
+&gt;&gt;&gt; Assign a different config epoch to each node
+&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster
+Waiting for the cluster to join
+.
+&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:7001)
+M: d524b262c27ee7f39c1dd02e5276c9be78b0e633 127.0.0.1:7001
+   slots:[0-5460] (5461 slots) master
+   1 additional replica(s)
+M: c51c2ed0242810d9a37baf2b26ce7db2050fb799 127.0.0.1:7003
+   slots:[10923-16383] (5461 slots) master
+   1 additional replica(s)
+S: 1a80b0716569940635f81d73711a86ec2cafeea6 127.0.0.1:7006
+   slots: (0 slots) slave
+   replicates 49dd9632954d0f6900277156a7be208246e823ce
+M: 49dd9632954d0f6900277156a7be208246e823ce 127.0.0.1:7002
+   slots:[5461-10922] (5462 slots) master
+   1 additional replica(s)
+S: fc4b812fdb411aaf94088670f76975e0a6f99330 127.0.0.1:7005
+   slots: (0 slots) slave
+   replicates d524b262c27ee7f39c1dd02e5276c9be78b0e633
+S: b28ebbee0994c5a94aa242257de7acedbfdd19b5 127.0.0.1:7004
+   slots: (0 slots) slave
+   replicates c51c2ed0242810d9a37baf2b26ce7db2050fb799
+[OK] All nodes agree about slots configuration.
+&gt;&gt;&gt; Check for open slots...
+&gt;&gt;&gt; Check slots coverage...
+[OK] All 16384 slots covered.
+[root@localhost redis-cluster]# 
+ 
+redis 7001 master log
+4098:M 16 Jun 2020 08:51:22.632 * Ready to accept connections
+4098:M 16 Jun 2020 09:24:18.214 # configEpoch set to 1 via CLUSTER SET-CONFIG-EPOCH
+4098:M 16 Jun 2020 09:24:18.267 # IP address for this node updated to 127.0.0.1
+4098:M 16 Jun 2020 09:24:20.844 * Replica 127.0.0.1:7005 asks for synchronization
+4098:M 16 Jun 2020 09:24:20.844 * Partial resynchronization not accepted: Replication ID mismatch (Replica asked for 'b093f8ad2c1d8603ccdfbf1f34dbe49cbe7d0a98', my replication IDs are '703d4ce334b44c721e63784f8aab1e1749b8b203' and '0000000000000000000000000000000000000000')
+4098:M 16 Jun 2020 09:24:20.844 * Replication backlog created, my new replication IDs are 'fc571166477eb96fc565d7c0f93d83bebcce0641' and '0000000000000000000000000000000000000000'
+4098:M 16 Jun 2020 09:24:20.844 * Starting BGSAVE for SYNC with target: disk
+4098:M 16 Jun 2020 09:24:20.847 * Background saving started by pid 4931
+4931:C 16 Jun 2020 09:24:20.863 * DB saved on disk
+4931:C 16 Jun 2020 09:24:20.864 * RDB: 2 MB of memory used by copy-on-write
+4098:M 16 Jun 2020 09:24:20.946 * Background saving terminated with success
+4098:M 16 Jun 2020 09:24:20.946 * Synchronization with replica 127.0.0.1:7005 succeeded
+4098:M 16 Jun 2020 09:24:23.195 # Cluster state changed: ok
+对应slave
+redis 7005 log
+4212:M 16 Jun 2020 08:52:27.109 * Ready to accept connections
+4212:M 16 Jun 2020 09:24:18.215 # configEpoch set to 5 via CLUSTER SET-CONFIG-EPOCH
+4212:M 16 Jun 2020 09:24:18.377 # IP address for this node updated to 127.0.0.1
+4212:S 16 Jun 2020 09:24:20.230 * Before turning into a replica, using my own master parameters to synthesize a cached master: I may be able to synchronize with the new master with just a partial transfer.
+4212:S 16 Jun 2020 09:24:20.230 # Cluster state changed: ok
+4212:S 16 Jun 2020 09:24:20.842 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 09:24:20.842 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 09:24:20.842 * Non blocking connect for SYNC fired the event.
+4212:S 16 Jun 2020 09:24:20.844 * Master replied to PING, replication can continue...
+4212:S 16 Jun 2020 09:24:20.844 * Trying a partial resynchronization (request b093f8ad2c1d8603ccdfbf1f34dbe49cbe7d0a98:1).
+4212:S 16 Jun 2020 09:24:20.847 * Full resync from master: fc571166477eb96fc565d7c0f93d83bebcce0641:0
+4212:S 16 Jun 2020 09:24:20.847 * Discarding previously cached master state.
+4212:S 16 Jun 2020 09:24:20.947 * MASTER &lt;-&gt; REPLICA sync: receiving 175 bytes from master to disk
+4212:S 16 Jun 2020 09:24:20.947 * MASTER &lt;-&gt; REPLICA sync: Flushing old data
+4212:S 16 Jun 2020 09:24:20.947 * MASTER &lt;-&gt; REPLICA sync: Loading DB in memory
+4212:S 16 Jun 2020 09:24:20.947 * Loading RDB produced by version 6.0.5
+4212:S 16 Jun 2020 09:24:20.947 * RDB age 0 seconds
+4212:S 16 Jun 2020 09:24:20.947 * RDB memory usage when created 2.52 Mb
+4212:S 16 Jun 2020 09:24:20.947 * MASTER &lt;-&gt; REPLICA sync: Finished with success
+4212:S 16 Jun 2020 09:24:20.947 * Background append only file rewriting started by pid 4933
+4212:S 16 Jun 2020 09:24:21.031 * AOF rewrite child asks to stop sending diffs.
+4933:C 16 Jun 2020 09:24:21.032 * Parent agreed to stop sending diffs. Finalizing AOF...
+4933:C 16 Jun 2020 09:24:21.032 * Concatenating 0.00 MB of AOF diff received from parent.
+4933:C 16 Jun 2020 09:24:21.032 * SYNC append only file rewrite performed
+4933:C 16 Jun 2020 09:24:21.032 * AOF rewrite: 0 MB of memory used by copy-on-write
+4212:S 16 Jun 2020 09:24:21.046 * Background AOF rewrite terminated with success
+4212:S 16 Jun 2020 09:24:21.046 * Residual parent diff successfully flushed to the rewritten AOF (0.00 MB)
+4212:S 16 Jun 2020 09:24:21.046 * Background AOF rewrite finished successfully
+ 
+redis 7002 master log
+4114:M 16 Jun 2020 09:24:18.214 # configEpoch set to 2 via CLUSTER SET-CONFIG-EPOCH
+4114:M 16 Jun 2020 09:24:18.372 # IP address for this node updated to 127.0.0.1
+4114:M 16 Jun 2020 09:24:20.844 * Replica 127.0.0.1:7006 asks for synchronization
+4114:M 16 Jun 2020 09:24:20.844 * Partial resynchronization not accepted: Replication ID mismatch (Replica asked for '36ad26429daeb065e56bd60183ca297bf9ad92c1', my replication IDs are '199ba2e942b9200981bfbeb0050d0568baa0e965' and '0000000000000000000000000000000000000000')
+4114:M 16 Jun 2020 09:24:20.844 * Replication backlog created, my new replication IDs are 'a5c6d5042bc1bf50a00c1135744f1350cbe12d9e' and '0000000000000000000000000000000000000000'
+4114:M 16 Jun 2020 09:24:20.844 * Starting BGSAVE for SYNC with target: disk
+4114:M 16 Jun 2020 09:24:20.844 * Background saving started by pid 4930
+4930:C 16 Jun 2020 09:24:20.864 * DB saved on disk
+4930:C 16 Jun 2020 09:24:20.865 * RDB: 0 MB of memory used by copy-on-write
+4114:M 16 Jun 2020 09:24:20.946 * Background saving terminated with success
+4114:M 16 Jun 2020 09:24:20.946 * Synchronization with replica 127.0.0.1:7006 succeeded
+4114:M 16 Jun 2020 09:24:23.195 # Cluster state changed: ok
+对应slave
+redis 7006 log
+4244:S 16 Jun 2020 09:24:20.232 # Cluster state changed: ok
+4244:S 16 Jun 2020 09:24:20.842 * Connecting to MASTER 127.0.0.1:7002
+4244:S 16 Jun 2020 09:24:20.842 * MASTER &lt;-&gt; REPLICA sync started
+4244:S 16 Jun 2020 09:24:20.842 * Non blocking connect for SYNC fired the event.
+4244:S 16 Jun 2020 09:24:20.844 * Master replied to PING, replication can continue...
+4244:S 16 Jun 2020 09:24:20.844 * Trying a partial resynchronization (request 36ad26429daeb065e56bd60183ca297bf9ad92c1:1).
+4244:S 16 Jun 2020 09:24:20.847 * Full resync from master: a5c6d5042bc1bf50a00c1135744f1350cbe12d9e:0
+4244:S 16 Jun 2020 09:24:20.847 * Discarding previously cached master state.
+4244:S 16 Jun 2020 09:24:20.946 * MASTER &lt;-&gt; REPLICA sync: receiving 175 bytes from master to disk
+4244:S 16 Jun 2020 09:24:20.946 * MASTER &lt;-&gt; REPLICA sync: Flushing old data
+4244:S 16 Jun 2020 09:24:20.946 * MASTER &lt;-&gt; REPLICA sync: Loading DB in memory
+4244:S 16 Jun 2020 09:24:20.946 * Loading RDB produced by version 6.0.5
+4244:S 16 Jun 2020 09:24:20.946 * RDB age 0 seconds
+4244:S 16 Jun 2020 09:24:20.946 * RDB memory usage when created 2.53 Mb
+4244:S 16 Jun 2020 09:24:20.946 * MASTER &lt;-&gt; REPLICA sync: Finished with success
+4244:S 16 Jun 2020 09:24:20.947 * Background append only file rewriting started by pid 4932
+4244:S 16 Jun 2020 09:24:21.031 * AOF rewrite child asks to stop sending diffs.
+4932:C 16 Jun 2020 09:24:21.032 * Parent agreed to stop sending diffs. Finalizing AOF...
+4932:C 16 Jun 2020 09:24:21.032 * Concatenating 0.00 MB of AOF diff received from parent.
+4932:C 16 Jun 2020 09:24:21.032 * SYNC append only file rewrite performed
+4932:C 16 Jun 2020 09:24:21.032 * AOF rewrite: 0 MB of memory used by copy-on-write
+4244:S 16 Jun 2020 09:24:21.046 * Background AOF rewrite terminated with success
+4244:S 16 Jun 2020 09:24:21.046 * Residual parent diff successfully flushed to the rewritten AOF (0.00 MB)
+4244:S 16 Jun 2020 09:24:21.046 * Background AOF rewrite finished successfully
+ 
+redis 7003 master log
+4146:M 16 Jun 2020 08:52:08.193 * Ready to accept connections
+4146:M 16 Jun 2020 09:24:18.214 # configEpoch set to 3 via CLUSTER SET-CONFIG-EPOCH
+4146:M 16 Jun 2020 09:24:18.374 # IP address for this node updated to 127.0.0.1
+4146:M 16 Jun 2020 09:24:20.538 * Replica 127.0.0.1:7004 asks for synchronization
+4146:M 16 Jun 2020 09:24:20.538 * Partial resynchronization not accepted: Replication ID mismatch (Replica asked for '90396c5c98bbf5e72c611683ef000d9d09dc3f9a', my replication IDs are '6c7493905539808b289310d9e65180a44242d185' and '0000000000000000000000000000000000000000')
+4146:M 16 Jun 2020 09:24:20.538 * Replication backlog created, my new replication IDs are '196fd958855d9285a05590dcc4c1dc13d8180e10' and '0000000000000000000000000000000000000000'
+4146:M 16 Jun 2020 09:24:20.538 * Starting BGSAVE for SYNC with target: disk
+4146:M 16 Jun 2020 09:24:20.538 * Background saving started by pid 4928
+4928:C 16 Jun 2020 09:24:20.669 * DB saved on disk
+4928:C 16 Jun 2020 09:24:20.669 * RDB: 0 MB of memory used by copy-on-write
+4146:M 16 Jun 2020 09:24:20.738 * Background saving terminated with success
+4146:M 16 Jun 2020 09:24:20.738 * Synchronization with replica 127.0.0.1:7004 succeeded
+4146:M 16 Jun 2020 09:24:23.195 # Cluster state changed: ok
+对应slave
+redis 7004 log
+4175:M 16 Jun 2020 08:52:16.640 * Ready to accept connections
+4175:M 16 Jun 2020 09:24:18.214 # configEpoch set to 4 via CLUSTER SET-CONFIG-EPOCH
+4175:M 16 Jun 2020 09:24:18.375 # IP address for this node updated to 127.0.0.1
+4175:S 16 Jun 2020 09:24:20.228 * Before turning into a replica, using my own master parameters to synthesize a cached master: I may be able to synchronize with the new master with just a partial transfer.
+4175:S 16 Jun 2020 09:24:20.229 # Cluster state changed: ok
+4175:S 16 Jun 2020 09:24:20.537 * Connecting to MASTER 127.0.0.1:7003
+4175:S 16 Jun 2020 09:24:20.537 * MASTER &lt;-&gt; REPLICA sync started
+4175:S 16 Jun 2020 09:24:20.537 * Non blocking connect for SYNC fired the event.
+4175:S 16 Jun 2020 09:24:20.538 * Master replied to PING, replication can continue...
+4175:S 16 Jun 2020 09:24:20.538 * Trying a partial resynchronization (request 90396c5c98bbf5e72c611683ef000d9d09dc3f9a:1).
+4175:S 16 Jun 2020 09:24:20.539 * Full resync from master: 196fd958855d9285a05590dcc4c1dc13d8180e10:0
+4175:S 16 Jun 2020 09:24:20.539 * Discarding previously cached master state.
+4175:S 16 Jun 2020 09:24:20.738 * MASTER &lt;-&gt; REPLICA sync: receiving 175 bytes from master to disk
+4175:S 16 Jun 2020 09:24:20.738 * MASTER &lt;-&gt; REPLICA sync: Flushing old data
+4175:S 16 Jun 2020 09:24:20.738 * MASTER &lt;-&gt; REPLICA sync: Loading DB in memory
+4175:S 16 Jun 2020 09:24:20.738 * Loading RDB produced by version 6.0.5
+4175:S 16 Jun 2020 09:24:20.738 * RDB age 0 seconds
+4175:S 16 Jun 2020 09:24:20.738 * RDB memory usage when created 2.52 Mb
+4175:S 16 Jun 2020 09:24:20.738 * MASTER &lt;-&gt; REPLICA sync: Finished with success
+4175:S 16 Jun 2020 09:24:20.739 * Background append only file rewriting started by pid 4929
+4175:S 16 Jun 2020 09:24:20.820 * AOF rewrite child asks to stop sending diffs.
+4929:C 16 Jun 2020 09:24:20.820 * Parent agreed to stop sending diffs. Finalizing AOF...
+4929:C 16 Jun 2020 09:24:20.820 * Concatenating 0.00 MB of AOF diff received from parent.
+4929:C 16 Jun 2020 09:24:20.820 * SYNC append only file rewrite performed
+4929:C 16 Jun 2020 09:24:20.820 * AOF rewrite: 0 MB of memory used by copy-on-write
+4175:S 16 Jun 2020 09:24:20.842 * Background AOF rewrite terminated with success
+4175:S 16 Jun 2020 09:24:20.842 * Residual parent diff successfully flushed to the rewritten AOF (0.00 MB)
+4175:S 16 Jun 2020 09:24:20.842 * Background AOF rewrite finished successfully
+ 
+ 
+ctrl + c关闭redis7001节点时
+7003/7004 log一致，指出重新选举master
+4114:M 16 Jun 2020 10:03:55.170 * Marking node d524b262c27ee7f39c1dd02e5276c9be78b0e633 as failing (quorum reached).
+4114:M 16 Jun 2020 10:03:55.172 # Cluster state changed: fail
+4114:M 16 Jun 2020 10:03:55.962 # Failover auth granted to fc4b812fdb411aaf94088670f76975e0a6f99330 for epoch 7
+4114:M 16 Jun 2020 10:03:56.004 # Cluster state changed: ok
+7005 log，可以看到选举为master，摆脱slave地位
+4212:S 16 Jun 2020 09:24:21.046 * Background AOF rewrite finished successfully
+4212:S 16 Jun 2020 10:03:47.604 # Connection with master lost.
+4212:S 16 Jun 2020 10:03:47.604 * Caching the disconnected master state.
+4212:S 16 Jun 2020 10:03:47.803 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:47.803 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:47.803 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:48.820 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:48.820 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:48.821 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:49.832 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:49.832 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:49.832 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:50.856 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:50.856 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:50.856 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:51.888 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:51.888 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:51.888 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:52.904 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:52.904 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:52.904 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:53.916 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:53.917 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:53.917 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:54.832 * Marking node d524b262c27ee7f39c1dd02e5276c9be78b0e633 as failing (quorum reached).
+4212:S 16 Jun 2020 10:03:54.832 # Cluster state changed: fail
+4212:S 16 Jun 2020 10:03:54.931 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:54.931 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:54.931 # Start of election delayed for 995 milliseconds (rank #0, offset 3220).
+4212:S 16 Jun 2020 10:03:54.931 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:55.955 * Connecting to MASTER 127.0.0.1:7001
+4212:S 16 Jun 2020 10:03:55.955 * MASTER &lt;-&gt; REPLICA sync started
+4212:S 16 Jun 2020 10:03:55.955 # Starting a failover election for epoch 7.
+4212:S 16 Jun 2020 10:03:55.959 # Error condition on socket for SYNC: Operation now in progress
+4212:S 16 Jun 2020 10:03:55.965 # Failover election won: I'm the new master.
+4212:S 16 Jun 2020 10:03:55.965 # configEpoch set to 7 after successful failover
+4212:M 16 Jun 2020 10:03:55.965 * Discarding previously cached master state.
+4212:M 16 Jun 2020 10:03:55.965 # Setting secondary replication ID to fc571166477eb96fc565d7c0f93d83bebcce0641, valid up to offset: 3221. New replication ID is cdbcc3d4c5f7f4f5318a226c98ab681cb48c173d
+4212:M 16 Jun 2020 10:03:55.965 # Cluster state changed: ok
+7004/7006 log，比较悲催，还是slave，只有3条log
+4175:S 16 Jun 2020 10:03:54.832 * Marking node d524b262c27ee7f39c1dd02e5276c9be78b0e633 as failing (quorum reached).
+4175:S 16 Jun 2020 10:03:54.832 # Cluster state changed: fail
+4175:S 16 Jun 2020 10:03:56.002 # Cluster state changed: ok
+ 
+ 
+ 
+重新使用redis-server redis.conf启动7001，查看节点状态，发现7005仍是master状态，7001启动后为slave状态，他的master是7005
+[root@localhost redis-cluster]# ./redis-cli -p 7001 cluster nodes
+d524b262c27ee7f39c1dd02e5276c9be78b0e633 127.0.0.1:7001@17001 myself,slave fc4b812fdb411aaf94088670f76975e0a6f99330 0 1592317276000 1 connected
+c51c2ed0242810d9a37baf2b26ce7db2050fb799 127.0.0.1:7003@17003 master - 0 1592317277569 3 connected 10923-16383
+49dd9632954d0f6900277156a7be208246e823ce 127.0.0.1:7002@17002 master - 0 1592317277000 2 connected 5461-10922
+b28ebbee0994c5a94aa242257de7acedbfdd19b5 127.0.0.1:7004@17004 slave c51c2ed0242810d9a37baf2b26ce7db2050fb799 0 1592317276552 4 connected
+1a80b0716569940635f81d73711a86ec2cafeea6 127.0.0.1:7006@17006 slave 49dd9632954d0f6900277156a7be208246e823ce 0 1592317277570 6 connected
+fc4b812fdb411aaf94088670f76975e0a6f99330 127.0.0.1:7005@17005 master - 0 1592317277976 7 connected 0-5460
+ 
+ 
+</code></pre><p><img data-src="../../../../images/redis01.png" alt="redis01"></p><div class="tags"><a href="/tags/linux/" rel="tag"><i class="ic i-tag"></i> linux</a> <a href="/tags/redis/" rel="tag"><i class="ic i-tag"></i> redis</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/devops/centos/centos8简单安装redis和模拟集群/" class="item leancloud_visitors" data-flag-title="centos8 简单安装 redis 和模拟集群" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/devops/centos/centos8%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85redis%E5%92%8C%E6%A8%A1%E6%8B%9F%E9%9B%86%E7%BE%A4/" title="centos8 简单安装 redis 和模拟集群">http://mingcheng.site/learn/devops/centos/centos8简单安装redis和模拟集群/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/devops/ubuntu/ubuntu%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85redis/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;TODBy9PpixvXf4K.jpg" title="ubuntu简单安装redis"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Ubuntu</span><h3>ubuntu简单安装redis</h3></a></div><div class="item right"><a href="/learn/database/redis/spring%20data%20redis%E7%AE%80%E5%8D%95%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95redis/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;nhH8ELKYJFoayGe.jpg" title="spring data redis简单连接测试redis"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Redis</span><h3>spring data redis简单连接测试redis</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/devops/centos/centos%206.5%20%E9%98%B2%E7%81%AB%E5%A2%99%E7%AB%AF%E5%8F%A3%E6%93%8D%E4%BD%9C/" rel="bookmark" title="centos 6.5 防火墙端口操作">centos 6.5 防火墙端口操作</a></li><li><a href="/learn/devops/centos/centos7%E5%AE%89%E8%A3%85mysql/" rel="bookmark" title="centos7安装mysql">centos7安装mysql</a></li><li><a href="/learn/devops/centos/centos7%E9%98%B2%E7%81%AB%E5%A2%99%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3/" rel="bookmark" title="centos7防火墙开放端口">centos7防火墙开放端口</a></li><li><a href="/learn/devops/centos/centos%E4%BD%BF%E7%94%A8shell%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8Cpython%E6%96%87%E4%BB%B6%E6%8A%A5No%20such%20file%20or%20directory/" rel="bookmark" title="centos使用shell脚本执行python文件报No such file or directory">centos使用shell脚本执行python文件报No such file or directory</a></li><li class="active"><a href="/learn/devops/centos/centos8%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85redis%E5%92%8C%E6%A8%A1%E6%8B%9F%E9%9B%86%E7%BE%A4/" rel="bookmark" title="centos8简单安装redis和模拟集群">centos8简单安装redis和模拟集群</a></li><li><a href="/learn/devops/centos/centos%E5%8D%87%E7%BA%A7gcc%E7%89%88%E6%9C%AC/" rel="bookmark" title="centos升级gcc版本">centos升级gcc版本</a></li><li><a href="/learn/devops/centos/centos7%E5%AE%89%E8%A3%85python3.9.0/" rel="bookmark" title="centos7安装python3.9.0">centos7安装python3.9.0</a></li><li><a href="/learn/devops/centos/centos7-6%E5%AE%89%E8%A3%85jenkins/" rel="bookmark" title="centos7.6安装jenkins">centos7.6安装jenkins</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/devops/ubuntu/ubuntu%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85redis/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/database/redis/spring%20data%20redis%E7%AE%80%E5%8D%95%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95redis/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Go-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Go 语言学习">Go 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/go/Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/" title="分类于 Go 语言基础">Go 语言基础</a></div><span><a href="/learn/go/runoob/03%E8%BF%90%E7%AE%97%E7%AC%A6/" title="第三节 运算符">第三节 运算符</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Maven/" title="分类于 Maven">Maven</a></div><span><a href="/learn/java/maven/maven%E6%89%93%E5%8C%85%E8%B7%B3%E8%BF%87%E6%B5%8B%E8%AF%95/" title="maven打包跳过测试">maven打包跳过测试</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/GoogleGuava/" title="分类于 GoogleGuava">GoogleGuava</a></div><span><a href="/learn/java/google-guava/learn-11/" title="CharMatcher类">CharMatcher类</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Ubuntu/" title="分类于 Ubuntu">Ubuntu</a></div><span><a href="/learn/devops/ubuntu/Ubuntu%E9%87%8D%E5%A4%8D%E5%BE%AA%E7%8E%AF%E7%99%BB%E5%BD%95/" title="Ubuntu重复循环登录">Ubuntu重复循环登录</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Grafana/" title="分类于 Grafana">Grafana</a></div><span><a href="/learn/devops/grafana/Grafana%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/" title="Grafana二次开发">Grafana二次开发</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/" title="分类于 数据库学习">数据库学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/Redis/" title="分类于 Redis">Redis</a></div><span><a href="/learn/database/redis/redis%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8Bstrings/" title="redis数据类型strings">redis数据类型strings</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/Python%E5%88%9D%E5%AD%A6%EF%BC%883%EF%BC%89%E8%BF%90%E7%AE%97%E7%AC%A6/" title="Python初学（3）运算符">Python初学（3）运算符</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Ubuntu/" title="分类于 Ubuntu">Ubuntu</a></div><span><a href="/learn/devops/ubuntu/ubuntu%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEpostgreSQL/" title="ubuntu安装配置postgreSQL">ubuntu安装配置postgreSQL</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/AngularJS/" title="分类于 AngularJS">AngularJS</a></div><span><a href="/learn/frontent/angular-js/Angular%E5%AD%A6%E4%B9%A0%EF%BC%889%EF%BC%89%E4%B9%8BDom%E6%93%8D%E4%BD%9C%E4%BE%A7%E8%BE%B9%E6%A0%8F%E5%8A%A8%E7%94%BB/" title="Angular学习（9）之Dom操作侧边栏动画">Angular学习（9）之Dom操作侧边栏动画</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" title="分类于 计算机科学">计算机科学</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/" title="分类于 二进制杂谈">二进制杂谈</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/Theme-Shoka-Documentation/" title="分类于 Theme Shoka Documentation">Theme Shoka Documentation</a></div><span><a href="/computer-science/note/theme-shoka-doc/config/" title="Step.2 基本配置">Step.2 基本配置</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/devops/centos/centos8简单安装redis和模拟集群/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

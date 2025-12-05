@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="java,StringBuilder"><link rel="canonical" href="http://mingcheng.site/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84StringBuilder%E6%89%A9%E5%AE%B9/"><title>简单了解 java 的 StringBuilder 扩容 - Java 集合扩容 - Java 语言学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">简单了解 java 的 StringBuilder 扩容</h1><div class="meta"><span class="item" title="创建时间：2019-08-27 12:28:59"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2019-08-27T12:28:59+08:00">2019-08-27</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>6.4k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>6 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/BUQdKDMtu18fzwX.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/RFdhPomTYO1Cjp4.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/uwWaizPO9gQqmhZ.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/6BVdFcJpCO1I8nq.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/yfhCQVTuvAWk8D9.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/X7De5Cldtk6MgLp.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" itemprop="item" rel="index" title="分类于 Java 语言学习"><span itemprop="name">Java 语言学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/java/Java%E9%9B%86%E5%90%88%E6%89%A9%E5%AE%B9/" itemprop="item" rel="index" title="分类于 Java 集合扩容"><span itemprop="name">Java 集合扩容</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84StringBuilder%E6%89%A9%E5%AE%B9/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><pre><code>package com.example.demo.test;
+ 
+ 
+/**
+ * &lt;p&gt;
+ * &lt;code&gt;StringBuilderTest&lt;/code&gt;
+ * &lt;/p&gt;
+ * Description: JDK 1.8
+ *
+ * @author Jalen
+ * @date 2019/8/26 9:41
+ */
+public class StringBuilderTest &#123;
+ 
+    public static void main(String[] args) &#123;
+        //createString();
+        //createEmptyStringBuilder();
+        createNonEmptyStringBuilder();
+    &#125;
+ 
+    private static void createString()&#123;
+        //编译期优化，直接将string赋值为&quot;abc&quot;，可以使用javap -verbose xxx.class查看
+        String string = &quot;a&quot; + &quot;b&quot; + &quot;c&quot;;
+        System.out.println(string);
+ 
+        //使用+号连接字符串等同于使用StringBuilder的append方法拼接字符串，
+        //可以使用javap -verbose xxx.class查看字节码
+        String a = &quot;a&quot;;
+        String b = &quot;b&quot;;
+        String c = &quot;c&quot;;
+        String str = a + b + c;
+        System.out.println(str);
+    &#125;
+ 
+    /**
+     * 创建容量为空的StringBuilder
+     * 调用链1：
+     *      &#123;@link java.lang.StringBuilder#StringBuilder&#125;
+     *          这里调用父类构造方法，同时赋值capacity为默认值16
+     *      &#123;@link java.lang.AbstractStringBuilder#AbstractStringBuilder(int)&#125;
+     *          这里初始化一个长度为16的字节数组(char[])
+     * 调用链2：
+     *      &#123;@link java.lang.StringBuilder#append(String)&#125;
+     *          这里调用父类的append方法，将当前字符串传给父类
+     *      &#123;@link java.lang.AbstractStringBuilder#append(String)&#125;
+     *          if (str == null)
+     *              return appendNull();
+     *          int len = str.length();  //这里length为1
+     *          ensureCapacityInternal(count + len); //第一次append，count为0
+     *          str.getChars(0, len, value, count);
+     *          count += len;  //count累加
+     *          return this;
+     *      &#123;@link java.lang.AbstractStringBuilder#ensureCapacityInternal(int)&#125;
+     *          if (minimumCapacity - value.length &gt; 0) &#123; //这里minimumCapacity=1，value长度为16（即上面初始化时赋予的16个长度的容量）
+     *             value = Arrays.copyOf(value, newCapacity(minimumCapacity));
+     *          &#125;
+     *      &#123;@link java.lang.String#getChars&#125;
+     *          if (srcBegin &lt; 0) &#123;
+     *             throw new StringIndexOutOfBoundsException(srcBegin);
+     *          &#125;
+     *          if (srcEnd &gt; value.length) &#123;
+     *             throw new StringIndexOutOfBoundsException(srcEnd);
+     *          &#125;
+     *          if (srcBegin &gt; srcEnd) &#123;
+     *             throw new StringIndexOutOfBoundsException(srcEnd - srcBegin);
+     *          &#125;
+     *          System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin); //调用native方法将append的字符串以char数组形式copy到value里
+     *       count += len; //count重新赋值
+     * 调用链3：
+     *      &#123;@link java.lang.StringBuilder#append(int)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#append(int)&#125;
+     *          if (i == Integer.MIN_VALUE) &#123;
+     *             append(&quot;-2147483648&quot;);
+     *             return this;
+     *          &#125;
+     *          int appendedLength = (i &lt; 0) ? Integer.stringSize(-i) + 1 : Integer.stringSize(i);
+     *          int spaceNeeded = count + appendedLength;
+     *          ensureCapacityInternal(spaceNeeded);
+     *          Integer.getChars(i, spaceNeeded, value);
+     *          count = spaceNeeded;
+     *          return this;
+     *      &#123;@link java.lang.Integer#stringSize(int)&#125;
+     *          for (int i=0; ; i++)
+     *             if (x &lt;= sizeTable[i]) //sizeTable = &#123; 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE &#125;
+     *                 return i+1;
+     *      &#123;@link java.lang.AbstractStringBuilder#ensureCapacityInternal(int)&#125;
+     *          if (minimumCapacity - value.length &gt; 0) &#123;
+     *             value = Arrays.copyOf(value, newCapacity(minimumCapacity));
+     *          &#125;
+     *      &#123;@link java.lang.Integer#getChars&#125;
+     *      count = count + appendedLength;
+     * 调用链4：
+     *      &#123;@link java.lang.StringBuilder#append(boolean)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#append(boolean)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#ensureCapacityInternal(int)&#125;
+     * 调用链5：
+     *      &#123;@link java.lang.StringBuilder#append(char)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#append(char)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#ensureCapacityInternal(int)&#125;
+     * 调用链6：
+     *      &#123;@link java.lang.StringBuilder#append(long)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#append(long)&#125;
+     *         if (l == Long.MIN_VALUE) &#123;
+     *             append(&quot;-9223372036854775808&quot;);
+     *             return this;
+     *         &#125;
+     *         int appendedLength = (l &lt; 0) ? Long.stringSize(-l) + 1
+     *                                      : Long.stringSize(l);
+     *         int spaceNeeded = count + appendedLength;
+     *         ensureCapacityInternal(spaceNeeded);
+     *         Long.getChars(l, spaceNeeded, value);
+     *         count = spaceNeeded;
+     *         return this;
+     */
+    @SuppressWarnings(&quot;all&quot;)
+    private static void createEmptyStringBuilder()&#123;
+        //这里等同于上面的String str = a + b + c
+        StringBuilder sb = new StringBuilder(); //1
+        sb.append(&quot;a&quot;);                         //2
+        sb.append(&quot;b&quot;);
+        sb.append(1);                           //3
+        sb.append(true);                        //4
+        sb.append('c');                         //5
+        sb.append(99L);                         //6
+        System.out.println(sb.toString());
+    &#125;
+ 
+    /**
+     * 创建包含初始容量的StringBuilder
+     * 调用链1：
+     *      &#123;@link java.lang.StringBuilder#StringBuilder(int)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#AbstractStringBuilder(int)&#125;
+     *          value = new char[capacity]; //capacity=3
+     * 调用链2：
+     *      &#123;@link java.lang.StringBuilder#append(String)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#append(String)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#ensureCapacityInternal(int)&#125;
+     *         if (minimumCapacity - value.length &gt; 0) &#123; //minimumCapacity=2, value.length=3
+     *             value = Arrays.copyOf(value, newCapacity(minimumCapacity));
+     *         &#125;
+     *      &#123;@link java.lang.String#getChars&#125;
+     *          System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);
+     *      count += len;
+     * 调用链3：
+     *      &#123;@link java.lang.StringBuilder#append(String)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#append(String)&#125;
+     *      &#123;@link java.lang.AbstractStringBuilder#ensureCapacityInternal(int)&#125;
+     *         if (minimumCapacity - value.length &gt; 0) &#123; //minimumCapacity=4, value.length=3
+     *             value = Arrays.copyOf(value, newCapacity(minimumCapacity)); //value扩容
+     *         &#125;
+     *      &#123;@link java.util.Arrays#copyOf(float[], int)&#125;
+     *         float[] copy = new float[newLength];
+     *         System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+     *         return copy;
+     *      &#123;@link java.lang.AbstractStringBuilder#newCapacity(int)&#125;
+     *         int newCapacity = (value.length &lt;&lt; 1) + 2; //value.length=3, newCapacity=8
+     *         if (newCapacity - minCapacity &lt; 0) &#123; //minCapacity=4
+     *             newCapacity = minCapacity;
+     *         &#125;
+     *         return (newCapacity &lt;= 0 || MAX_ARRAY_SIZE - newCapacity &lt; 0)
+     *             ? hugeCapacity(minCapacity) : newCapacity;
+     *      &#123;@link java.lang.String#getChars&#125;
+     *          System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);
+     *      count += len;
+     */
+    @SuppressWarnings(&quot;all&quot;)
+    private static void createNonEmptyStringBuilder()&#123;
+        StringBuilder sb = new StringBuilder(3); //1
+        sb.append(&quot;aa&quot;); //2
+        sb.append(&quot;bb&quot;); //3，触发扩容
+        System.out.println(sb.toString());
+    &#125;
+&#125;
+</code></pre><p>扩容方法</p><pre><code>    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+    public static final int MAX_VALUE = 0x7fffffff;
+ 
+    private int newCapacity(int minCapacity) &#123;
+        // overflow-conscious code
+        int newCapacity = (value.length &lt;&lt; 1) + 2;
+        if (newCapacity - minCapacity &lt; 0) &#123;
+            newCapacity = minCapacity;
+        &#125;
+        return (newCapacity &lt;= 0 || MAX_ARRAY_SIZE - newCapacity &lt; 0)
+            ? hugeCapacity(minCapacity)
+            : newCapacity;
+    &#125;
+ 
+ 
+    private int hugeCapacity(int minCapacity) &#123;
+        if (Integer.MAX_VALUE - minCapacity &lt; 0) &#123; // overflow
+            throw new OutOfMemoryError();
+        &#125;
+        return (minCapacity &gt; MAX_ARRAY_SIZE)
+            ? minCapacity : MAX_ARRAY_SIZE;
+    &#125;
+</code></pre><p>StringBuffer 扩容方式与 StringBuilder 基本一致</p><div class="tags"><a href="/tags/java/" rel="tag"><i class="ic i-tag"></i> java</a> <a href="/tags/StringBuilder/" rel="tag"><i class="ic i-tag"></i> StringBuilder</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/java/java-collection-scale/简单了解java的StringBuilder扩容/" class="item leancloud_visitors" data-flag-title="简单了解 java 的 StringBuilder 扩容" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84StringBuilder%E6%89%A9%E5%AE%B9/" title="简单了解 java 的 StringBuilder 扩容">http://mingcheng.site/learn/java/java-collection-scale/简单了解java的StringBuilder扩容/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;URhMtT1S6YQNdPe.jpg" title="简单了解java的HashMap扩容"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Java 集合扩容</span><h3>简单了解java的HashMap扩容</h3></a></div><div class="item right"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84Vector%E6%89%A9%E5%AE%B9/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;iGOMdHWbhu8DzsL.jpg" title="简单了解java的Vector扩容"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Java 集合扩容</span><h3>简单了解java的Vector扩容</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84ArrayList%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的ArrayList扩容">简单了解java的ArrayList扩容</a></li><li><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的HashMap扩容">简单了解java的HashMap扩容</a></li><li class="active"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84StringBuilder%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的StringBuilder扩容">简单了解java的StringBuilder扩容</a></li><li><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84Vector%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的Vector扩容">简单了解java的Vector扩容</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84Vector%E6%89%A9%E5%AE%B9/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/Website/" title="分类于 Website">Website</a></div><span><a href="/%E4%B8%80%E4%BA%9B%E5%A5%BD%E7%9C%8B%E7%9A%84JS%E9%A1%B5%E9%9D%A2/" title="一些好看的JS页面">一些好看的JS页面</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Eclipse/" title="分类于 Eclipse">Eclipse</a></div><span><a href="/learn/java/eclipse/eclipse%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6%E6%96%B9%E6%B3%95/" title="eclipse安装插件方法">eclipse安装插件方法</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/life/" title="分类于 生活">生活</a> <i class="ic i-angle-right"></i> <a href="/categories/life/%E8%B5%84%E6%96%99/" title="分类于 资料">资料</a></div><span><a href="/life/material/%E7%AC%AC%E4%B8%89%E6%96%B9java%E6%A1%86%E6%9E%B6%E3%80%81%E7%B1%BB%E5%BA%93%E5%92%8C%E8%BD%AF%E4%BB%B6%E5%A4%A7%E5%85%A8/" title="第三方java框架、类库和软件大全">第三方java框架、类库和软件大全</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/Python%E5%88%9D%E5%AD%A6%EF%BC%884%EF%BC%89%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5/" title="Python初学（4）基本语句">Python初学（4）基本语句</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/VueJS/" title="分类于 VueJS">VueJS</a></div><span><a href="/learn/frontent/vue-js/vue%20mounted%E5%86%85%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95%E6%8A%A5is%20not%20define%E7%9A%84%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E8%AE%B0%E5%BD%95/" title="vue mounted内调用方法报is not define的一种情况记录">vue mounted内调用方法报is not define的一种情况记录</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E9%80%9F%E6%88%90%E8%AF%BE/" title="计算机科学速成课">计算机科学速成课</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/" title="分类于 中间件学习">中间件学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/ELK/" title="分类于 ELK">ELK</a></div><span><a href="/learn/middleware/elk/elasticsearch%E9%9B%86%E7%BE%A4%E7%AE%80%E5%8D%95%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/" title="elasticsearch集群简单登录配置">elasticsearch集群简单登录配置</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Kubernetes/" title="分类于 Kubernetes">Kubernetes</a></div><span><a href="/learn/devops/kubernetes/jenkins+k8s+maven/" title="centos registry+jenkins+k8s+maven 简单部署(待续)">centos registry+jenkins+k8s+maven 简单部署(待续)</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/NLP/" title="分类于 NLP">NLP</a></div><span><a href="/learn/python/nlp/%E4%BD%BF%E7%94%A8%E4%BD%99%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6%E5%AE%9E%E7%8E%B0%E6%96%87%E6%9C%AC%E7%9B%B8%E4%BC%BC%E5%BA%A6%E6%A3%80%E6%B5%8B/" title="使用余弦相似度实现文本相似度检测">使用余弦相似度实现文本相似度检测</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/python%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%93%E5%B0%BE100%E8%A1%8C/" title="python获取服务器日志文件结尾100行">python获取服务器日志文件结尾100行</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/java/java-collection-scale/简单了解java的StringBuilder扩容/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:{placeholder:"1. 提问前请先仔细阅读本文档⚡\n2. 页面显示问题💥，请提供控制台截图📸或者您的测试网址\n3. 其他任何报错💣，请提供详细描述和截图📸，祝食用愉快💪"},fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

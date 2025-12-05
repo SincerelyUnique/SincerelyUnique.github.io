@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="java,HashMap"><link rel="canonical" href="http://mingcheng.site/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/"><title>简单了解 java 的 HashMap 扩容 - Java 集合扩容 - Java 语言学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">简单了解 java 的 HashMap 扩容</h1><div class="meta"><span class="item" title="创建时间：2019-08-26 16:12:20"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2019-08-26T16:12:20+08:00">2019-08-26</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>5.9k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>5 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/agp87xKz4JQUGSO.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/xuKtdoFjYS4n7iD.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/faPC8BdzLSIrVZi.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/oqOkxL15fMtCJed.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/yvnkbCNIoF3p5uR.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/mvgeVdc61TojIA3.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" itemprop="item" rel="index" title="分类于 Java 语言学习"><span itemprop="name">Java 语言学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/java/Java%E9%9B%86%E5%90%88%E6%89%A9%E5%AE%B9/" itemprop="item" rel="index" title="分类于 Java 集合扩容"><span itemprop="name">Java 集合扩容</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><pre><code>package com.example.demo.test;
+ 
+import java.util.HashMap;
+import java.util.Map;
+ 
+/**
+ * &lt;p&gt;
+ * &lt;code&gt;HashMapTest&lt;/code&gt;
+ * &lt;/p&gt;
+ * Description: JDK 1.8
+ * @see java.util.HashMap 本质上是Node&lt;K,V&gt;[]
+ *
+ * @author Jalen
+ * @date 2019/8/26 14:03
+ */
+public class HashMapTest &#123;
+ 
+    public static void main(String[] args) &#123;
+        //createEmptyHashMap();
+        createNonEmptyHashMap();
+    &#125;
+ 
+    /**
+     * @see java.util.HashMap#HashMap() loadFactor=DEFAULT_LOAD_FACTOR=0.75f
+     * @see java.util.HashMap#put
+     *      &#123;@link java.util.HashMap#hash(Object key)&#125;
+     *      &#123;@link java.lang.String#hashCode&#125;
+     *      &#123;@link java.util.HashMap#putVal&#125;
+     *          &#123;@link java.util.HashMap#resize&#125;
+     *              static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4    as newCapacity
+     *              (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY) = 0.75f * 16 = 12    as newThreshold
+     *              Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap]  创建16长度的kv节点
+     *          &#123;@link java.util.HashMap#newNode&#125;
+     *              create new Node&lt;K,V&gt; 赋值到newTab[0]
+     *              modCount++
+     *          &#123;@link java.util.HashMap#afterNodeInsertion&#125;
+     */
+    private static void createEmptyHashMap()&#123;
+        Map&lt;String, String&gt; map = new HashMap&lt;&gt;(); //loadFactor=DEFAULT_LOAD_FACTOR=0.75f
+        map.put(&quot;a&quot;, &quot;China&quot;);
+        System.out.println(map.toString());
+    &#125;
+ 
+    /**
+     * @see java.util.HashMap#HashMap(int initialCapacity)
+     *      this(initialCapacity, DEFAULT_LOAD_FACTOR);
+     *      &#123;@link java.util.HashMap#HashMap(int initialCapacity, float loadFactor)&#125;
+     *          check initialCapacity(不能小于0，如果大于MAXIMUM_CAPACITY则赋值为MAXIMUM_CAPACITY)，MAXIMUM_CAPACITY=1 &lt;&lt; 30
+     *          loadFactor设为DEFAULT_LOAD_FACTOR，即0.75f
+     *          &#123;@link java.util.HashMap#tableSizeFor(int cap)&#125;
+     *              通过initialCapacity计算得到threshold为8，此时map的capacity并未确定，在第一次put value时才会定下来
+     * @see java.util.HashMap#put (第一次put值时会触发resize，重新计算threshold)
+     *      &#123;@link java.util.HashMap#hash(Object key)&#125;
+     *      &#123;@link java.lang.String#hashCode&#125;
+     *      &#123;@link java.util.HashMap#putVal&#125;
+     *          &#123;@link java.util.HashMap#resize&#125;
+     *              (int)(DEFAULT_LOAD_FACTOR * initialCapacity) = 0.75f * 8 = 6    as newThreshold
+     *              Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap]  创建8长度的kv节点
+     *              (此时capacity为8，threshold重新计算为6)
+     *          &#123;@link java.util.HashMap#newNode&#125;
+     *              create new Node&lt;K,V&gt; 赋值到newTab[0]
+     *              modCount++
+     *          &#123;@link java.util.HashMap#afterNodeInsertion&#125;
+     * @see java.util.HashMap#put
+     *      &#123;@link java.util.HashMap#hash(Object key)&#125;
+     *      &#123;@link java.util.HashMap#putVal&#125;
+     *      &#123;@link java.util.HashMap#afterNodeAccess&#125;
+     * @see java.util.HashMap#put
+     *      &#123;@link java.util.HashMap#hash(Object key)&#125;
+     *      &#123;@link java.util.HashMap#putVal&#125;
+     *          &#123;@link java.util.HashMap#newNode&#125;
+     *          &#123;@link java.util.HashMap#afterNodeInsertion&#125;
+     * ... ...
+     * @see java.util.HashMap#put
+     *      &#123;@link java.util.HashMap#hash(Object key)&#125;
+     *      &#123;@link java.util.HashMap#putVal&#125;
+     *          &#123;@link java.util.HashMap#newNode&#125;
+     *          &#123;@link java.util.HashMap#resize&#125;
+     *              oldCap=8，oldThr=6；
+     *              newCap=oldCap &lt;&lt; 1，newThr=16*0.75=12
+     *              Node&lt;K, V&gt; oldTab length=8(但实际上只有6个元素，2个空位), Node&lt;K, V&gt; newTab length=16(new Node[newCap])
+     *              for循环将oldTab数据移动到newTab中，返回newTab
+     *          &#123;@link java.util.HashMap#afterNodeInsertion&#125;
+     */
+    private static void createNonEmptyHashMap()&#123;
+        Map&lt;String, String&gt; map = new HashMap&lt;&gt;(5);
+        map.put(&quot;1&quot;, &quot;China&quot;);
+        map.put(&quot;1&quot;, &quot;America&quot;);
+        map.put(&quot;2&quot;, &quot;England&quot;);
+        map.put(&quot;3&quot;, &quot;France&quot;);
+        map.put(&quot;4&quot;, &quot;Japan&quot;);
+        map.put(&quot;5&quot;, &quot;Australia&quot;);
+        map.put(&quot;6&quot;, &quot;Canada&quot;);
+        map.put(&quot;7&quot;, &quot;Russia&quot;);  // 达到threshold，触发resize，oldCap=8，oldThr=6，newCap=oldCap &lt;&lt; 1，newThr=16*0.75=12, 此时将oldTab数据移动到newTab里，返回newTab
+        // ... ... 当添加到第13个元素时还会触发resize扩容，此时oldCap &lt;&lt; 1=32，newThr = 24
+        // ... ...
+        System.out.println(map.toString());
+    &#125;
+&#125;
+</code></pre><p>tableSizeFor 方法</p><pre><code>    /**
+     * Returns a power of two size for the given target capacity.
+     */
+    static final int tableSizeFor(int cap) &#123;
+        int n = cap - 1;
+        n |= n &gt;&gt;&gt; 1;
+        n |= n &gt;&gt;&gt; 2;
+        n |= n &gt;&gt;&gt; 4;
+        n |= n &gt;&gt;&gt; 8;
+        n |= n &gt;&gt;&gt; 16;
+        return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+    &#125;
+</code></pre><p>resize 方法</p><pre><code>    /**
+     * Initializes or doubles table size.  If null, allocates in
+     * accord with initial capacity target held in field threshold.
+     * Otherwise, because we are using power-of-two expansion, the
+     * elements from each bin must either stay at same index, or move
+     * with a power of two offset in the new table.
+     *
+     * @return the table
+     */
+    final Node&lt;K,V&gt;[] resize() &#123;
+        Node&lt;K,V&gt;[] oldTab = table;
+        int oldCap = (oldTab == null) ? 0 : oldTab.length;
+        int oldThr = threshold;
+        int newCap, newThr = 0;
+        if (oldCap &gt; 0) &#123;
+            if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;
+                threshold = Integer.MAX_VALUE;
+                return oldTab;
+            &#125;
+            else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;
+                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)
+                newThr = oldThr &lt;&lt; 1; // double threshold
+        &#125;
+        else if (oldThr &gt; 0) // initial capacity was placed in threshold
+            newCap = oldThr;
+        else &#123;               // zero initial threshold signifies using defaults
+            newCap = DEFAULT_INITIAL_CAPACITY;
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+        &#125;
+        if (newThr == 0) &#123;
+            float ft = (float)newCap * loadFactor;
+            newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?
+                      (int)ft : Integer.MAX_VALUE);
+        &#125;
+        threshold = newThr;
+        @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)
+            Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
+        table = newTab;
+        if (oldTab != null) &#123;
+            for (int j = 0; j &lt; oldCap; ++j) &#123;
+                Node&lt;K,V&gt; e;
+                if ((e = oldTab[j]) != null) &#123;
+                    oldTab[j] = null;
+                    if (e.next == null)
+                        newTab[e.hash &amp; (newCap - 1)] = e;
+                    else if (e instanceof TreeNode)
+                        ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);
+                    else &#123; // preserve order
+                        Node&lt;K,V&gt; loHead = null, loTail = null;
+                        Node&lt;K,V&gt; hiHead = null, hiTail = null;
+                        Node&lt;K,V&gt; next;
+                        do &#123;
+                            next = e.next;
+                            if ((e.hash &amp; oldCap) == 0) &#123;
+                                if (loTail == null)
+                                    loHead = e;
+                                else
+                                    loTail.next = e;
+                                loTail = e;
+                            &#125;
+                            else &#123;
+                                if (hiTail == null)
+                                    hiHead = e;
+                                else
+                                    hiTail.next = e;
+                                hiTail = e;
+                            &#125;
+                        &#125; while ((e = next) != null);
+                        if (loTail != null) &#123;
+                            loTail.next = null;
+                            newTab[j] = loHead;
+                        &#125;
+                        if (hiTail != null) &#123;
+                            hiTail.next = null;
+                            newTab[j + oldCap] = hiHead;
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        return newTab;
+    &#125;
+</code></pre><div class="tags"><a href="/tags/java/" rel="tag"><i class="ic i-tag"></i> java</a> <a href="/tags/HashMap/" rel="tag"><i class="ic i-tag"></i> HashMap</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/java/java-collection-scale/简单了解java的HashMap扩容/" class="item leancloud_visitors" data-flag-title="简单了解 java 的 HashMap 扩容" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/" title="简单了解 java 的 HashMap 扩容">http://mingcheng.site/learn/java/java-collection-scale/简单了解java的HashMap扩容/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84ArrayList%E6%89%A9%E5%AE%B9/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;6aZYmqOpinP8eFN.jpg" title="简单了解java的ArrayList扩容"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Java 集合扩容</span><h3>简单了解java的ArrayList扩容</h3></a></div><div class="item right"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84StringBuilder%E6%89%A9%E5%AE%B9/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;ckCrlM4Qxotug6f.jpg" title="简单了解java的StringBuilder扩容"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Java 集合扩容</span><h3>简单了解java的StringBuilder扩容</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84ArrayList%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的ArrayList扩容">简单了解java的ArrayList扩容</a></li><li class="active"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的HashMap扩容">简单了解java的HashMap扩容</a></li><li><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84StringBuilder%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的StringBuilder扩容">简单了解java的StringBuilder扩容</a></li><li><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84Vector%E6%89%A9%E5%AE%B9/" rel="bookmark" title="简单了解java的Vector扩容">简单了解java的Vector扩容</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84ArrayList%E6%89%A9%E5%AE%B9/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84StringBuilder%E6%89%A9%E5%AE%B9/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Java/" title="分类于 Java">Java</a></div><span><a href="/learn/java/java-basic/java%E8%BF%90%E7%AE%97%E4%BF%9D%E7%95%99%E4%B8%A4%E4%BD%8D%E5%B0%8F%E6%95%B0/" title="java运算保留两位小数">java运算保留两位小数</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/MyBatis/" title="分类于 MyBatis">MyBatis</a></div><span><a href="/learn/java/mybatis/MyBatis%E4%B8%A4%E5%BC%A0%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9B%B8%E5%90%8C%E5%AD%97%E6%AE%B5%E5%90%8D%EF%BC%8C%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%97%B6%E7%9A%84%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="MyBatis两张表中存在相同字段名，联表查询时的冲突解决办法">MyBatis两张表中存在相同字段名，联表查询时的冲突解决办法</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/The%20used%20select%20statements%20have%20a%20different%20number%20of%20columns%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="The used select statements have a different number of columns解决办法">The used select statements have a different number of columns解决办法</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E9%80%9F%E6%88%90%E8%AF%BE/" title="计算机科学速成课">计算机科学速成课</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/Extjs/" title="分类于 Extjs">Extjs</a></div><span><a href="/Combobox%E9%A6%96%E6%AC%A1%E5%8A%A0%E8%BD%BD%E8%87%AA%E5%8A%A8%E9%80%89%E6%8B%A9%E4%B8%8A%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" title="Combobox首次加载自动选择上一次配置信息">Combobox首次加载自动选择上一次配置信息</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/" title="分类于 数据库学习">数据库学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/Oracle/" title="分类于 Oracle">Oracle</a></div><span><a href="/learn/database/oracle/oracle%E6%8B%86%E5%88%86%E6%9F%90%E4%B8%AA%E5%AD%97%E6%AE%B5/" title="oracle拆分某个字段">oracle拆分某个字段</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/VBA%E4%B8%A4%E5%88%97%E5%8E%BB%E9%87%8D%E5%B9%B6%E6%8F%90%E5%8F%96%E4%B8%8D%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E5%88%97/" title="VBA两列去重并提取不重复数据到新列">VBA两列去重并提取不重复数据到新列</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Spring/" title="分类于 Spring">Spring</a></div><span><a href="/learn/java/spring/spring%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B3%A8%E5%85%A5%E7%9A%84bean/" title="spring项目中静态方法中使用注入的bean">spring项目中静态方法中使用注入的bean</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/" title="分类于 中间件学习">中间件学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/ELK/" title="分类于 ELK">ELK</a></div><span><a href="/learn/middleware/elk/ES%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB(ES%20to%20ES)/" title="ES数据迁移（ES to ES）">ES数据迁移（ES to ES）</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E4%BD%BF%E7%94%A8layui%E8%83%8C%E6%99%AF%E8%8A%B1%E5%B1%8F/" title="使用layui背景花屏">使用layui背景花屏</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/java/java-collection-scale/简单了解java的HashMap扩容/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:{placeholder:"1. 提问前请先仔细阅读本文档⚡\n2. 页面显示问题💥，请提供控制台截图📸或者您的测试网址\n3. 其他任何报错💣，请提供详细描述和截图📸，祝食用愉快💪"},fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(a){return a.includes("#")},function(a){return new RegExp(LOCAL.path+"$").test(a)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

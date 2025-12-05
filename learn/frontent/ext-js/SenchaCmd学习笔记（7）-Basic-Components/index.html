@@ -1,0 +1,587 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="sencha"><link rel="canonical" href="http://mingcheng.site/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%887%EF%BC%89-Basic-Components/"><title>SenchaCmd 学习笔记（7）:Basic Components - ExtJS - 前端知识学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">SenchaCmd 学习笔记（7）:Basic Components</h1><div class="meta"><span class="item" title="创建时间：2017-02-22 13:55:40"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2017-02-22T13:55:40+08:00">2017-02-22</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>7.3k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>7 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/oqOkxL15fMtCJed.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/QSqg3he6vwClUT2.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/ckCrlM4Qxotug6f.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/BbCxJjVTwHmqiS1.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/6yogBJdLbI7rVp8.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/sBzhKCFNci5ItJw.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/frontent/" itemprop="item" rel="index" title="分类于 前端知识学习"><span itemprop="name">前端知识学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/frontent/ExtJS/" itemprop="item" rel="index" title="分类于 ExtJS"><span itemprop="name">ExtJS</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%887%EF%BC%89-Basic-Components/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><p>•Getting familiar with basic components – buttons, text field, date picker,and so on<br>•The form field validation<br>•Menus and toolbars<br>•A customer feedback form design<br>•Calculator – a sample projec<br><span id="more"></span></p><p>1.Ext.Button 创建一个 button</p><pre><code>    1）
+</code></pre><pre><code>        Ext.create('Ext.Button', &#123;
+
+                        text: 'My Button',
+
+                        renderTo: Ext.getBody(),
+
+                        handler: function() &#123;
+
+                        alert('click');
+
+﻿                        &#125;
+
+        &#125;);
+</code></pre><pre><code>    2）
+</code></pre><pre><code>        Ext.application(&#123;
+
+                        name : 'Fiddle',
+
+                        launch : function() &#123;
+
+                                Ext.create('Ext.Button', &#123;
+
+                                        text: 'My Button',
+
+                                        renderTo: Ext.getBody(),
+
+                                        handler: function() &#123;
+
+                                                alert('click');
+
+                                        &#125;
+
+                                &#125;);
+
+                         &#125;
+
+        &#125;);
+</code></pre><pre><code>    3）使用Listener
+</code></pre><pre><code>        Ext.create('Ext.Button', &#123;
+
+                        text: 'My Button',
+
+                        renderTo: Ext.getBody(),
+
+                        listeners: &#123;
+
+                                        click: &#123;
+
+                                                fn: function()&#123;
+
+                                                        //Handle click event
+
+                                                        alert('click');
+
+                                                    &#125;
+
+                                         &#125;,
+
+                                        mouseout: &#123;
+
+                                                fn: function()&#123;
+
+                                                        //Handle double click event
+
+                                                        alert('Mouse out');
+
+                                                &#125;
+
+                                        &#125;
+
+                        &#125;
+
+        &#125;);
+</code></pre><pre><code>    4）创建一个link的butto
+</code></pre><pre><code>        Ext.create('Ext.Button', &#123;
+
+                                renderTo: Ext.getBody(),
+
+                                text: 'Link Button',
+
+                                href: 'http://www.sencha.com/'
+
+                        &#125;);
+</code></pre><pre><code>    5）可以用menu属性制作一个menu button
+</code></pre><pre><code>        Ext.create('Ext.Button', &#123;
+
+                        text: 'My Button',
+
+                        renderTo: Ext.getBody(),
+
+                        menu: 
+
+                        [
+
+                                &#123;
+
+                                        text: 'Item 1'
+
+                                &#125;, 
+
+                                &#123;
+
+                                        text: 'Item 2'
+
+                                &#125;, 
+
+                                &#123;
+
+                                        text: 'Item 3'
+
+                                &#125;
+
+                        ]
+
+            &#125;);
+</code></pre><pre><code>    6）还有些其他属性：bind , cls , disabled , html , tooltip ,tpl , and so on
+</code></pre><p>2.Ext.MessageBox</p><pre><code>    1）继承：Ext.window.MessageBox，是一个单例实例，可以用于输出，获得确认，输入提示等
+
+    简单输出：
+</code></pre><pre><code>                Ext.Msg.alert('Info', 'Document saved!');
+</code></pre><pre><code>    演示消息确认，可选“是”或“否”       
+</code></pre><pre><code>                Ext.Msg.confirm('Confirm', 'Are you want to cancel the updates?',
+
+                                        function(button)&#123;
+
+                                                if('yes'==button) &#123;
+
+                                                        Ext.Msg.alert(&quot;a&quot;,&quot;b&quot;);
+
+                                                &#125;
+
+                                                else &#123;
+
+                                                        Ext.Msg.alert(&quot;c&quot;,&quot;d&quot;);
+
+                                                &#125;
+
+                                        &#125;
+
+                    );
+</code></pre><pre><code>    当然也可以用另一种方式             
+</code></pre><pre><code>                Ext.MessageBox.show(&#123;
+
+                                                title:'Save Changes?',
+
+                                                msg: 'Do you want to save the file?',
+
+                                                buttons: Ext.MessageBox.YESNO,
+
+                                                fn: function(button)&#123;
+
+                                                                            if('yes'==button)
+
+                                                                                    &#123;
+
+                                                                                    &#125;
+
+                                                                            else if('no'==button)
+
+                                                                                    &#123;
+
+                                                                                    &#125;
+
+                                                                            &#125; ,
+
+                                                icon: Ext.MessageBox.QUESTION
+
+                        &#125;);
+</code></pre><p>3.Ext.form.Panel （表单）</p><pre><code>    1）默认布局：锚布局
+
+    2）fields：有一个便利的配置：fieldDefaults  （给所有fields指定默认配置的值）        
+
+                    Ext.form.field.Checkbox
+
+                    Ext.form.field.ComboBox
+
+                    Ext.form.field.Date
+
+                    Ext.form.field.File
+
+                    Ext.form.field.Hidden
+
+                    Ext.form.field.HtmlEditor
+
+                    Ext.form.field.Number
+
+                    Ext.form.field.Radio
+
+                    Ext.form.field.Text
+
+                    Ext.form.field.TextArea
+
+                    Ext.form.field.Time
+</code></pre><p>4.Ext.form.field.Text （一个最基础的文本域，有一个提供 validation 的属性：vtype）</p><pre><code>    如将email设为验证的属性
+</code></pre><pre><code>        Ext.create('Ext.form.field.Text', &#123;
+
+                                    renderTo: Ext.getBody(),
+
+                                    name: 'email',
+
+                                    fieldLabel: 'Email',
+
+                                    allowBlank: false,        （输入为空报错）
+
+                                    vtype: 'email'
+
+                        &#125;);
+</code></pre><p>5.Ext.form.field.Number （继承自：spinner field， spinner field 继承自：text field）</p><pre><code>    用于处理数值 
+</code></pre><pre><code>        Ext.create('Ext.form.field.Number', &#123;
+
+                            renderTo: Ext.getBody(),
+
+                            name: 'Count',
+
+                            fieldLabel: 'Count',
+
+                            value: 0,
+
+                            maxValue: 10,
+
+                            minValue: 0
+
+                   &#125;);
+</code></pre><p>6.Ext.form.field.ComboBox</p><pre><code>    有一个配置：store
+
+    datastore提供数据供下拉菜单使用
+
+    另一个配置：queryMode    （可以本地或远程，如果是远程，datastore加载运行时需要发出请求给远程服务器）
+
+    1）提供一个月份的下拉菜单  
+</code></pre><pre><code>            var months = Ext.create('Ext.data.Store', &#123;
+
+                                                fields: ['abbr', 'name'],
+
+                                                data: 
+
+                                                [
+
+                                                                &#123;&quot;abbr&quot;:&quot;JAN&quot;, &quot;name&quot;:&quot;January&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;FEB&quot;, &quot;name&quot;:&quot;February&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;MAR&quot;, &quot;name&quot;:&quot;March&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;APR&quot;, &quot;name&quot;:&quot;April&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;MAY&quot;, &quot;name&quot;:&quot;May&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;JUN&quot;, &quot;name&quot;:&quot;June&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;JUL&quot;, &quot;name&quot;:&quot;July&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;AUG&quot;, &quot;name&quot;:&quot;August&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;SEP&quot;, &quot;name&quot;:&quot;September&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;OCT&quot;, &quot;name&quot;:&quot;October&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;NOV&quot;, &quot;name&quot;:&quot;November&quot;&#125;,
+
+                                                                &#123;&quot;abbr&quot;:&quot;DEC&quot;, &quot;name&quot;:&quot;December&quot;&#125;
+
+                                                ]
+
+                                         &#125;);
+
+                                        Ext.create('Ext.form.ComboBox', &#123;
+
+                                                                fieldLabel: 'Choose Month',
+
+                                                                store: months,
+
+                                                                queryMode: 'local',
+
+                                                                displayField: 'name',
+
+                                                                valueField: 'abbr',
+
+                                                                renderTo: Ext.getBody()
+
+                                        &#125;);
+</code></pre><p>7.Ext.form.field.HtmlEditor （html 编辑）</p><pre><code>            Ext.create('Ext.form.HtmlEditor', &#123;
+
+                            width: 800,
+
+                            height: 200,
+
+                            renderTo: Ext.getBody()
+
+            &#125;);
+</code></pre><p>8.validation （验证：allowBlank , minLength , and maxLength 等，使用：Regex 正则表达式）</p><pre><code>    1）Events in the form panel     
+
+        •	 beforeaction : This event will be fired before executing any action    执行任何操作都验证
+
+        •	 actionfailed : This event will be fired when an action fails    操作失败验证
+
+        •	 actioncomplete : This event will be fired after an action is completed    完成一个操作进行验证
+
+        •	 validitychange : This event will be fired when the validity of the entire form changes            全部表单变更时验证
+
+        •	 dirtychange : This event will be fired when the dirty state of the form changes        表单变更发现脏数据状态验证
+</code></pre><p>9.Form field containers （表单面板容器）</p><pre><code>        1）Ext.form.CheckboxGroup    （复选框：给复选框域分组）
+
+                Ext.create('Ext.form.CheckboxGroup', &#123;
+
+                                renderTo: Ext.getBody(),
+
+                                fieldLabel: 'Skills ',
+
+                                vertical: true,
+
+                                columns: 1,
+
+                                items: 
+
+                                [
+
+                                        &#123; boxLabel: 'C++', name: 'rb', inputValue: '1' &#125;,
+
+                                        &#123; boxLabel: '.Net Framework', name: 'rb', inputValue: '2', checked: true &#125;,
+
+                                        &#123; boxLabel: 'C#', name: 'rb', inputValue: '3' &#125;,
+
+                                        &#123; boxLabel: 'SQL Server', name: 'rb', inputValue: '4' &#125;,
+
+                                ]
+
+                &#125;);
+</code></pre><pre><code>    2）Ext.form.FieldContainer    （将相关的field分组，并附给他一个相应标签）
+</code></pre><pre><code>                Ext.create('Ext.form.FieldContainer', &#123;
+
+                                renderTo: Ext.getBody(),
+
+                                fieldLabel: 'Name',
+
+                                layout: 'hbox',
+
+                                combineErrors: true,
+
+                                defaultType: 'textfield',
+
+                                defaults: 
+
+                                &#123;
+
+                                        hideLabel: 'true'
+
+                                &#125;,
+
+                                items: 
+
+                                [
+
+                                        &#123;
+
+                                                name: 'firstName',
+
+                                                fieldLabel: 'First Name',
+
+                                                flex: 2,
+
+                                                emptyText: 'First',
+
+                                                allowBlank: false
+
+                                        &#125;, 
+
+                                        &#123;
+
+                                                name: 'lastName',
+
+                                                fieldLabel: 'Last Name',
+
+                                                flex: 3,
+
+                                                margin: '0 0 0 6',
+
+                                                emptyText: 'Last',
+
+                                                allowBlank: false
+
+                                        &#125;
+
+                                ]
+
+                &#125;);
+</code></pre><pre><code>    3）Ext.form.RadioGroup    （单选框：给单选框分组）   
+</code></pre><pre><code>                Ext.create('Ext.form.RadioGroup', &#123;
+
+                                renderTo: Ext.getBody(),
+
+                                fieldLabel: 'Sex ',
+
+                                vertical: true,
+
+                                columns: 1,
+
+                                items: 
+
+                                [
+
+                                        &#123; boxLabel: 'Male', name: 'rb', inputValue: '1' &#125;,
+
+                                        &#123; boxLabel: 'Female', name: 'rb', inputValue: '2' &#125;
+
+                                ]
+
+                   &#125;);
+</code></pre><pre><code>    4）Submitting a form    （提交表单：submit method和getForm method和sValid method）
+</code></pre><pre><code>                var form = this.up('form').getForm();
+
+                if (form.isValid()) &#123;
+
+                        form.submit(&#123;
+
+                                url: 'someurl',
+
+                                success: function () &#123;
+
+                                        &#125;,
+
+                                failure: function () &#123;
+
+                        &#125;
+
+                &#125;);
+
+                &#125; else &#123;
+
+                        Ext.Msg.alert('Error', 'Fix the errors in the form')
+
+                &#125;
+</code></pre><p>10.Menus and toolbar （菜单和工具栏）</p><pre><code>    1）使用：Ext.toolbar.Toolbar
+
+    2）默认：任何子组件在Ext.toolbar.Toolbar里面都是一个button
+
+    3）自行可添加组件：a textfield, a number field, an icon, a dropdown, and so on                                 
+
+                            Ext.toolbar.Spacer , 
+
+                            Ext.toolbar.Separator ,
+
+                            Ext.toolbar.Fill
+
+        缩写：    ' ' (space),     ' | ' (pipe),     and     ' -&gt; '(arrow)    
+</code></pre><pre><code>            Ext.create('Ext.toolbar.Toolbar', &#123;
+
+                            renderTo: Ext.getBody(),
+
+                            width: 800,
+
+                            items: [
+
+                                        &#123;
+
+                                                text: 'My Button'
+
+                                        &#125;,
+
+                                    &#123;
+
+                                            text: 'My Button',
+
+                                            menu: 
+
+                                    [
+
+                                            &#123;
+
+                                                    text: 'Item 1'
+
+                                            &#125;,
+
+                                            &#123;
+
+                                                    text: 'Item 2'
+
+                                            &#125;, 
+
+                                            &#123;
+
+                                                    text: 'Item 3'
+
+                                            &#125;
+
+                                    ]
+
+                                    &#125;,
+
+                                    &#123;
+
+                                            text: 'Menu with divider',
+
+                                            tooltip: &#123;
+
+                                            text: 'Tooltip info',
+
+                                            title: 'Tip Title'
+
+                                    &#125;,
+
+                            menu: &#123;
+
+                            items: [&#123;
+
+                                            text: 'Task 1',
+
+                                            // handler:onItemClick
+
+                                    &#125;, '-', &#123;
+
+                                            text: 'Task 2',
+
+                                            // handler:onItemClick
+
+                                    &#125;, &#123;
+
+                                            text: 'Task 3',
+
+                                            // handler:onItemClick
+
+                            &#125;]
+
+                            &#125;
+
+                            &#125;,
+
+                            '-&gt;',
+
+                            &#123;
+
+                                    xtype: 'textfield',
+
+                                    name: 'field1',
+
+                                    emptyText: 'search web site'
+
+                            &#125;,
+
+                            '-',
+
+                            'Some Info',
+
+                            &#123;
+
+                                    xtype: 'tbspacer'
+
+                            &#125;,
+
+                            &#123;
+
+                                    name: 'Count',
+
+                                    xtype: 'numberfield',
+
+                                    value: 0,
+
+                                    maxValue: 10,
+
+                                    minValue: 0,
+
+                                    width: 60
+
+                            &#125;
+
+                            ]
+
+            &#125;);
+</code></pre><p>11.The customer feedback form design （反馈表：见附件）</p><p>12.Calculator （计算器：见附件）</p><p>13.MVC and MVVM （以计算器为例）</p><pre><code>    1）
+
+    Model：数据层，包含数据验证，业务逻辑和持久化
+
+    View：用户接口，有button，form，messagebox等组件
+
+    Controller：处理任何与View相关的业务逻辑，视图事件的处理等
+
+                1）ViewController：指定一个特殊的View，可以在app范围内交叉使用Controller，随View销毁而销毁
+
+                2）Controller：
+
+    2）View model：更新View数据，封装View端的业务逻辑，绑定数据，与传统model不同的是他指定特殊的View，文件：main.js
+
+    3）Controller：处理button触发事件，处理操作和操作数，用了一个model：main，文件：MainController.js
+
+    4）ViewModel：只有一个属性display，用于绑定计算器显示的数值，文件：MainViewModel.js
+</code></pre><p>14. 下节预告：</p><p>In the next chapter, you'll learn about data packages, such as data stores, model,proxies, and so on, which will be useful to handle data.</p><div class="tags"><a href="/tags/sencha/" rel="tag"><i class="ic i-tag"></i> sencha</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/frontent/ext-js/SenchaCmd学习笔记（7）-Basic-Components/" class="item leancloud_visitors" data-flag-title="SenchaCmd 学习笔记（7）:Basic Components" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%887%EF%BC%89-Basic-Components/" title="SenchaCmd 学习笔记（7）:Basic Components">http://mingcheng.site/learn/frontent/ext-js/SenchaCmd学习笔记（7）-Basic-Components/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89-Events-and-The-DOM-node-event-handling/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;5gie4Y1DqFQkus7.jpg" title="SenchaCmd学习笔记（6）:Events and The DOM node event handling"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> ExtJS</span><h3>SenchaCmd学习笔记（6）:Events and The DOM node event handling</h3></a></div><div class="item right"><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%888%EF%BC%89-Data-Packages/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;LYR8lwPeBzQasmC.jpg" title="SenchaCmd学习笔记（8）:Data Packages"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> ExtJS</span><h3>SenchaCmd学习笔记（8）:Data Packages</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/frontent/ext-js/Extjs%E9%81%AE%E7%BD%A9/" rel="bookmark" title="Extjs遮罩">Extjs遮罩</a></li><li><a href="/learn/frontent/ext-js/Extjs%E9%80%9A%E8%BF%87beforeload%E4%BA%8B%E4%BB%B6%E5%90%91%E5%90%8E%E5%8F%B0%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/" rel="bookmark" title="Extjs通过beforeload事件向后台传递参数">Extjs通过beforeload事件向后台传递参数</a></li><li><a href="/learn/frontent/ext-js/Extjs-Sample-Login-App-TutorialApp/" rel="bookmark" title="Extjs Sample Login App: TutorialApp">Extjs Sample Login App: TutorialApp</a></li><li><a href="/learn/frontent/ext-js/Extjs%E5%AD%A6%E4%B9%A0%EF%BC%881%EF%BC%89%EF%BC%9A%E7%B1%BB%EF%BC%8C%E5%B8%83%E5%B1%80%EF%BC%8C%E5%AE%B9%E5%99%A8%E5%92%8C%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5/" rel="bookmark" title="Extjs学习（1）：类，布局，容器和组件的概念">Extjs学习（1）：类，布局，容器和组件的概念</a></li><li><a href="/learn/frontent/ext-js/Extjs%E5%AD%A6%E4%B9%A0%EF%BC%882%EF%BC%89%EF%BC%9A%E6%95%B0%E6%8D%AE%E6%89%93%E5%8C%85/" rel="bookmark" title="Extjs学习（2）：数据打包">Extjs学习（2）：数据打包</a></li><li><a href="/learn/frontent/ext-js/Extjs%E5%AD%A6%E4%B9%A0%EF%BC%883%EF%BC%89%EF%BC%9A%E4%BA%8B%E4%BB%B6%E5%92%8C%E5%8A%A8%E4%BD%9C/" rel="bookmark" title="Extjs学习（3）：事件和动作">Extjs学习（3）：事件和动作</a></li><li><a href="/learn/frontent/ext-js/Extjs%E5%AD%A6%E4%B9%A0%EF%BC%884%EF%BC%89%EF%BC%9A%E6%8B%96%E4%B8%8E%E6%94%BE/" rel="bookmark" title="Extjs学习（4）：拖与放">Extjs学习（4）：拖与放</a></li><li><a href="/learn/frontent/ext-js/Extjs%E5%AD%A6%E4%B9%A0%EF%BC%885%EF%BC%89%EF%BC%9AExtjs%E4%B8%BB%E9%A2%98/" rel="bookmark" title="Extjs学习（5）：Extjs主题">Extjs学习（5）：Extjs主题</a></li><li><a href="/learn/frontent/ext-js/Extjs-grid-panel-column%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AElink/" rel="bookmark" title="Extjs-grid-panel-column属性配置link">Extjs-grid-panel-column属性配置link</a></li><li><a href="/learn/frontent/ext-js/Extjs-Viewport%E5%86%99%E7%9A%84%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2/" rel="bookmark" title="Extjs-Viewport写的一个页面">Extjs-Viewport写的一个页面</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" rel="bookmark" title="SenchaCmd学习笔记（1）">SenchaCmd学习笔记（1）</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/" rel="bookmark" title="SenchaCmd学习笔记（2）">SenchaCmd学习笔记（2）</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-SenchaCmd%E6%8C%87%E4%BB%A4/" rel="bookmark" title="SenchaCmd学习笔记（3）:SenchaCmd指令">SenchaCmd学习笔记（3）:SenchaCmd指令</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%884%EF%BC%89-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5class-system/" rel="bookmark" title="SenchaCmd学习笔记（4）:核心概念class system">SenchaCmd学习笔记（4）:核心概念class system</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%885%EF%BC%89-Advanced-Components/" rel="bookmark" title="SenchaCmd学习笔记（5）:Advanced Components">SenchaCmd学习笔记（5）:Advanced Components</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89-Events-and-The-DOM-node-event-handling/" rel="bookmark" title="SenchaCmd学习笔记（6）:Events and The DOM node event handling">SenchaCmd学习笔记（6）:Events and The DOM node event handling</a></li><li class="active"><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%887%EF%BC%89-Basic-Components/" rel="bookmark" title="SenchaCmd学习笔记（7）:Basic Components">SenchaCmd学习笔记（7）:Basic Components</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%888%EF%BC%89-Data-Packages/" rel="bookmark" title="SenchaCmd学习笔记（8）:Data Packages">SenchaCmd学习笔记（8）:Data Packages</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%889%EF%BC%89-Working-with-Grids-%E7%BD%91%E6%A0%BC/" rel="bookmark" title="SenchaCmd学习笔记（9）:Working with Grids(网格)">SenchaCmd学习笔记（9）:Working with Grids(网格)</a></li><li><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%8810%EF%BC%89-Working-with-Charts/" rel="bookmark" title="SenchaCmd学习笔记（10）:Working with Charts">SenchaCmd学习笔记（10）:Working with Charts</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%886%EF%BC%89-Events-and-The-DOM-node-event-handling/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%888%EF%BC%89-Data-Packages/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/soap%20The%20endpoint%20reference%20(EPR)%20for%20the%20Operation%20not%20found.../" title="soap The endpoint reference (EPR) for the Operation not found...">soap The endpoint reference (EPR) for the Operation not found...</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/%E5%85%84%E5%BC%9F%E8%BF%9ELinux%E5%AD%A6%E4%B9%A0/" title="分类于 兄弟连 Linux 学习">兄弟连 Linux 学习</a></div><span><a href="/learn/devops/linux-basic/Linux%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86%EF%BC%88%E5%85%84%E5%BC%9F%E8%BF%9E%EF%BC%89/" title="Linux服务管理（兄弟连）">Linux服务管理（兄弟连）</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="分类于 深入理解 Java 虚拟机">深入理解 Java 虚拟机</a></div><span><a href="/learn/java/deep-understand-jvm/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/" title="(4) 虚拟机性能监控与故障处理工具">(4) 虚拟机性能监控与故障处理工具</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/cprogram/" title="分类于 C 语言学习">C 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/cprogram/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/" title="分类于 C 语言基础">C 语言基础</a></div><span><a href="/learn/cprogram/c-basic/04%E6%95%B0%E7%BB%84%E6%9E%9A%E4%B8%BE%E5%92%8C%E6%8C%87%E9%92%88/" title="数组、枚举和指针">数组、枚举和指针</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/CentOS/" title="分类于 CentOS">CentOS</a></div><span><a href="/learn/devops/centos/centos7%E5%AE%89%E8%A3%85python3.9.0/" title="centos7安装python3.9.0">centos7安装python3.9.0</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/SQLAlchemy/" title="分类于 SQLAlchemy">SQLAlchemy</a></div><span><a href="/learn/python/sqlalchemy/sqlalchemy%20with%20oracle%20db%20link%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/" title="SQLAlchemy ORM oracle dblink usage">SQLAlchemy ORM oracle dblink usage</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/network/" title="分类于 计算机网络">计算机网络</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/network/%E5%9B%BE%E8%A7%A3HTTP/" title="分类于 图解 HTTP">图解 HTTP</a></div><span><a href="/learn/network/pic-http/%E8%B7%A8%E5%9F%9F%E4%B8%8E%E5%90%8C%E6%BA%90/" title="跨域与同源">跨域与同源</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/Failed%20to%20build%20gevent%20Could%20not%20build%20wheels%20for%20gevent%20which%20use%20PEP%20517%20...%20.../" title="Failed to build gevent Could not build wheels for gevent which use PEP 517 ... ...">Failed to build gevent Could not build wheels for gevent which use PEP 517 ... ...</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Java%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="分类于 深入理解 Java 虚拟机">深入理解 Java 虚拟机</a></div><span><a href="/learn/java/deep-understand-jvm/%E7%AC%AC%E5%9B%9B%E7%AB%A0-JDK%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7/" title="(4) JDK的可视化工具">(4) JDK的可视化工具</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E6%8E%A7%E5%88%B6ssh%E5%AE%A2%E6%88%B7%E7%AB%AFlogin%E6%95%B0%E9%87%8F/" title="控制ssh客户端login数量">控制ssh客户端login数量</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/frontent/ext-js/SenchaCmd学习笔记（7）-Basic-Components/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

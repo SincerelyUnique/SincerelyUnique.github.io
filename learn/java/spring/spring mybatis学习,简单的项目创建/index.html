@@ -1,0 +1,1112 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="http://mingcheng.site/learn/java/spring/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/"><title>spring mybatis 学习，简单的项目创建 - Spring - Java 语言学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">spring mybatis 学习，简单的项目创建</h1><div class="meta"><span class="item" title="创建时间：2017-03-10 15:19:15"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2017-03-10T15:19:15+08:00">2017-03-10</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>31k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>28 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/CspI9iVgn7WBrxF.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/L8J1mc6iu5G7OqR.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/X7De5Cldtk6MgLp.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/ZgfTDNd72ECIoRz.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/l1uOAmzbg6q4fG3.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/CmnDWYfFqX5E7hb.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" itemprop="item" rel="index" title="分类于 Java 语言学习"><span itemprop="name">Java 语言学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/java/Spring/" itemprop="item" rel="index" title="分类于 Spring"><span itemprop="name">Spring</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/java/spring/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><p>这是一个 spring 集成 mybatis 的小项目实践，通过 spring 的 bean 管理，配置 mybatis 的 mapper，同时使用阿里巴巴连接池 druid，连接到 postgresql 数据库，实现 insert 插入操作<br><span id="more"></span></p><ol><li>首先使用 eclipse 创建一个 maven 项目（single maven project），编辑 pom</li></ol><pre><code>  &lt;build&gt;
+    &lt;finalName&gt;test&lt;/finalName&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.8&lt;/source&gt;
+          &lt;target&gt;1.8&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+  
+  &lt;dependencies&gt;
+  	&lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+      &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-orm&lt;/artifactId&gt;
+      &lt;version&gt;4.3.3.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    
+    &lt;dependency&gt;
+      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+      &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+      &lt;version&gt;4.0.0-b01&lt;/version&gt;
+    &lt;/dependency&gt;
+    
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
+      &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;
+      &lt;version&gt;5.1.2.Final&lt;/version&gt;
+    &lt;/dependency&gt;
+    
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+      &lt;artifactId&gt;druid&lt;/artifactId&gt;
+      &lt;version&gt;1.0.26&lt;/version&gt;
+    &lt;/dependency&gt;
+    
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
+      &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+      &lt;version&gt;9.3-1104-jdbc41&lt;/version&gt;
+    &lt;/dependency&gt;
+    
+    &lt;dependency&gt;
+	    &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+	    &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+	    &lt;version&gt;3.4.1&lt;/version&gt;
+	&lt;/dependency&gt;
+	
+	&lt;dependency&gt;
+	    &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+	    &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+	    &lt;version&gt;1.3.0&lt;/version&gt;
+	&lt;/dependency&gt;
+	
+	&lt;dependency&gt;  
+	    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;  
+	    &lt;artifactId&gt;druid&lt;/artifactId&gt;  
+	    &lt;version&gt;1.0.20&lt;/version&gt;  
+	&lt;/dependency&gt; 
+  &lt;/dependencies&gt;
+</code></pre><ol start="2"><li>服务器启动首先加载 web.xml 配置文件，在这里我们设置一个 welcome file，指向 index.jsp，index.jsp 里面其实只是一个 form 表单，表单提交是有一个 servlet 控制，后台 servlet 使用 dopost 方法获取前台表单填充参数，并存储到数据库，下面是 web 配置文件。</li></ol><pre><code>	&lt;!-- 使用contextConfigLocation获取并初始化spring配置文件 --&gt;
+	&lt;context-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;/WEB-INF/applicationContext.xml&lt;/param-value&gt;
+	&lt;/context-param&gt;
+
+	&lt;listener&gt;
+		&lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+	&lt;/listener&gt;
+
+	&lt;!-- 服务器启动，初始化servlet，可以通过他获取spring上下文的bean，里面有个init()方法 --&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;ServerApplicationContext&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;com.spring.mybatis.servlet.ServerApplicationContext&lt;/servlet-class&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+
+	&lt;!-- 这个是获取页面输入数据的servlet，并调用service层接口存储数据 --&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;ServletLogin&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;com.spring.mybatis.servlet.LoginServlet&lt;/servlet-class&gt;
+		&lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+
+	&lt;!-- 这里是阿里连接池druid的监控配置 --&gt;
+	&lt;filter&gt;
+		&lt;filter-name&gt;DruidWebStatFilter&lt;/filter-name&gt;
+		&lt;filter-class&gt;com.alibaba.druid.support.http.WebStatFilter&lt;/filter-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;exclusions&lt;/param-name&gt;
+			&lt;param-value&gt;*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,/rs/*&lt;/param-value&gt;
+		&lt;/init-param&gt;
+	&lt;/filter&gt;
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;DruidWebStatFilter&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;
+	
+	&lt;servlet&gt;
+        	&lt;servlet-name&gt;DruidStatView&lt;/servlet-name&gt;
+        	&lt;servlet-class&gt;com.alibaba.druid.support.http.StatViewServlet&lt;/servlet-class&gt;
+    	&lt;/servlet&gt;
+
+    	&lt;servlet-mapping&gt;
+        	&lt;servlet-name&gt;DruidStatView&lt;/servlet-name&gt;
+        	&lt;url-pattern&gt;/druid/*&lt;/url-pattern&gt;
+    	&lt;/servlet-mapping&gt;
+
+	&lt;!-- web初始化默认加载的页面 --&gt;
+	&lt;welcome-file-list&gt;
+		&lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+	&lt;/welcome-file-list&gt;
+</code></pre><ol start="3"><li>我们下面来看一下 spring 配置文件里面 bean 的配置，当我们配置 bean 的时候，应该注意他们的业务范围，以及应该怎样注入，这里使用的 setter 注入方式，从 web.xml 中可以看出 spring 配置文件是在 WEB-INF 下面的 applicationContext.xml，文件内容是：</li></ol><pre><code>&lt;beans xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+	xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+	xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+    
+    &lt;bean id=&quot;loginService&quot; class=&quot;com.spring.mybatis.service.impl.LoginServiceImpl&quot;&gt;
+        &lt;property name=&quot;loginDao&quot; ref=&quot;loginDao&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    
+    &lt;bean id=&quot;loginDao&quot; class=&quot;org.mybatis.spring.mapper.MapperFactoryBean&quot;&gt;
+        &lt;property name=&quot;mapperInterface&quot; value=&quot;com.spring.mybatis.dao.LoginDao&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;sqlSessionFactory&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    
+    &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
+        &lt;property name=&quot;mapperLocations&quot; value=&quot;classpath*:com/spring/mybatis/mapper/*Mapper.xml&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot; destroy-method = &quot;close&quot;&gt;
+        &lt;property name=&quot;driverClassName&quot; value=&quot;org.postgresql.Driver&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;url&quot; value=&quot;jdbc:postgresql://localhost:5432/test_mybatis_db&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;username&quot; value=&quot;postgres&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;password&quot; value=&quot;dbms4Fna&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;maxActive&quot; value=&quot;20&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;maxIdle&quot; value=&quot;20&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;maxWait&quot; value=&quot;6000&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;defaultAutoCommit&quot; value=&quot;true&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    
+&lt;/beans&gt;
+</code></pre><p>注入顺序大概是：<br>dataSource ---&gt;sqlSessionFactory ---&gt;loginDao ---&gt;loginService</p><ol start="4"><li>我们的页面代码很简单，一个 form 表单</li></ol><pre><code>&lt;form action=&quot;LoginServlet&quot; method=&quot;post&quot;&gt;
+ 用户名:&lt;br&gt;
+&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;&lt;br&gt;
+ 密  码:&lt;br&gt;
+&lt;input type=&quot;text&quot; name=&quot;password&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt; 
+</code></pre><ol start="5"><li>下面是我们配置的一个 servlet 类，其中一个是为了在初始化时获得 ApplicationContext，即 ServerApplicationContext.java</li></ol><pre><code>package com.spring.mybatis.servlet;
+
+import javax.servlet.ServletException;
+
+import javax.servlet.http.HttpServlet;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+public class ServerApplicationContext extends HttpServlet &#123;
+	private static final long serialVersionUID = 1L;
+	private static ApplicationContext serverContext = null;
+
+	@Override
+	public void init() throws ServletException &#123;
+		super.init();
+		javax.servlet.ServletContext servletContext = getServletContext();
+		serverContext = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
+		System.out.println(&quot;================&quot;);
+		System.out.println(&quot;==serverContext begin==&quot;);
+		System.out.println(&quot;================&quot;);
+	&#125;
+
+	public static ApplicationContext getApplicationContext() &#123;
+		return serverContext;
+	&#125;
+	
+&#125;
+</code></pre><ol start="6"><li>这也是一个 servlet 类，类似于处理与前段页面交互的 Struts2 的 Action 类</li></ol><pre><code>package com.spring.mybatis.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.spring.mybatis.domain.UserInfo;
+import com.spring.mybatis.service.LoginService;
+
+@WebServlet(&quot;/LoginServlet&quot;)
+public class LoginServlet extends HttpServlet &#123;
+	private static final long serialVersionUID = 1L;
+       
+    public LoginServlet() &#123;
+        super();
+    &#125;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;
+		doPost(request, response); 
+	&#125;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;
+		response.setContentType(&quot;text/html;charset=gb2312&quot;);  
+        request.setCharacterEncoding(&quot;gb2312&quot;);
+        
+        String username = request.getParameter(&quot;username&quot;);  
+        String password = request.getParameter(&quot;password&quot;); 
+        
+        LoginService loginService = (LoginService) ServerApplicationContext.getApplicationContext().getBean(&quot;loginService&quot;);
+        int age = 14;
+        char sex = '男';
+        int weight = 42;
+        UserInfo ui = new UserInfo();
+        ui.setUsername(username);
+        ui.setPassword(password);
+        ui.setAge(age);
+        ui.setSex(sex);
+        ui.setWeight(weight);
+        loginService.insertUserInfo(ui);
+        /*try &#123;
+            Class.forName(&quot;org.postgresql.Driver&quot;);  
+        &#125; catch (Exception e) &#123;  
+            System.out.print(&quot;Class Not Found Exception&quot;);  
+        &#125;  
+          
+        String url = &quot;jdbc:postgresql://localhost:5432/test_mybatis_db&quot;;  
+        Connection conn = null;  
+        Statement stmt = null;  
+        ResultSet rs = null;  
+          
+        try &#123;  
+            conn = (Connection) DriverManager.getConnection(url,&quot;postgres&quot;,&quot;dbms4Fna&quot;);  
+            stmt = (Statement) conn.createStatement();  
+              
+            String sql = &quot;insert into userinfo (username,userpsw,age,sex,weight) values ('&quot;+username+&quot;','&quot;+psw+&quot;',25,'男',52)&quot;;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            int result=ps.executeUpdate();
+            if( result&gt;0 )&#123;
+            	System.out.println(&quot;Insert OK&quot;);
+            &#125;
+        &#125; catch (Exception e) &#123;  
+            e.printStackTrace();  
+        &#125;*/
+	&#125;
+
+&#125;
+</code></pre><ol start="7"><li>上面的 LoginServlet 里调用了 service 层接口</li></ol><pre><code>package com.spring.mybatis.service;
+
+import com.spring.mybatis.domain.UserInfo;
+
+public interface LoginService &#123;
+
+	public void insertUserInfo(UserInfo userInfo);
+&#125;
+</code></pre><ol start="8"><li>接下来是 service 层接口的实现类，调用 dao</li></ol><pre><code>package com.spring.mybatis.service.impl;
+
+import com.spring.mybatis.dao.LoginDao;
+import com.spring.mybatis.domain.UserInfo;
+import com.spring.mybatis.service.LoginService;
+
+public class LoginServiceImpl implements LoginService &#123;
+
+	private LoginDao loginDao ;
+	
+	public void setLoginDao(LoginDao loginDao) &#123;
+		this.loginDao = loginDao;
+	&#125;
+
+	@Override
+	public void insertUserInfo(UserInfo userInfo) &#123;
+		loginDao.insertUserInfo(userInfo);
+	&#125;
+	
+&#125;
+</code></pre><ol start="9"><li>在我们的 dao 层只需要定义一个接口即可</li></ol><pre><code>package com.spring.mybatis.dao;
+
+import com.spring.mybatis.domain.UserInfo;
+
+public interface LoginDao &#123;
+
+	public void insertUserInfo(UserInfo userInfo);
+&#125;
+</code></pre><ol start="10"><li>下面是 mybatis 重要的类，首先我们定义 pojo（domain），可以根据此 pojo 自动生成 sql 代码，连接并操作数据库</li></ol><pre><code>package com.spring.mybatis.domain;
+
+public class UserInfo &#123;
+
+	private String username;
+	private String password;
+	private int age;
+	private char sex;
+	private int weight;
+
+	public String getUsername() &#123;
+		return username;
+	&#125;
+
+	public void setUsername(String username) &#123;
+		this.username = username;
+	&#125;
+
+	public String getPassword() &#123;
+		return password;
+	&#125;
+
+	public void setPassword(String password) &#123;
+		this.password = password;
+	&#125;
+
+	public int getAge() &#123;
+		return age;
+	&#125;
+
+	public void setAge(int age) &#123;
+		this.age = age;
+	&#125;
+
+	public int getWeight() &#123;
+		return weight;
+	&#125;
+
+	public void setWeight(int weight) &#123;
+		this.weight = weight;
+	&#125;
+
+	public char getSex() &#123;
+		return sex;
+	&#125;
+
+	public void setSex(char sex) &#123;
+		this.sex = sex;
+	&#125;
+
+	@Override
+	public String toString() &#123;
+		return &quot;UserInfo [username=&quot; + username + &quot;, password=&quot; + password + &quot;, age=&quot; + age + &quot;, sex=&quot; + sex
+				+ &quot;, weight=&quot; + weight + &quot;]&quot;;
+	&#125;
+
+&#125;
+</code></pre><ol start="11"><li>创建 mapper 包，存放 mapper.xml 文件</li></ol><pre><code>&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot; &gt;
+&lt;!-- 注意这里的命名空间要指向dao，类型指向domain对应实体类 --&gt;
+&lt;mapper namespace=&quot;com.spring.mybatis.dao.LoginDao&quot; &gt;
+  &lt;resultMap id=&quot;BaseResultMap&quot; type=&quot;com.spring.mybatis.domain.UserInfo&quot; &gt;
+    &lt;id column=&quot;username&quot; property=&quot;username&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result column=&quot;userpsw&quot; property=&quot;password&quot; jdbcType=&quot;VARCHAR&quot; /&gt;
+    &lt;result column=&quot;age&quot; property=&quot;age&quot; jdbcType=&quot;INTEGER&quot; /&gt;
+    &lt;result column=&quot;sex&quot; property=&quot;sex&quot; jdbcType=&quot;CHAR&quot; /&gt;
+    &lt;result column=&quot;weight&quot; property=&quot;weight&quot; jdbcType=&quot;INTEGER&quot; /&gt;
+  &lt;/resultMap&gt;
+  
+  &lt;!-- 这里的id要和dao接口的方法名对应 --&gt;
+  &lt;insert id=&quot;insertUserInfo&quot; parameterType=&quot;com.spring.mybatis.domain.UserInfo&quot; &gt;
+    insert into public.userinfo (username, userpsw, age, 
+      sex, weight)
+    values (#&#123;username,jdbcType=VARCHAR&#125;, #&#123;password,jdbcType=VARCHAR&#125;, #&#123;age,jdbcType=INTEGER&#125;, 
+      #&#123;sex,jdbcType=CHAR&#125;, #&#123;weight,jdbcType=INTEGER&#125;)
+  &lt;/insert&gt;
+&lt;/mapper&gt;
+</code></pre><p>Appendix：<br>附上两个 mybatis 自动生成的类文件（没有用到）</p><pre><code>package com.spring.mybatis.mapper;
+
+import com.spring.mybatis.domain.UserInfo;
+import com.spring.mybatis.entity.UserInfoExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface UserInfoMapper &#123;
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int countByExample(UserInfoExample example);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int deleteByExample(UserInfoExample example);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int deleteByPrimaryKey(String username);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int insert(UserInfo record);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int insertSelective(UserInfo record);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    List&lt;UserInfo&gt; selectByExample(UserInfoExample example);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    UserInfo selectByPrimaryKey(String username);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int updateByExampleSelective(@Param(&quot;record&quot;) UserInfo record, @Param(&quot;example&quot;) UserInfoExample example);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int updateByExample(@Param(&quot;record&quot;) UserInfo record, @Param(&quot;example&quot;) UserInfoExample example);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int updateByPrimaryKeySelective(UserInfo record);
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    int updateByPrimaryKey(UserInfo record);
+&#125;
+
+
+
+
+
+
+package com.spring.mybatis.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserInfoExample &#123;
+    /**
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    protected String orderByClause;
+
+    /**
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    protected boolean distinct;
+
+    /**
+     * This field was generated by MyBatis Generator.
+     * This field corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    protected List&lt;Criteria&gt; oredCriteria;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public UserInfoExample() &#123;
+        oredCriteria = new ArrayList&lt;Criteria&gt;();
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public void setOrderByClause(String orderByClause) &#123;
+        this.orderByClause = orderByClause;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public String getOrderByClause() &#123;
+        return orderByClause;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public void setDistinct(boolean distinct) &#123;
+        this.distinct = distinct;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public boolean isDistinct() &#123;
+        return distinct;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public List&lt;Criteria&gt; getOredCriteria() &#123;
+        return oredCriteria;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public void or(Criteria criteria) &#123;
+        oredCriteria.add(criteria);
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public Criteria or() &#123;
+        Criteria criteria = createCriteriaInternal();
+        oredCriteria.add(criteria);
+        return criteria;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public Criteria createCriteria() &#123;
+        Criteria criteria = createCriteriaInternal();
+        if (oredCriteria.size() == 0) &#123;
+            oredCriteria.add(criteria);
+        &#125;
+        return criteria;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    protected Criteria createCriteriaInternal() &#123;
+        Criteria criteria = new Criteria();
+        return criteria;
+    &#125;
+
+    /**
+     * This method was generated by MyBatis Generator.
+     * This method corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public void clear() &#123;
+        oredCriteria.clear();
+        orderByClause = null;
+        distinct = false;
+    &#125;
+
+    /**
+     * This class was generated by MyBatis Generator.
+     * This class corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    protected abstract static class GeneratedCriteria &#123;
+        protected List&lt;Criterion&gt; criteria;
+
+        protected GeneratedCriteria() &#123;
+            super();
+            criteria = new ArrayList&lt;Criterion&gt;();
+        &#125;
+
+        public boolean isValid() &#123;
+            return criteria.size() &gt; 0;
+        &#125;
+
+        public List&lt;Criterion&gt; getAllCriteria() &#123;
+            return criteria;
+        &#125;
+
+        public List&lt;Criterion&gt; getCriteria() &#123;
+            return criteria;
+        &#125;
+
+        protected void addCriterion(String condition) &#123;
+            if (condition == null) &#123;
+                throw new RuntimeException(&quot;Value for condition cannot be null&quot;);
+            &#125;
+            criteria.add(new Criterion(condition));
+        &#125;
+
+        protected void addCriterion(String condition, Object value, String property) &#123;
+            if (value == null) &#123;
+                throw new RuntimeException(&quot;Value for &quot; + property + &quot; cannot be null&quot;);
+            &#125;
+            criteria.add(new Criterion(condition, value));
+        &#125;
+
+        protected void addCriterion(String condition, Object value1, Object value2, String property) &#123;
+            if (value1 == null || value2 == null) &#123;
+                throw new RuntimeException(&quot;Between values for &quot; + property + &quot; cannot be null&quot;);
+            &#125;
+            criteria.add(new Criterion(condition, value1, value2));
+        &#125;
+
+        public Criteria andUsernameIsNull() &#123;
+            addCriterion(&quot;username is null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameIsNotNull() &#123;
+            addCriterion(&quot;username is not null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameEqualTo(String value) &#123;
+            addCriterion(&quot;username =&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameNotEqualTo(String value) &#123;
+            addCriterion(&quot;username &lt;&gt;&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameGreaterThan(String value) &#123;
+            addCriterion(&quot;username &gt;&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameGreaterThanOrEqualTo(String value) &#123;
+            addCriterion(&quot;username &gt;=&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameLessThan(String value) &#123;
+            addCriterion(&quot;username &lt;&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameLessThanOrEqualTo(String value) &#123;
+            addCriterion(&quot;username &lt;=&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameLike(String value) &#123;
+            addCriterion(&quot;username like&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameNotLike(String value) &#123;
+            addCriterion(&quot;username not like&quot;, value, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameIn(List&lt;String&gt; values) &#123;
+            addCriterion(&quot;username in&quot;, values, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameNotIn(List&lt;String&gt; values) &#123;
+            addCriterion(&quot;username not in&quot;, values, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameBetween(String value1, String value2) &#123;
+            addCriterion(&quot;username between&quot;, value1, value2, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUsernameNotBetween(String value1, String value2) &#123;
+            addCriterion(&quot;username not between&quot;, value1, value2, &quot;username&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswIsNull() &#123;
+            addCriterion(&quot;userpsw is null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswIsNotNull() &#123;
+            addCriterion(&quot;userpsw is not null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswEqualTo(String value) &#123;
+            addCriterion(&quot;userpsw =&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswNotEqualTo(String value) &#123;
+            addCriterion(&quot;userpsw &lt;&gt;&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswGreaterThan(String value) &#123;
+            addCriterion(&quot;userpsw &gt;&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswGreaterThanOrEqualTo(String value) &#123;
+            addCriterion(&quot;userpsw &gt;=&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswLessThan(String value) &#123;
+            addCriterion(&quot;userpsw &lt;&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswLessThanOrEqualTo(String value) &#123;
+            addCriterion(&quot;userpsw &lt;=&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswLike(String value) &#123;
+            addCriterion(&quot;userpsw like&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswNotLike(String value) &#123;
+            addCriterion(&quot;userpsw not like&quot;, value, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswIn(List&lt;String&gt; values) &#123;
+            addCriterion(&quot;userpsw in&quot;, values, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswNotIn(List&lt;String&gt; values) &#123;
+            addCriterion(&quot;userpsw not in&quot;, values, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswBetween(String value1, String value2) &#123;
+            addCriterion(&quot;userpsw between&quot;, value1, value2, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andUserpswNotBetween(String value1, String value2) &#123;
+            addCriterion(&quot;userpsw not between&quot;, value1, value2, &quot;userpsw&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeIsNull() &#123;
+            addCriterion(&quot;age is null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeIsNotNull() &#123;
+            addCriterion(&quot;age is not null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeEqualTo(Integer value) &#123;
+            addCriterion(&quot;age =&quot;, value, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeNotEqualTo(Integer value) &#123;
+            addCriterion(&quot;age &lt;&gt;&quot;, value, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeGreaterThan(Integer value) &#123;
+            addCriterion(&quot;age &gt;&quot;, value, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeGreaterThanOrEqualTo(Integer value) &#123;
+            addCriterion(&quot;age &gt;=&quot;, value, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeLessThan(Integer value) &#123;
+            addCriterion(&quot;age &lt;&quot;, value, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeLessThanOrEqualTo(Integer value) &#123;
+            addCriterion(&quot;age &lt;=&quot;, value, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeIn(List&lt;Integer&gt; values) &#123;
+            addCriterion(&quot;age in&quot;, values, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeNotIn(List&lt;Integer&gt; values) &#123;
+            addCriterion(&quot;age not in&quot;, values, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeBetween(Integer value1, Integer value2) &#123;
+            addCriterion(&quot;age between&quot;, value1, value2, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andAgeNotBetween(Integer value1, Integer value2) &#123;
+            addCriterion(&quot;age not between&quot;, value1, value2, &quot;age&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexIsNull() &#123;
+            addCriterion(&quot;sex is null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexIsNotNull() &#123;
+            addCriterion(&quot;sex is not null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexEqualTo(String value) &#123;
+            addCriterion(&quot;sex =&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexNotEqualTo(String value) &#123;
+            addCriterion(&quot;sex &lt;&gt;&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexGreaterThan(String value) &#123;
+            addCriterion(&quot;sex &gt;&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexGreaterThanOrEqualTo(String value) &#123;
+            addCriterion(&quot;sex &gt;=&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexLessThan(String value) &#123;
+            addCriterion(&quot;sex &lt;&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexLessThanOrEqualTo(String value) &#123;
+            addCriterion(&quot;sex &lt;=&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexLike(String value) &#123;
+            addCriterion(&quot;sex like&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexNotLike(String value) &#123;
+            addCriterion(&quot;sex not like&quot;, value, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexIn(List&lt;String&gt; values) &#123;
+            addCriterion(&quot;sex in&quot;, values, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexNotIn(List&lt;String&gt; values) &#123;
+            addCriterion(&quot;sex not in&quot;, values, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexBetween(String value1, String value2) &#123;
+            addCriterion(&quot;sex between&quot;, value1, value2, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andSexNotBetween(String value1, String value2) &#123;
+            addCriterion(&quot;sex not between&quot;, value1, value2, &quot;sex&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightIsNull() &#123;
+            addCriterion(&quot;weight is null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightIsNotNull() &#123;
+            addCriterion(&quot;weight is not null&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightEqualTo(Integer value) &#123;
+            addCriterion(&quot;weight =&quot;, value, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightNotEqualTo(Integer value) &#123;
+            addCriterion(&quot;weight &lt;&gt;&quot;, value, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightGreaterThan(Integer value) &#123;
+            addCriterion(&quot;weight &gt;&quot;, value, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightGreaterThanOrEqualTo(Integer value) &#123;
+            addCriterion(&quot;weight &gt;=&quot;, value, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightLessThan(Integer value) &#123;
+            addCriterion(&quot;weight &lt;&quot;, value, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightLessThanOrEqualTo(Integer value) &#123;
+            addCriterion(&quot;weight &lt;=&quot;, value, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightIn(List&lt;Integer&gt; values) &#123;
+            addCriterion(&quot;weight in&quot;, values, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightNotIn(List&lt;Integer&gt; values) &#123;
+            addCriterion(&quot;weight not in&quot;, values, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightBetween(Integer value1, Integer value2) &#123;
+            addCriterion(&quot;weight between&quot;, value1, value2, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+
+        public Criteria andWeightNotBetween(Integer value1, Integer value2) &#123;
+            addCriterion(&quot;weight not between&quot;, value1, value2, &quot;weight&quot;);
+            return (Criteria) this;
+        &#125;
+    &#125;
+
+    /**
+     * This class was generated by MyBatis Generator.
+     * This class corresponds to the database table public.userinfo
+     *
+     * @mbggenerated do_not_delete_during_merge Fri Mar 10 15:01:14 CST 2017
+     */
+    public static class Criteria extends GeneratedCriteria &#123;
+
+        protected Criteria() &#123;
+            super();
+        &#125;
+    &#125;
+
+    /**
+     * This class was generated by MyBatis Generator.
+     * This class corresponds to the database table public.userinfo
+     *
+     * @mbggenerated Fri Mar 10 15:01:14 CST 2017
+     */
+    public static class Criterion &#123;
+        private String condition;
+
+        private Object value;
+
+        private Object secondValue;
+
+        private boolean noValue;
+
+        private boolean singleValue;
+
+        private boolean betweenValue;
+
+        private boolean listValue;
+
+        private String typeHandler;
+
+        public String getCondition() &#123;
+            return condition;
+        &#125;
+
+        public Object getValue() &#123;
+            return value;
+        &#125;
+
+        public Object getSecondValue() &#123;
+            return secondValue;
+        &#125;
+
+        public boolean isNoValue() &#123;
+            return noValue;
+        &#125;
+
+        public boolean isSingleValue() &#123;
+            return singleValue;
+        &#125;
+
+        public boolean isBetweenValue() &#123;
+            return betweenValue;
+        &#125;
+
+        public boolean isListValue() &#123;
+            return listValue;
+        &#125;
+
+        public String getTypeHandler() &#123;
+            return typeHandler;
+        &#125;
+
+        protected Criterion(String condition) &#123;
+            super();
+            this.condition = condition;
+            this.typeHandler = null;
+            this.noValue = true;
+        &#125;
+
+        protected Criterion(String condition, Object value, String typeHandler) &#123;
+            super();
+            this.condition = condition;
+            this.value = value;
+            this.typeHandler = typeHandler;
+            if (value instanceof List&lt;?&gt;) &#123;
+                this.listValue = true;
+            &#125; else &#123;
+                this.singleValue = true;
+            &#125;
+        &#125;
+
+        protected Criterion(String condition, Object value) &#123;
+            this(condition, value, null);
+        &#125;
+
+        protected Criterion(String condition, Object value, Object secondValue, String typeHandler) &#123;
+            super();
+            this.condition = condition;
+            this.value = value;
+            this.secondValue = secondValue;
+            this.typeHandler = typeHandler;
+            this.betweenValue = true;
+        &#125;
+
+        protected Criterion(String condition, Object value, Object secondValue) &#123;
+            this(condition, value, secondValue, null);
+        &#125;
+    &#125;
+&#125;
+</code></pre></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/java/spring/spring mybatis学习,简单的项目创建/" class="item leancloud_visitors" data-flag-title="spring mybatis 学习，简单的项目创建" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/java/spring/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/" title="spring mybatis 学习，简单的项目创建">http://mingcheng.site/learn/java/spring/spring mybatis学习,简单的项目创建/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/%E4%BD%BF%E7%94%A8jasypt%E4%B8%BAdatasource%E5%B1%9E%E6%80%A7%E5%8A%A0%E5%AF%86/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;TsQteqc94bi2oUm.jpg" title="使用jasypt为datasource属性加密"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Spring</span><h3>使用jasypt为datasource属性加密</h3></a></div><div class="item right"><a href="/learn/java/mybatis/mybatis%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;ge1GuDaMQs5mUSC.jpg" title="mybatis自动生成代码"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> MyBatis</span><h3>mybatis自动生成代码</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/java/spring/Spring%20mvc%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Spring mvc学习">Spring mvc学习</a></li><li><a href="/learn/java/spring/Spring%20aop%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Spring aop学习">Spring aop学习</a></li><li><a href="/learn/java/spring/spring%20jdbctemplate%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="bookmark" title="spring jdbctemplate的使用">spring jdbctemplate的使用</a></li><li class="active"><a href="/learn/java/spring/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/" rel="bookmark" title="spring mybatis学习,简单的项目创建">spring mybatis学习,简单的项目创建</a></li><li><a href="/learn/java/spring/spring%20mvc%E4%BD%BF%E7%94%A8ConversionService%E8%BD%AC%E6%8D%A2%E6%95%B0%E6%8D%AE/" rel="bookmark" title="spring mvc使用ConversionService转换数据">spring mvc使用ConversionService转换数据</a></li><li><a href="/learn/java/spring/spring%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" rel="bookmark" title="spring定时器的基本使用">spring定时器的基本使用</a></li><li><a href="/learn/java/spring/spring%20boot%E5%8F%91%E9%80%81%E7%9F%AD%E4%BF%A1%E6%9C%8D%E5%8A%A1/" rel="bookmark" title="spring boot发送短信服务">spring boot发送短信服务</a></li><li><a href="/learn/java/spring/spring%E9%9B%86%E6%88%90javamail%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" rel="bookmark" title="spring集成javamail发送邮件">spring集成javamail发送邮件</a></li><li><a href="/learn/java/spring/spring%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B3%A8%E5%85%A5%E7%9A%84bean/" rel="bookmark" title="spring项目中静态方法中使用注入的bean">spring项目中静态方法中使用注入的bean</a></li><li><a href="/learn/java/spring/spring%20boot%E4%BA%A7%E7%94%9F404%E7%9A%84%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5/" rel="bookmark" title="spring boot产生404的一种情况">spring boot产生404的一种情况</a></li><li><a href="/learn/java/spring/spring%20boot%20neo4j%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="spring boot neo4j简单学习">spring boot neo4j简单学习</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/%E4%BD%BF%E7%94%A8jasypt%E4%B8%BAdatasource%E5%B1%9E%E6%80%A7%E5%8A%A0%E5%AF%86/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/java/mybatis/mybatis%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/VBA%E4%B8%A4%E5%88%97%E5%8E%BB%E9%87%8D%E5%B9%B6%E6%8F%90%E5%8F%96%E4%B8%8D%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%88%B0%E6%96%B0%E5%88%97/" title="VBA两列去重并提取不重复数据到新列">VBA两列去重并提取不重复数据到新列</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/IntelliJIDEA/" title="分类于 IntelliJIDEA">IntelliJIDEA</a></div><span><a href="/learn/java/idea/idea%20actiBPM%E6%8F%92%E4%BB%B6/" title="idea actiBPM插件">idea actiBPM插件</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" title="分类于 计算机科学">计算机科学</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/" title="分类于 二进制杂谈">二进制杂谈</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/Theme-Shoka-Documentation/" title="分类于 Theme Shoka Documentation">Theme Shoka Documentation</a></div><span><a href="/computer-science/note/theme-shoka-doc/display/" title="Step.3 界面显示">Step.3 界面显示</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E8%AE%B0spring%20boot%E6%89%93war%E5%8C%85/" title="记spring boot打war包">记spring boot打war包</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/%E4%BD%BF%E7%94%A8layui%E8%83%8C%E6%99%AF%E8%8A%B1%E5%B1%8F/" title="使用layui背景花屏">使用layui背景花屏</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/life/" title="分类于 生活">生活</a> <i class="ic i-angle-right"></i> <a href="/categories/life/%E5%B0%8F%E6%B8%B8%E6%88%8F/" title="分类于 小游戏">小游戏</a></div><span><a href="/life/game/%E5%88%87%E6%B0%B4%E6%9E%9C/" title="切水果">切水果</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Pandas/" title="分类于 Pandas">Pandas</a></div><span><a href="/learn/python/pandas/pandas%E5%88%97%E7%AD%9B%E9%80%89/" title="pandas列筛选">pandas列筛选</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/Python%E5%88%9D%E5%AD%A6%EF%BC%884%EF%BC%89%E5%9F%BA%E6%9C%AC%E8%AF%AD%E5%8F%A5/" title="Python初学（4）基本语句">Python初学（4）基本语句</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Pandas/" title="分类于 Pandas">Pandas</a></div><span><a href="/learn/python/pandas/pandas%E4%B8%80%E8%A1%8C%E6%8B%86%E5%88%86%E6%88%90%E5%A4%9A%E8%A1%8C/" title="pandas一行拆分成多行">pandas一行拆分成多行</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/life/" title="分类于 生活">生活</a> <i class="ic i-angle-right"></i> <a href="/categories/life/%E5%B0%8F%E8%A7%86%E9%A2%91/" title="分类于 小视频">小视频</a></div><span><a href="/life/video/%E5%B4%94%E6%B0%B8%E5%85%83%E5%92%8C%E9%BB%84%E8%A5%BF%E4%B8%A4%E6%AE%B5%E8%A7%86%E9%A2%91/" title="崔永元和黄西两段视频">崔永元和黄西两段视频</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/java/spring/spring mybatis学习,简单的项目创建/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

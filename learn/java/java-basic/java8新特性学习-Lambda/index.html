@@ -1,0 +1,486 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="http://mingcheng.site/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/"><title>java8 新特性学习 - Lambda - Java - Java 语言学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">java8 新特性学习 - Lambda</h1><div class="meta"><span class="item" title="创建时间：2017-04-12 16:34:08"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2017-04-12T16:34:08+08:00">2017-04-12</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>15k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>13 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/HZCYqfsMlE61Uh8.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/X7De5Cldtk6MgLp.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/ZgfTDNd72ECIoRz.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/iGOMdHWbhu8DzsL.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/CmnDWYfFqX5E7hb.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/9qrzMg5QRWevBYN.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" itemprop="item" rel="index" title="分类于 Java 语言学习"><span itemprop="name">Java 语言学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/java/Java/" itemprop="item" rel="index" title="分类于 Java"><span itemprop="name">Java</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><p>这篇博客转自网上，网址是：!(<span class="exturl" data-url="aHR0cDovL3d3dy5qYjUxLm5ldC9hcnRpY2xlLzQ4MzA0Lmh0bQ==">http://www.jb51.net/article/48304.htm</span>)[<span class="exturl" data-url="aHR0cDovL3d3dy5qYjUxLm5ldC9hcnRpY2xlLzQ4MzA0Lmh0bQ==">http://www.jb51.net/article/48304.htm</span>]<br>，首先谢谢博主，收藏一下<br><span id="more"></span></p><ol><li>编写一个 java 类</li></ol><pre><code>public class Demo &#123;
+
+	public static void main(String[] args) &#123;
+		//Arrays.asList数组转化成list
+		List&lt;String&gt; names = Arrays.asList(&quot;peter&quot;, &quot;anna&quot;, &quot;mike&quot;, &quot;xenia&quot;);
+		
+		Collections.sort(names, new Comparator&lt;String&gt;() &#123;
+		    @Override
+		    public int compare(String a, String b) &#123;
+		        return b.compareTo(a);
+		    &#125;
+		&#125;);
+		
+		System.out.println(names);
+	&#125;
+&#125;
+</code></pre><p>此时使用 jdk7 打印 names 会抛异常：Exception in thread &quot;main&quot; java.lang.UnsupportedClassVersionError；<br>使用 jdk8 则正常输出：[xenia, peter, mike, anna]</p><ol start="2"><li>传统排序和 jdk8 Lambda 排序</li></ol><pre><code>public class Demo&#123;
+
+	public static void main(String[] args) &#123;
+		//Arrays.asList数组转化成list
+		List&lt;String&gt; names = Arrays.asList(&quot;peter&quot;, &quot;anna&quot;, &quot;mike&quot;, &quot;xenia&quot;);
+		
+		/**
+		 * jdk7排序，逆序，正序a.compareTo(b);
+		 * 传统方法：使用匿名对象
+		 * */
+		/*Collections.sort(names, new Comparator&lt;String&gt;() &#123;
+		    @Override
+		    public int compare(String a, String b) &#123;
+		        return b.compareTo(a);
+		    &#125;
+		&#125;);*/
+
+		/**
+		 * jdk8排序，[anna, mike, peter, xenia]
+		 * */
+		/*Collections.sort(names, (String a,String b)-&gt;&#123;
+			return a.compareTo(b);
+		&#125;);*/
+		
+		/**
+		 * jdk8排序，[xenia, peter, mike, anna]
+		 * */
+		//Collections.sort(names, (String a,String b)-&gt;b.compareTo(a));
+		
+		/**
+		 * jdk8排序，输出：[anna, mike, peter, xenia]
+		 * */
+		Collections.sort(names, (a,b)-&gt;a.compareTo(b));
+		
+		System.out.println(names);
+	&#125;
+&#125;
+</code></pre><ol start="3"><li>什么是函数式接口，即只包含一个抽象方法的接口类型，我们只需要在定义的 interface 上面添加 @FunctionalInterface 注解即可，例子如下：<br>首先我们定义一个接口，注意只能包含一个抽象方法，由于注解原因，两个或两个以上方法会报编译错误：</li></ol><pre><code>@FunctionalInterface
+public interface Converter&lt;F,T&gt; &#123;
+	T convert(F from);
+&#125;
+</code></pre><p>然后我们定义一个一个 Demo 测试类作为接口的实现类（不实现也可以），主要实现数据转型：</p><pre><code>public class Demo implements Converter&lt;String, Integer&gt;&#123;
+
+	public static void main(String[] args) &#123;
+		Converter&lt;String, Integer&gt; converter = (from) -&gt; Integer.valueOf(from);
+		Integer converted = converter.convert(&quot;123&quot;);
+		System.out.println(converted);    // 打印结果是123
+	&#125;
+
+	@Override
+	public Integer convert(String from) &#123;
+		// TODO Auto-generated method stub
+		return null;
+	&#125;
+&#125;
+</code></pre><ol start="4"><li>其实 java8 也允许你使用：：关键字来传递方法或者构造函数引用，根据上面的例子可以修改成如下：</li></ol><pre><code>Converter&lt;String, Integer&gt; converter = Integer::valueOf;
+Integer converted = converter.convert(&quot;123&quot;);
+System.out.println(converted);   // 123
+</code></pre><p>我们看一个新的例子，定义一个 Person 实体类，定义一个 PersonFactory 接口，定义一个实现类：</p><pre><code>public class Person &#123;
+
+	String firstName;
+	String lastName;
+
+	Person() &#123;
+	&#125;
+
+	Person(String firstName, String lastName) &#123;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	&#125;
+&#125;
+</code></pre><pre><code>public interface PersonFactory&lt;P extends Person&gt; &#123;
+    P create(String firstName, String lastName);
+&#125;
+</code></pre><pre><code>public class Test implements PersonFactory&lt;Person&gt;&#123;
+
+	public static void main(String[] args) &#123;
+		PersonFactory&lt;Person&gt; personFactory = Person::new;   //必须是实例化接口的时候才能使用::
+		Person person = personFactory.create(&quot;Peter&quot;, &quot;Parker&quot;);
+		System.out.println(person);
+	&#125;
+
+	@Override
+	public Person create(String firstName, String lastName) &#123;
+		return null;
+	&#125;
+&#125;
+</code></pre><ol start="5"><li>Lambda 作用域，可以直接访问外层的 final 修饰的局部变量（或隐性的认为不会被后续操作修改），或者实例的字段以及静态变量。</li><li>访问局部变量<br>首先定义一个接口</li></ol><pre><code>@FunctionalInterface
+public interface Converter&lt;F, T&gt; &#123;
+
+	T convert(F from);
+&#125;
+</code></pre><p>然后</p><pre><code>public class Demo&#123;
+
+	static int num = 1;  //前面或者加final
+	
+	public static void main(String[] args) &#123;
+		Converter&lt;Integer, String&gt; stringConverter = (from) -&gt; String.valueOf(from + num);
+		String s = stringConverter.convert(2);     // 3
+		System.out.println(s);
+	&#125;
+&#125;
+</code></pre><ol start="7"><li>java8 常用的一些接口</li></ol><pre><code>package com.java.demo;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+public class Demo&#123;
+
+	static int num = 1;
+	
+	public static void main(String[] args) &#123;
+		//testPredicate();
+		//testFunction();
+		//testSupplier();
+		//testConsumer();
+		//testComparator();
+	&#125;
+	
+	/**
+	 * Predicate 接口只有一个参数，返回boolean类型。
+	 * 该接口包含多种默认方法来将Predicate组合成其他复杂的逻辑（比如：与，或，非）：
+	 * */
+	public static void testPredicate()&#123;
+		Predicate&lt;String&gt; predicate = (s) -&gt; s.length() &gt; 0;
+		boolean b1 = predicate.test(&quot;foo&quot;);              // true
+		boolean b2 = predicate.negate().test(&quot;foo&quot;);     // false
+		Predicate&lt;Boolean&gt; nonNull = Objects::nonNull;
+		Predicate&lt;Boolean&gt; isNull = Objects::isNull;
+		Predicate&lt;String&gt; isEmpty = String::isEmpty;
+		Predicate&lt;String&gt; isNotEmpty = isEmpty.negate();
+	&#125;
+	
+	/**
+	 * Function 接口有一个参数并且返回一个结果，
+	 * 并附带了一些可以和其他函数组合的默认方法（compose, andThen）：
+	 * */
+	public static void testFunction()&#123;
+		Function&lt;String, Integer&gt; toInteger = Integer::valueOf;
+		Function&lt;String, String&gt; backToString = toInteger.andThen(String::valueOf);
+		backToString.apply(&quot;123&quot;);     // &quot;123&quot;
+	&#125;
+	
+	/**
+	 * Supplier 接口返回一个任意范型的值，
+	 * 和Function接口不同的是该接口没有任何参数
+	 * */
+	public static void testSupplier()&#123;
+		Supplier&lt;Person&gt; personSupplier = Person::new;
+		personSupplier.get();   // new Person
+	&#125;
+	
+	/**
+	 * Consumer 接口表示执行在单个参数上的操作。
+	 * */
+	public static void testConsumer()&#123;
+		Consumer&lt;Person&gt; greeter = (p) -&gt; System.out.println(&quot;Hello, &quot; + p.firstName);
+		greeter.accept(new Person(&quot;Luke&quot;, &quot;Skywalker&quot;));
+	&#125;
+	
+	/**
+	 * Comparator 是老Java中的经典接口， 
+	 * Java 8在此之上添加了多种默认方法：
+	 * */
+	public static void testComparator()&#123;
+		Comparator&lt;Person&gt; comparator = (p1, p2) -&gt; p1.firstName.compareTo(p2.firstName);
+		Person p1 = new Person(&quot;John&quot;, &quot;Doe&quot;);
+		Person p2 = new Person(&quot;Alice&quot;, &quot;Wonderland&quot;);
+		comparator.compare(p1, p2);             // &gt; 0
+		comparator.reversed().compare(p1, p2);  // &lt; 0
+	&#125;
+	
+	/**
+	 * Optional 不是函数是接口，这是个用来防止NullPointerException异常的辅助类型，
+	 * 这是下一届中将要用到的重要概念，现在先简单的看看这个接口能干什么：
+	 * Optional 被定义为一个简单的容器，其值可能是null或者不是null。
+	 * 在Java 8之前一般某个函数应该返回非空对象但是偶尔却可能返回了null，
+	 * 而在Java 8中，不推荐你返回null而是返回Optional。
+	 * */
+	public static void testOptional()&#123;
+		Optional&lt;String&gt; optional = Optional.of(&quot;bam&quot;);
+		optional.isPresent();           // true
+		optional.get();                 // &quot;bam&quot;
+		optional.orElse(&quot;fallback&quot;);    // &quot;bam&quot;
+		optional.ifPresent((s) -&gt; System.out.println(s.charAt(0)));     // &quot;b&quot;
+	&#125;
+	
+	/**
+	 * java.util.Stream 表示能应用在一组元素上一次执行的操作序列。
+	 * Stream 操作分为中间操作或者最终操作两种，最终操作返回一特定类型的计算结果，
+	 * 而中间操作返回Stream本身，这样你就可以将多个操作依次串起来。
+	 * Stream 的创建需要指定一个数据源，比如 java.util.Collection的子类，List或者Set， Map不支持。
+	 * Stream的操作可以串行执行或者并行执行。
+	 * 
+	 * Java 8扩展了集合类，
+	 * 可以通过 Collection.stream() 或者 Collection.parallelStream() 来创建一个Stream。
+	 * */
+	public static void testStream()&#123;
+		List&lt;String&gt; stringCollection = new ArrayList&lt;&gt;();
+		stringCollection.add(&quot;ddd2&quot;);
+		stringCollection.add(&quot;aaa2&quot;);
+		stringCollection.add(&quot;bbb1&quot;);
+		stringCollection.add(&quot;aaa1&quot;);
+		stringCollection.add(&quot;bbb3&quot;);
+		stringCollection.add(&quot;ccc&quot;);
+		stringCollection.add(&quot;bbb2&quot;);
+		stringCollection.add(&quot;ddd1&quot;);
+		
+		/**
+		 * 过滤通过一个predicate接口来过滤并只保留符合条件的元素，
+		 * 该操作属于中间操作，所以我们可以在过滤后的结果来应用其他Stream操作（比如forEach）。
+		 * forEach是一个最终操作，所以我们不能在forEach之后来执行其他Stream操作。
+		 * */
+		stringCollection.stream()
+	    				.filter((s) -&gt; s.startsWith(&quot;a&quot;))
+	    				.forEach(System.out::println);		// &quot;aaa2&quot;, &quot;aaa1&quot;
+		
+		/**
+		 * 排序是一个中间操作，返回的是排序好后的Stream。如果你不指定一个自定义的Comparator则会使用默认排序。
+		 * 需要注意的是，排序只创建了一个排列好后的Stream，而不会影响原有的数据源，排序之后原数据stringCollection是不会被修改的：
+		 * */
+		stringCollection.stream()
+	    				.sorted()
+	    				.filter((s) -&gt; s.startsWith(&quot;a&quot;))
+	    				.forEach(System.out::println);		// &quot;aaa1&quot;, &quot;aaa2&quot;
+		
+		/**
+		 * 中间操作map会将元素根据指定的Function接口来依次将元素转成另外的对象，
+		 * 下面的示例展示了将字符串转换为大写字符串。
+		 * 你也可以通过map来讲对象转换成其他类型，map返回的Stream类型是根据你map传递进去的函数的返回值决定的。
+		 * */
+		stringCollection.stream()
+	    				.map(String::toUpperCase)
+	    				.sorted((a, b) -&gt; b.compareTo(a))
+	    				.forEach(System.out::println); 		//// &quot;DDD2&quot;, &quot;DDD1&quot;, &quot;CCC&quot;, &quot;BBB3&quot;, &quot;BBB2&quot;, &quot;AAA2&quot;, &quot;AAA1&quot;
+
+		/**
+		 * Stream提供了多种匹配操作，允许检测指定的Predicate是否匹配整个Stream。
+		 * 所有的匹配操作都是最终操作，并返回一个boolean类型的值。
+		 * */
+		boolean anyStartsWithA = stringCollection.stream().anyMatch(
+				(s) -&gt; s.startsWith(&quot;a&quot;));
+		System.out.println(anyStartsWithA); // true
+		boolean allStartsWithA = stringCollection.stream().allMatch(
+				(s) -&gt; s.startsWith(&quot;a&quot;));
+		System.out.println(allStartsWithA); // false
+		boolean noneStartsWithZ = stringCollection.stream().noneMatch(
+				(s) -&gt; s.startsWith(&quot;z&quot;));
+		System.out.println(noneStartsWithZ); // true
+		
+		/**
+		 * 计数是一个最终操作，返回Stream中元素的个数，返回值类型是long。
+		 * */
+		long startsWithB = stringCollection.stream()
+				.filter((s) -&gt; s.startsWith(&quot;b&quot;)).count();
+		System.out.println(startsWithB); // 3
+		
+		/**
+		 * 这是一个最终操作，允许通过指定的函数来讲stream中的多个元素规约为一个元素，
+		 * 规越后的结果是通过Optional接口表示的：
+		 * */
+		Optional&lt;String&gt; reduced = stringCollection.stream().sorted()
+				.reduce((s1, s2) -&gt; s1 + &quot;#&quot; + s2);
+		reduced.ifPresent(System.out::println);		// &quot;aaa1#aaa2#bbb1#bbb2#bbb3#ccc#ddd1#ddd2&quot;
+	
+		/**
+		 * 前面提到过Stream有串行和并行两种，
+		 * 串行Stream上的操作是在一个线程中依次完成，
+		 * 而并行Stream则是在多个线程上同时执行。
+		 * 下面的例子展示了是如何通过并行Stream来提升性能：首先我们创建一个没有重复元素的大表：
+		 * 然后我们计算一下排序这个Stream要耗时多久，串行排序：
+		 * */
+		int max = 1000000;
+		List&lt;String&gt; values = new ArrayList&lt;&gt;(max);
+		for (int i = 0; i &lt; max; i++) &#123;
+			UUID uuid = UUID.randomUUID();
+			values.add(uuid.toString());
+		&#125;
+		//串行排序：
+		long t0 = System.nanoTime();
+		long count = values.stream().sorted().count();
+		System.out.println(count);
+		long t1 = System.nanoTime();
+		long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+		System.out.println(String.format(&quot;sequential sort took: %d ms&quot;, millis)); //串行耗时: 899 ms
+		
+		//并行排序：
+		long t01 = System.nanoTime();
+		long count1 = values.parallelStream().sorted().count();
+		System.out.println(count);
+		long t11 = System.nanoTime();
+		long millis1 = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+		System.out.println(String.format(&quot;parallel sort took: %d ms&quot;, millis)); //并行排序耗时: 472 ms
+	&#125;
+	
+	/**
+	 * 前面提到过，Map类型不支持stream，不过Map提供了一些新的有用的方法来处理一些日常任务。
+	 * */
+	public static void testMapWithoutStream()&#123;
+		Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+		for (int i = 0; i &lt; 10; i++) &#123;
+		    //putIfAbsent 不需要我们做额外的存在性检查
+			map.putIfAbsent(i, &quot;val&quot; + i);
+			//forEach 接收一个Consumer接口来对map里的每一个键值对进行操作。
+			map.forEach((id, val) -&gt; System.out.println(val));
+		&#125;
+		
+		//map上的其他有用的函数：
+		map.computeIfPresent(3, (num, val) -&gt; val + num);
+		map.get(3);             // val33
+		map.computeIfPresent(9, (num, val) -&gt; null);
+		map.containsKey(9);     // false
+		map.computeIfAbsent(23, num -&gt; &quot;val&quot; + num);
+		map.containsKey(23);    // true
+		map.computeIfAbsent(3, num -&gt; &quot;bam&quot;);
+		map.get(3);             // val33
+		
+		//Map里删除一个键值全都匹配的项：
+		map.remove(3, &quot;val3&quot;);
+		map.get(3);             // val33
+		map.remove(3, &quot;val33&quot;);
+		map.get(3);             // null
+		
+		//另外一个有用的方法：
+		map.getOrDefault(42, &quot;not found&quot;);  // not found
+		
+		//对Map的元素做合并
+		map.merge(9, &quot;val9&quot;, (value, newValue) -&gt; value.concat(newValue));
+		map.get(9);             // val9
+		map.merge(9, &quot;concat&quot;, (value, newValue) -&gt; value.concat(newValue));
+		map.get(9);             // val9concat
+	&#125;
+	
+	
+&#125;
+</code></pre><ol start="9"><li>Date API</li></ol><pre><code>	/**
+	 * Clock类提供了访问当前日期和时间的方法，Clock是时区敏感的，可以用来取代 System.currentTimeMillis() 来获取当前的微秒数。
+	 * 某一个特定的时间点也可以使用Instant类来表示，Instant类也可以用来创建老的java.util.Date对象。
+	 * */
+	public static void testClock()&#123;
+		Clock clock = Clock.systemDefaultZone();
+		long millis = clock.millis();
+		Instant instant = clock.instant();
+		Date legacyDate = Date.from(instant);   // legacy java.util.Date
+	&#125;
+</code></pre><pre><code>	/**
+	 * 在新API中时区使用ZoneId来表示。时区可以很方便的使用静态方法of来获取到。 
+	 * 时区定义了到UTS时间的时间差，在Instant时间点对象到本地日期对象之间转换的时候是极其重要的。
+	 * */
+	public static void testTimezones()&#123;
+		System.out.println(ZoneId.getAvailableZoneIds());
+		// prints all available timezone ids
+		ZoneId zone1 = ZoneId.of(&quot;Europe/Berlin&quot;);
+		ZoneId zone2 = ZoneId.of(&quot;Brazil/East&quot;);
+		System.out.println(zone1.getRules());
+		System.out.println(zone2.getRules());
+		// ZoneRules[currentStandardOffset=+01:00]
+		// ZoneRules[currentStandardOffset=-03:00]
+	&#125;
+</code></pre><pre><code>	/**
+	 * LocalTime 定义了一个没有时区信息的时间，例如 晚上10点，或者 17:30:15。
+	 * 下面的例子使用前面代码创建的时区创建了两个本地时间。
+	 * 之后比较时间并以小时和分钟为单位计算两个时间的时间差：
+	 * */
+	public static void testLocalTime()&#123;
+		ZoneId zone1 = null;
+		LocalTime now1 = LocalTime.now(zone1);
+		ZoneId zone2 = null;
+		LocalTime now2 = LocalTime.now(zone2);
+		System.out.println(now1.isBefore(now2));  // false
+		long hoursBetween = ChronoUnit.HOURS.between(now1, now2);
+		long minutesBetween = ChronoUnit.MINUTES.between(now1, now2);
+		System.out.println(hoursBetween);       // -3
+		System.out.println(minutesBetween);     // -239
+		
+		//LocalTime 提供了多种工厂方法来简化对象的创建，包括解析时间字符串。
+		LocalTime late = LocalTime.of(23, 59, 59);
+		System.out.println(late);       // 23:59:59
+		DateTimeFormatter germanFormatter =
+		    DateTimeFormatter
+		        .ofLocalizedTime(FormatStyle.SHORT)
+		        .withLocale(Locale.GERMAN);
+		LocalTime leetTime = LocalTime.parse(&quot;13:37&quot;, germanFormatter);
+		System.out.println(leetTime);   // 13:37
+	&#125;
+</code></pre><pre><code>	/**
+	 * LocalDate 表示了一个确切的日期，比如 2014-03-11。
+	 * 该对象值是不可变的，用起来和LocalTime基本一致。
+	 * 下面的例子展示了如何给Date对象加减天/月/年。
+	 * 另外要注意的是这些对象是不可变的，操作返回的总是一个新实例。
+	 * */
+	public static void testLocalDate()&#123;
+		LocalDate today = LocalDate.now();
+		LocalDate tomorrow = today.plus(1, ChronoUnit.DAYS);
+		LocalDate yesterday = tomorrow.minusDays(2);
+		LocalDate independenceDay = LocalDate.of(2014, Month.JULY, 4);
+		DayOfWeek dayOfWeek = independenceDay.getDayOfWeek();
+		
+		//从字符串解析一个LocalDate类型和解析LocalTime一样简单：
+		DateTimeFormatter germanFormatter =
+			    DateTimeFormatter
+			        .ofLocalizedDate(FormatStyle.MEDIUM)
+			        .withLocale(Locale.GERMAN);
+			LocalDate xmas = LocalDate.parse(&quot;24.12.2014&quot;, germanFormatter);
+			System.out.println(xmas);   // 2014-12-24
+	&#125;
+</code></pre><pre><code>	/**
+	 * LocalDateTime 同时表示了时间和日期，相当于前两节内容合并到一个对象上了。
+	 * LocalDateTime和LocalTime还有LocalDate一样，都是不可变的。
+	 * LocalDateTime提供了一些能访问具体字段的方法。
+	 * */
+	public static void testLocalDateTime()&#123;
+		LocalDateTime sylvester = LocalDateTime.of(2014, Month.DECEMBER, 31, 23, 59, 59);
+		DayOfWeek dayOfWeek = sylvester.getDayOfWeek();
+		System.out.println(dayOfWeek);      // WEDNESDAY
+		Month month = sylvester.getMonth();
+		System.out.println(month);          // DECEMBER
+		long minuteOfDay = sylvester.getLong(ChronoField.MINUTE_OF_DAY);
+		System.out.println(minuteOfDay);    // 1439
+		
+		//只要附加上时区信息，就可以将其转换为一个时间点Instant对象，Instant时间点对象可以很容易的转换为老式的java.util.Date。
+		Instant instant = sylvester
+		        .atZone(ZoneId.systemDefault())
+		        .toInstant();
+		Date legacyDate = Date.from(instant);
+		System.out.println(legacyDate);     // Wed Dec 31 23:59:59 CET 2014
+		
+		//格式化LocalDateTime和格式化时间和日期一样的，除了使用预定义好的格式外，我们也可以自己定义格式：
+		DateTimeFormatter formatter =
+			    DateTimeFormatter
+			        .ofPattern(&quot;MMM dd, yyyy - HH:mm&quot;);
+			LocalDateTime parsed = LocalDateTime.parse(&quot;Nov 03, 2014 - 07:13&quot;, formatter);
+			String string = formatter.format(parsed);
+			System.out.println(string);     // Nov 03, 2014 - 07:13
+		
+		//和java.text.NumberFormat不一样的是新版的DateTimeFormatter是不可变的，所以它是线程安全的。
+		//关于时间日期格式的详细信息：http://download.java.net/jdk8/docs/api/java/time/format/DateTimeFormatter.html
+	&#125;
+</code></pre><ol start="10"><li>Annotation<br>在 Java 8 中支持多重注解了，先看个例子来理解一下是什么意思。<br>首先定义一个包装类 Hints 注解用来放置一组具体的 Hint 注解：</li></ol><pre><code>@interface Hints &#123;
+    Hint[] value();
+&#125;
+@Repeatable(Hints.class)
+@interface Hint &#123;
+    String value();
+&#125;
+</code></pre><p>Java 8 允许我们把同一个类型的注解使用多次，只需要给该注解标注一下 @Repeatable 即可。<br>例 1: 使用包装类当容器来存多个注解（老方法）</p><pre><code>@Hints(&#123;@Hint(&quot;hint1&quot;), @Hint(&quot;hint2&quot;)&#125;)
+class Person &#123;&#125;
+</code></pre><p>例 2：使用多重注解（新方法）</p><pre><code>@Hint(&quot;hint1&quot;)
+@Hint(&quot;hint2&quot;)
+class Person &#123;&#125;
+</code></pre><p>第二个例子里 java 编译器会隐性的帮你定义好 @Hints 注解，了解这一点有助于你用反射来获取这些信息：</p><pre><code>Hint hint = Person.class.getAnnotation(Hint.class);
+System.out.println(hint);                   // null
+Hints hints1 = Person.class.getAnnotation(Hints.class);
+System.out.println(hints1.value().length);  // 2
+Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
+System.out.println(hints2.length);          // 2
+</code></pre><p>即便我们没有在 Person 类上定义 @Hints 注解，我们还是可以通过 getAnnotation (Hints.class) 来获取 @Hints 注解，更加方便的方法是使用 getAnnotationsByType 可以直接获取到所有的 @Hint 注解。<br>另外 Java 8 的注解还增加到两种新的 target 上了：</p><pre><code>@Target(&#123;ElementType.TYPE_PARAMETER, ElementType.TYPE_USE&#125;)
+@interface MyAnnotation &#123;&#125;
+</code></pre></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/java/java-basic/java8新特性学习-Lambda/" class="item leancloud_visitors" data-flag-title="java8 新特性学习 - Lambda" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/" title="java8 新特性学习 - Lambda">http://mingcheng.site/learn/java/java-basic/java8新特性学习-Lambda/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;HZCYqfsMlE61Uh8.jpg" title="java8新特性学习-接口扩展"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Java</span><h3>java8新特性学习-接口扩展</h3></a></div><div class="item right"><a href="/learn/algorithm/practise/%E4%B8%A4%E9%81%93String%E7%B1%BB%E5%9E%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;5PAzie6YZsDBROM.jpg" title="两道String类型面试题"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Java</span><h3>两道String类型面试题</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/java/java-basic/Java%20Annotation/" rel="bookmark" title="Java Annotation">Java Annotation</a></li><li><a href="/learn/java/java-basic/javax-crypto%E4%B8%8D%E5%AD%98%E5%9C%A8/" rel="bookmark" title="javax crypto不存在">javax crypto不存在</a></li><li><a href="/learn/java/java-basic/Java%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Java任务调度学习">Java任务调度学习</a></li><li><a href="/learn/java/java-basic/Java%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E9%87%8C%E9%9D%A2super-%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="bookmark" title="Java构造方法里面super()的使用">Java构造方法里面super()的使用</a></li><li><a href="/learn/java/java-basic/Java%E5%86%85%E5%AD%98%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Java内存学习">Java内存学习</a></li><li><a href="/learn/java/java-basic/Java%E8%8E%B7%E5%8F%96%E8%B7%AF%E5%BE%84/" rel="bookmark" title="Java获取路径">Java获取路径</a></li><li><a href="/learn/java/java-basic/java%E8%8E%B7%E5%8F%96spring-bean%E9%87%8C%E9%9D%A2%E7%9A%84properties%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7/" rel="bookmark" title="java获取spring bean里面的properties文件属性">java获取spring bean里面的properties文件属性</a></li><li><a href="/learn/java/java-basic/jdbc%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%89%A7%E8%A1%8C%E6%9F%A5%E8%AF%A2/" rel="bookmark" title="jdbc数据库连接执行查询">jdbc数据库连接执行查询</a></li><li><a href="/learn/java/java-basic/java%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA3%E7%A7%8D%E6%96%B9%E5%BC%8F/" rel="bookmark" title="java线程创建3种方式">java线程创建3种方式</a></li><li><a href="/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0-1/" rel="bookmark" title="Java高并发程序设计学习1：走入并行世界">Java高并发程序设计学习1：走入并行世界</a></li><li><a href="/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A02%EF%BC%9AJava%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80/" rel="bookmark" title="Java高并发程序设计学习2：Java并行程序基础">Java高并发程序设计学习2：Java并行程序基础</a></li><li><a href="/learn/java/java-basic/Java%E5%B9%B6%E5%8F%91%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="Java并发和多线程学习">Java并发和多线程学习</a></li><li><a href="/learn/java/java-basic/java%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%AE%80%E4%BB%8B/" rel="bookmark" title="java线程池简介">java线程池简介</a></li><li><a href="/learn/java/java-basic/java%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84%E4%B9%8BArrays/" rel="bookmark" title="java操作数组之Arrays">java操作数组之Arrays</a></li><li><a href="/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95/" rel="bookmark" title="java8新特性学习-接口扩展">java8新特性学习-接口扩展</a></li><li class="active"><a href="/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-Lambda/" rel="bookmark" title="java8新特性学习-Lambda">java8新特性学习-Lambda</a></li><li><a href="/learn/java/java-basic/java%E4%BD%BF%E7%94%A8Freemarker%E6%A8%A1%E6%9D%BF%E5%8F%91%E9%80%81%E5%9B%BA%E5%AE%9A%E6%A0%BC%E5%BC%8F%E9%82%AE%E4%BB%B6/" rel="bookmark" title="java使用Freemarker模板发送固定格式邮件">java使用Freemarker模板发送固定格式邮件</a></li><li><a href="/learn/java/java-basic/java%E5%B1%9E%E6%80%A7copy%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="bookmark" title="java属性copy简单使用">java属性copy简单使用</a></li><li><a href="/learn/java/java-basic/java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B9%8Btransient/" rel="bookmark" title="java序列化之transient">java序列化之transient</a></li><li><a href="/learn/java/java-basic/java%E8%BF%90%E7%AE%97%E4%BF%9D%E7%95%99%E4%B8%A4%E4%BD%8D%E5%B0%8F%E6%95%B0/" rel="bookmark" title="java运算保留两位小数">java运算保留两位小数</a></li><li><a href="/learn/java/java-basic/java%E7%BC%96%E8%AF%91%E6%97%B6%E4%BC%98%E5%8C%96%E7%9A%84%E9%83%A8%E5%88%86%E4%BD%93%E7%8E%B0/" rel="bookmark" title="java编译时优化的部分体现">java编译时优化的部分体现</a></li><li><a href="/learn/java/java-basic/java%E4%BA%A4%E6%8D%A2%E5%8F%98%E9%87%8F%E5%80%BC%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" rel="bookmark" title="java交换变量值的几种方法">java交换变量值的几种方法</a></li><li><a href="/learn/java/java-basic/java%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" rel="bookmark" title="java进制转换">java进制转换</a></li><li><a href="/learn/java/java-basic/java%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1%E4%B8%8D%E5%8F%AF%E9%81%BF%E5%85%8D%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" rel="bookmark" title="java自动拆装箱不可避免遇到的一些问题">java自动拆装箱不可避免遇到的一些问题</a></li><li><a href="/learn/java/java-basic/java%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/" rel="bookmark" title="java是值传递还是引用传递">java是值传递还是引用传递</a></li><li><a href="/learn/java/java-basic/java%E8%87%AA%E5%B8%A6%E7%9A%84%E6%8E%92%E5%BA%8F%E5%B7%A5%E5%85%B7/" rel="bookmark" title="java自带的排序工具">java自带的排序工具</a></li><li><a href="/learn/java/java-basic/java%20swing%E8%BF%90%E8%A1%8Cmain%E6%96%B9%E6%B3%95%E6%97%B6%E9%81%87%E5%88%B0NPE/" rel="bookmark" title="java swing运行main方法时遇到NPE">java swing运行main方法时遇到NPE</a></li><li><a href="/learn/java/java-basic/java%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E6%B5%8B%E8%AF%95%20/" rel="bookmark" title="java字符串长度测试">java字符串长度测试</a></li><li><a href="/learn/java/java-basic/Java%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%90%E4%B8%80%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="bookmark" title="Java修改文件中某一行字符串">Java修改文件中某一行字符串</a></li><li><a href="/learn/java/java-basic/java%E5%88%9B%E5%BB%BAshell%E8%84%9A%E6%9C%AC/" rel="bookmark" title="java创建shell脚本">java创建shell脚本</a></li><li><a href="/learn/java/java-basic/%E7%AE%80%E5%8D%95%E5%A4%84%E7%90%86Java%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%92%8COOM/" rel="bookmark" title="简单处理Java内存泄漏与OOM">简单处理Java内存泄漏与OOM</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/java/java-basic/java8%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0-%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/algorithm/practise/%E4%B8%A4%E9%81%93String%E7%B1%BB%E5%9E%8B%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Java/" title="分类于 Java">Java</a></div><span><a href="/learn/java/java-basic/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0-1/" title="Java高并发程序设计学习1：走入并行世界">Java高并发程序设计学习1：走入并行世界</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/python%20flask%20sqlalchemy%20model%E5%AF%B9%E8%B1%A1%E8%BD%ACjson/" title="python flask sqlalchemy model对象转json">python flask sqlalchemy model对象转json</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/life/" title="分类于 生活">生活</a> <i class="ic i-angle-right"></i> <a href="/categories/life/%E5%B8%B8%E8%AF%86/" title="分类于 常识">常识</a></div><span><a href="/life/nous/%E7%A9%BA%E8%B0%83%E7%9A%84%E8%80%97%E7%94%B5%E9%87%8F%E4%B8%8E%E8%AE%BE%E5%AE%9A%E7%9A%84%E6%B8%A9%E5%BA%A6%E9%AB%98%E4%BD%8E%E6%98%AF%E5%90%A6%E6%9C%89%E5%85%B3/" title="空调的耗电量与设定的温度高低是否有关？">空调的耗电量与设定的温度高低是否有关？</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/" title="分类于 数据库学习">数据库学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/Redis/" title="分类于 Redis">Redis</a></div><span><a href="/learn/database/redis/spring%20data%20redis%E7%AE%80%E5%8D%95%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95redis/" title="spring data redis简单连接测试redis">spring data redis简单连接测试redis</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/Bootstrap/" title="分类于 Bootstrap">Bootstrap</a></div><span><a href="/learn/frontent/bootstrap/bootstrapTable%E6%B8%85%E7%A9%BAsearch%E6%A1%86%E5%86%85%E5%AE%B9%E5%B9%B6%E5%88%B7%E6%96%B0%E9%A1%B5%E9%9D%A2/" title="bootstrapTable清空search框内容并刷新页面">bootstrapTable清空search框内容并刷新页面</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/GoogleGuava/" title="分类于 GoogleGuava">GoogleGuava</a></div><span><a href="/learn/java/google-guava/learn-9/" title="Cache类（1）">Cache类（1）</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Tomcat/" title="分类于 Tomcat">Tomcat</a></div><span><a href="/learn/devops/tomcat/%E9%9A%90%E8%97%8Ftomcat%E9%A1%B5%E9%9D%A2%E5%BC%82%E5%B8%B8%E6%98%BE%E7%A4%BA%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF/" title="隐藏tomcat页面异常显示的版本信息">隐藏tomcat页面异常显示的版本信息</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/%E5%85%84%E5%BC%9F%E8%BF%9ELinux%E5%AD%A6%E4%B9%A0/" title="分类于 兄弟连 Linux 学习">兄弟连 Linux 学习</a></div><span><a href="/learn/devops/linux-basic/%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86%EF%BC%88%E5%85%84%E5%BC%9F%E8%BF%9E%EF%BC%89/" title="用户和用户组管理（兄弟连）">用户和用户组管理（兄弟连）</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/python%E7%A6%81%E6%AD%A2%E5%AD%97%E5%85%B8key%E6%8E%92%E5%BA%8F/" title="python禁止字典key排序">python禁止字典key排序</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/Field%20injection%20is%20not%20recommended/" title="Field injection is not recommended">Field injection is not recommended</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/java/java-basic/java8新特性学习-Lambda/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(a){return a.includes("#")},function(a){return new RegExp(LOCAL.path+"$").test(a)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

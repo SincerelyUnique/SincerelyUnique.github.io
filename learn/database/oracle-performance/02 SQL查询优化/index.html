@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="sql,oracle"><link rel="canonical" href="http://mingcheng.site/learn/database/oracle-performance/02%20SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/"><title>(2) SQL 查询优化 - Oracle - 数据库学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">(2) SQL 查询优化</h1><div class="meta"><span class="item" title="创建时间：2020-08-19 16:36:02"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2020-08-19T16:36:02+08:00">2020-08-19</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>4.3k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>4 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/8OLXZf6yuVmdGo1.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/nhH8ELKYJFoayGe.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/HJvQi2a3Yhy9gdb.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/VJsRFDWdAuMoCkw.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/QSqg3he6vwClUT2.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/ZbXgfLPpyrt5vSi.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/database/" itemprop="item" rel="index" title="分类于 数据库学习"><span itemprop="name">数据库学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/database/Oracle/" itemprop="item" rel="index" title="分类于 Oracle"><span itemprop="name">Oracle</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/database/oracle-performance/02%20SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><pre><code>oracle性能调优-转自《Oracle Database 11g数据库管理艺术》第19章（改进数据库性能：SQL查询优化）
+1. 高效的where子句
+选择性原则--查询所返回的行数占全部行数的百分比，低百分比对应高选择性，高百分比对应低选择性。
+ 
+例子：select * from employee where no=221342 and city='DALLAS';
+no=221342子句需要的IO较少，因为列no是主键，具有非常高的选择性（行只有1个），
+优化程序通过查看索引统计数据为这两个列中的每个列确定其选择性，索引数据告诉优化程序在表中有多
+少行包含了查询的两个列值中的每个列值。
+如果两个列都没有索引，则全表扫描进行检索以回复查询。
+如果两个列都有索引，则对no列使用更多的选择性（因此也更有效）索引。
+ 
+某个列有索引，但并不能保证索引总能被使用，如果like '%xxx%' 查询会跳过索引并进行全表扫描。
+例如，如果一个表有1000行数据，位于200个数据块中，假定db_file_multiblock_read_count（一次IO扫
+描的块数）的值为8，对这样一个表执行全表扫描时，在整个表中会执行25次IO读操作。
+如果索引是低选择性的，就会首先读取大多数索引，如果索引有40个页块，并且首先读取了其中90%的叶块
+以得到被索引的数据，而且IO读操作已经执行了32次。此外，还要额外的IO操作用来读取表值。
+而一个全表扫描只需要25次IO操作，这比使用索引更有效。
+ 
+（1）使用SQL函数
+如果在where子句中使用sql函数（如substr、instr、to_date、to_number）,oracle优化程序会忽略列上
+的索引，如果必须在子句上使用函数，应确保使用的是基于函数的索引。
+（2）使用右联结
+建议1：使用等值联结（equi join）得到比使用其他方式更有效的查询路径。尽量使用等值联结。
+建议2：较早的使用过滤操作可以减少后面要进行联结的行数。即传递给下一步的行较少。
+建议3：以产生最小行数的顺序进行联结，作为上个步骤的输出结果。
+（3）使用case语句
+当需要计算来自同一个表的多个聚集时，不要为每个聚集编写单独的查询。因为每次查询oracle都要读取
+整个表。这时可以使用case语句一次读表计算来自该表的多个聚集。
+（4）执行高效的子查询
+使用in而不是exists时，子查询执行会更好。
+如果子查询包括选择性的where子句，oracle建议使用in；
+如果夫查询包括选择性的where子句，建议使用exists；
+（5）使用where代替having
+where子句一开始就限制了被检索的行数，而having子句还需要检索很多不需要的行，这样也会增加额外
+的排序和求和操作。
+（6）最小化表查找
+尽可能少的访问数据，意味着要删除那些为不同列值而对一个表进行重复访问的sql语句。此时应使用多列
+更新。
+ 
+2. 使用提示影响执行计划
+优化程序是基于规则的，一个好的应用开发人员对应用程序和数据的了解要比CBO更多。可以为优化程序提
+供提示以取代CBO的执行计划，例如你知道某个索引效果比其他索引更好，那么你可以强制使用这个索引。
+常用提示：
+（1）ALL_ROWS：对吞吐量进行优化（最小成本优化），但不优化语句的响应事件
+（2）FIRST_ROWS(n)：要求oracle快速返回前n行数据。目的是较低的响应时间
+（3）FULL：要求全表扫描并忽略可能存在的索引。如果你确定全表扫描效率高时可以这么做。
+（4）ORDERED：强制在查询中表的联结次序
+（5）INDEX：强制使用一个索引扫描，即优化程序可能出于某种原因忽略了该索引而执行了全表扫描
+（6）INDEX_FFS：索引快速全扫描（INDEX_FFS）提示强制对索引进行一个快速全扫表。
+ 
+3. 选择最佳的联结方式
+（1）避免笛卡儿积联结
+（2）嵌套查询：要对小的数据子集（少于10000行）进行联结，如果优化程序使用的是散列联结或全表
+     扫描，可以使用提示强制优化程序使用嵌套联结方法： select /*+ USE_NL(TableA, TableB) */
+（3）散列联结：联结会产生大的数据子集或表中的很大一部分都要被联结而优化程序并不打算使用散列
+     联结，此时可以使用散列联结提示：select /* USE_HASH */
+（4）合并联结：如果联结中的表是被一个不等式条件（非等值联结）所联结，那么合并联结最理想。
+     select /*+ USE_MERGE(TableA, TableB) */
+ 
+4. 使用位图联结索引
+位图联结索引（BJI）预先在一个索引中存储了两个表之间的联结结果，从而取消了进行代价高昂的运行时
+联结操作。
+ 
+5. 选择最佳的联结次序
+在联结中，驱动表是紧跟在where子句后面的第一个表。
+联结中的驱动表应当包含能够去除大多数行的过滤条件。
+选择的联结次序的依据是可以让最少数目的行与其他表进行联结。
+也就是说如果你联结了3个表，那么具有更多限制的过滤条件的表应当在其他两个表之前被联结。
+ 
+6. 索引策略
+索引是一种数据结构（如mysql是b+ tree），它取得一个表（键）的一个或多个列的值，并返回具有该
+列值的所有行（或者在一个行中所要求的列）。
+提高效率的原因：只查找必要的行而不需要对一个表的所有行进行扫描，即与全表扫描比磁盘IO少。
+（1）什么时候使用索引？
+当表的数据达到一定的数量级，正常查询较慢，且只有在你认为你的查询将只会选择表中的一小部分数据时，
+才需要对表进行索引。如果查询所检索的行数超过表总行数的10%或15%，就不需要索引（从索引中获取行
+的rowid-即磁盘上的逻辑地址）。如果在一个表中强调行的唯一性，那么可以对这个表使用一个主索引（非空且唯一）。
+通常一个表的主索引有1个，更多的是次索引，过多的次索引会增加维护成本，除了需要额外的磁盘空间，
+因为对表的insert和update也需要同时对索引进行更新，所以如果该表包含了大量的insert和delete，太多的索引
+反而有害。
+（2）对什么进行索引
+尽可能使用较少的索引来满足性能需求。
+建议1：对高选择性的列进行索引，高选择性意味着具有同样值得行很少
+建议2：对所有重复得外键进行索引
+建议3：对所有谓词列进行索引
+建议4：对在表联结中使用得列进行索引
+建议5：尽量避免对由长字符串构成得列进行索引，除非你正在使用oracle text特性
+建议6：无论什么情况下，尽量使用index-only计划，创建必要得组合索引
+建议7：对order by和group by操作以及union或distinct这样的分类操作中经常涉及的列使用次索引。
+（3）使用合适的索引类型
+B-树索引（或B*树）是默认的或标准的oracle索引，在一个一般的OLTP应用程序中，几乎所有索引都是该类型。
+方案1：位图索引，对于具有低基数（low cardinality）的列数据使用最理想。
+方案2：索引组织表（IOT），数据行按主键顺序被保存，节省空间，加快访问速度
+方案3：拼接索引（或组合索引），包含一个以上列的索引，如果被拼接的索引包含where列中所有列，就会免除
+       查找表的麻烦，从而减少IO次数。但需要对索引中列的舒徐特别注意。
+方案4：基于函数的索引，包含一个oracle函数或表达式进行转换后的列。当使用函数或表达式创建的索引哎查询
+       的where子句中使用时，可以直接从索引中快速返回经过函数或表达式计算过的值，而不需要每次重新计算
+方案5：反向键索引，如果一个带有大量insert操作的数据库存在性能问题可以考虑该索引，在处理一次增加的列
+       时，反向键可以提供一种有效的方式使得索引值分布均匀，从而改进性能。
+方案6：分区索引策略，被分区的索引可以是局部的，也可以是全局的
+ 
+7. 监控索引的使用
+一个表可能有几个索引，但不能保证这些索引在查询种都能被使用，如果没有使用，不妨删除它，因为索引会减慢
+DML操作的速度，可以使用v$object_usage视图收集索引使用信息。
+ 
+8. 使用相似的SQL语句
+除了保留SGA的共享池区的使用之外，重用已经分析过的语句还会得到性能上的改进，但是，其前提是SQL语句必须
+在各个方面都完全相同，包括空格以及其他部分。
+ 
+9. 通过内嵌函数减少sql开销
+ 
+10. 使用绑定变量
+查询处理的分析阶段会消耗资源，因此理想情况下是只分析一次，然后重复执行的操作使用同一个被分析的语句版本。
+分析是比执行语句花费资源更多的操作。
+应当在sql语句中使用绑定变量来代替字面值以减少数据库中分析的次数。
+ 
+11. 避免不恰当地使用视图
+视图有几个好处，但并不包括提高性能。
+因为视图是一个sql查询，如果你想再次查询视图，它会再执行这个实例化过程。
+如果你的查询对视图做了联结，那么执行这个查询将耗费大量的事件。
+ 
+12. 避免不必要的全表扫描
+即使已经做了索引，全表扫描还是会发生。
+避免在谓词中使用不等于和大于等于，因为使用他们也可能跳过索引。
+ 
+13. 找DBA帮忙，下面的主要是DBA可以做到的一些帮助
+（1）使用分区表，主要针对大表，上千万行的记录，oracle11g有5种分区模式可以供选择。
+（2）使用压缩技术，即表压缩，减少表的空间需求，增强查询性能。
+（3）使用实体化视图，改进响应时间。
+（4）使用存储大纲保证CBO的稳定性。
+ 
+14. SQL性能调优工具
+（1）explain plan
+（2）autotrace
+（3）sql trace
+（4）tkprof
+（5）DBMS_MONITOR程序包（端到端追踪）
+ 
+15. 使用v$sql视图查询低效sql，还可以使用其他的字典视图如v$sql_plan、v$sql_plan_statustics
+（1）对前5个花费最多cpu时间和最多占用时间的查询进行排序
+select sql_text, executions,
+       round(elapsed_time/1000000, 2) elapsed_seconds,
+       round(cpu_time/1000000, 2) cpu_seconds
+  from (select * from v$sql order by elapsed_time desc)
+ where ROWNUM&lt;6;
+（2）显示较高的磁盘读取和较高的逻辑读取
+select sql_text, executions, buffer_gets, disk_reads
+  from v$sql
+ where buffer_gets&gt;100000 or disk_reads&gt;100000
+ order by buffer_gets + 100 * disk_reads desc ;
+ 
+16. 使用sql tuning advisor来改进低效的sql语句
+ 
+17. 使用结果高速缓存-cache
+</code></pre><div class="tags"><a href="/tags/sql/" rel="tag"><i class="ic i-tag"></i> sql</a> <a href="/tags/oracle/" rel="tag"><i class="ic i-tag"></i> oracle</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/database/oracle-performance/02 SQL查询优化/" class="item leancloud_visitors" data-flag-title="(2) SQL 查询优化" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/database/oracle-performance/02%20SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" title="(2) SQL 查询优化">http://mingcheng.site/learn/database/oracle-performance/02 SQL查询优化/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/windows%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8rabbitmq/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;YpTBvsqRdeDN96b.jpg" title="windows简单安装使用rabbitmq"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i></span><h3>windows简单安装使用rabbitmq</h3></a></div><div class="item right"><a href="/learn/database/oracle-performance/03%20SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E8%A1%A5%E5%85%85/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;9fXGEsJDt1FBZYx.jpg" title="(3) SQL查询优化（补）"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Oracle</span><h3>(3) SQL查询优化（补）</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/database/oracle/%E6%80%8E%E4%B9%88%E6%8F%90%E9%AB%98%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD/" rel="bookmark" title="怎么提高数据库性能">怎么提高数据库性能</a></li><li><a href="/learn/database/oracle/oracle.sql.TIMESTAMP%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%88%90%E5%9B%BA%E5%AE%9A%E6%A0%BC%E5%BC%8F%E7%9A%84date%E7%B1%BB%E5%9E%8B/" rel="bookmark" title="oracle.sql.TIMESTAMP类型转成固定格式的date类型">oracle.sql.TIMESTAMP类型转成固定格式的date类型</a></li><li><a href="/learn/database/oracle/oracle%E5%88%86%E7%BB%84%E5%8F%96%E5%89%8D5%E6%9D%A1%E6%95%B0%E6%8D%AE/" rel="bookmark" title="oracle分组取前5条数据">oracle分组取前5条数据</a></li><li><a href="/learn/database/oracle/oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%97%E6%AE%B5%E9%99%8D%E7%B2%BE%E5%BA%A6/" rel="bookmark" title="oracle数据库字段降精度">oracle数据库字段降精度</a></li><li><a href="/learn/database/oracle/oracle%E6%8B%86%E5%88%86%E6%9F%90%E4%B8%AA%E5%AD%97%E6%AE%B5/" rel="bookmark" title="oracle拆分某个字段">oracle拆分某个字段</a></li><li><a href="/learn/database/oracle/%E5%B0%86%E4%B8%80%E4%B8%AA%E8%A1%A8%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E6%AE%B5%E6%9B%B4%E6%96%B0%EF%BC%88copy%EF%BC%89%E5%88%B0%E5%8F%A6%E4%B8%80%E5%BC%A0%E8%A1%A8/" rel="bookmark" title="将一个表中某个字段更新（copy）到另一张表">将一个表中某个字段更新（copy）到另一张表</a></li><li><a href="/learn/database/oracle/oracle%E5%88%97varchar%E8%BD%ACclob/" rel="bookmark" title="oracle列varchar转clob">oracle列varchar转clob</a></li><li><a href="/learn/database/oracle/oracle%E8%A1%A8%E5%A4%87%E4%BB%BD/" rel="bookmark" title="oracle表备份">oracle表备份</a></li><li><a href="/learn/database/oracle/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%8C%83%E5%BC%8F%EF%BC%88wiki%EF%BC%89/" rel="bookmark" title="数据库范式（wiki）">数据库范式（wiki）</a></li><li><a href="/learn/database/oracle/oracle%20call%20vs%20exec%5Bute%5D/" rel="bookmark" title="oracle call vs exec[ute]">oracle call vs exec[ute]</a></li><li><a href="/learn/database/oracle/oracle%20merge%20into%EF%BC%88%E4%B8%80%E6%9D%A1%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E6%9B%B4%E6%96%B0%E6%88%96%E6%8F%92%E5%85%A5%EF%BC%89/" rel="bookmark" title="oracle merge into（一条语句执行更新或插入）">oracle merge into（一条语句执行更新或插入）</a></li><li><a href="/learn/database/oracle/oracle%E5%8F%96%E5%B8%A6%E6%9C%89%E5%B0%8F%E6%95%B0%E7%9A%84%E8%AE%B0%E5%BD%95/" rel="bookmark" title="oracle取带有小数的记录">oracle取带有小数的记录</a></li><li><a href="/learn/database/oracle/oracle%E6%A0%B9%E6%8D%AE%E6%9D%A1%E4%BB%B6%E7%BB%9F%E8%AE%A1%E5%90%84%E7%BB%84%E8%AE%B0%E5%BD%95%E6%95%B0%E9%87%8F/" rel="bookmark" title="oracle根据条件统计各组记录数量">oracle根据条件统计各组记录数量</a></li><li class="active"><a href="/learn/database/oracle-performance/02%20SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" rel="bookmark" title="(2) SQL查询优化">(2) SQL查询优化</a></li><li><a href="/learn/database/oracle-performance/03%20SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E8%A1%A5%E5%85%85/" rel="bookmark" title="(3) SQL查询优化（补）">(3) SQL查询优化（补）</a></li><li><a href="/learn/database/oracle-performance/01%20SQL%E5%9F%BA%E7%A1%80/" rel="bookmark" title="(1) SQL基础">(1) SQL基础</a></li><li><a href="/learn/database/oracle/oracle%E4%B8%80%E5%88%97%E6%8B%86%E5%A4%9A%E5%88%97/" rel="bookmark" title="oracle一列拆多列">oracle一列拆多列</a></li><li><a href="/learn/database/oracle/oracle%E5%AF%B9%E4%B8%A4%E7%BB%84%E6%95%B0%E6%8D%AE%E6%B1%82%E5%B7%AE%E9%9B%86%E3%80%81%E5%B9%B6%E9%9B%86%E3%80%81%E4%BA%A4%E9%9B%86/" rel="bookmark" title="oracle对两组数据求差集、并集、交集">oracle对两组数据求差集、并集、交集</a></li><li><a href="/learn/database/oracle/SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E4%B9%8B%E7%BB%91%E5%AE%9A%E5%8F%98%E9%87%8F/" rel="bookmark" title="SQL查询优化之绑定变量">SQL查询优化之绑定变量</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/windows%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8rabbitmq/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/database/oracle-performance/03%20SQL%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E8%A1%A5%E5%85%85/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" title="分类于 Java 开发规范">Java 开发规范</a></div><span><a href="/learn/java/dev-spec/java%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" title="java命名规范">java命名规范</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/base64%E7%9A%84%E4%BD%BF%E7%94%A8/" title="base64的使用">base64的使用</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/ExtJS/" title="分类于 ExtJS">ExtJS</a></div><span><a href="/learn/frontent/ext-js/SenchaCmd%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%8810%EF%BC%89-Working-with-Charts/" title="SenchaCmd学习笔记（10）:Working with Charts">SenchaCmd学习笔记（10）:Working with Charts</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/npm%E6%89%93%E5%8C%85vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0nginx/" title="npm打包vue项目部署到nginx">npm打包vue项目部署到nginx</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/error%20pulling%20image%20configuration%20Get%20https%20dseasb33srnrn.cloudfront.netregist/" title="error pulling image configuration Get https dseasb33srnrn.cloudfront.netregist">error pulling image configuration Get https dseasb33srnrn.cloudfront.netregist</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/504%20Gateway%20Time-out(nginx)/" title="504 Gateway Time-out(nginx)">504 Gateway Time-out(nginx)</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Java%E9%9B%86%E5%90%88%E6%89%A9%E5%AE%B9/" title="分类于 Java 集合扩容">Java 集合扩容</a></div><span><a href="/learn/java/java-collection-scale/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3java%E7%9A%84HashMap%E6%89%A9%E5%AE%B9/" title="简单了解java的HashMap扩容">简单了解java的HashMap扩容</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" title="分类于 计算机科学">计算机科学</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/" title="分类于 二进制杂谈">二进制杂谈</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/Theme-Shoka-Documentation/" title="分类于 Theme Shoka Documentation">Theme Shoka Documentation</a></div><span><a href="/computer-science/note/theme-shoka-doc/config/" title="Step.2 基本配置">Step.2 基本配置</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Eclipse/" title="分类于 Eclipse">Eclipse</a></div><span><a href="/learn/java/eclipse/eclipse%E4%BF%AE%E6%94%B9root-path/" title="eclipse修改root path">eclipse修改root path</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/%E5%85%84%E5%BC%9F%E8%BF%9ELinux%E5%AD%A6%E4%B9%A0/" title="分类于 兄弟连 Linux 学习">兄弟连 Linux 学习</a></div><span><a href="/learn/devops/linux-basic/%E5%90%AF%E5%8A%A8%E7%AE%A1%E7%90%86%EF%BC%88%E5%85%84%E5%BC%9F%E8%BF%9E%EF%BC%89/" title="启动管理（兄弟连）">启动管理（兄弟连）</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/database/oracle-performance/02 SQL查询优化/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

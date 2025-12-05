@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><meta name="keywords" content="nginx"><link rel="canonical" href="http://mingcheng.site/learn/middleware/nginx-document/03%20Controlling%20nginx/"><title>(3) Controlling nginx - Nginx 文档学习 - 中间件学习 - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">(3) Controlling nginx</h1><div class="meta"><span class="item" title="创建时间：2020-12-28 16:37:47"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2020-12-28T16:37:47+08:00">2020-12-28</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>5.1k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>5 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/uVxdPYkbWySC6et.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/oqOkxL15fMtCJed.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/QSqg3he6vwClUT2.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/jYLZn5OTalvXDhr.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/4QmLPlfogTCV6IF.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/eaTIyAMYK9Skz8c.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/middleware/" itemprop="item" rel="index" title="分类于 中间件学习"><span itemprop="name">中间件学习</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/middleware/Nginx%E6%96%87%E6%A1%A3%E5%AD%A6%E4%B9%A0/" itemprop="item" rel="index" title="分类于 Nginx 文档学习"><span itemprop="name">Nginx 文档学习</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/middleware/nginx-document/03%20Controlling%20nginx/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><pre><code>参考：http://nginx.org/en/docs/control.html
+ 
+ 
+1.查看master进程pid：看nginx.conf配置中 pid 配置所指向的path;
+ 
+ 
+ 
+2.nginx signals （nginx信号集）
+nginx自身可以通过各种信号来操控，我们有两种方式来向 master 进程发送信号:
+（1）通过 nginx -s signal 来操作：产生一个新进程，该进程通过 nginx.pid 文件
+     得到 master 进程的 pid，然后把对应的信号发送到 master，之后退出，这种
+     进程被称为 signaller。
+（2）通过 kill 命令手动发送：kill操作的是nginx -s signal映射到的真实信号
+关键性的信号操作完成后，等待一段时间，避免时间窗口的影响
+ 
+master进程可以通过下面的信号来操控：
+TERM, INT：快速关闭、强制退出，慎用 （映射nginx -s stop）
+QUIT：正常关闭，优雅地关闭 （映射nginx -s quit）
+HUP：重新进行配置文件解析、共享内存申请，
+     协同时区变化 (仅对 FreeBSD and Linux), 
+     伴随新的配置开启一个新的worker进程, 
+     正常关闭老的进程，实现无缝重启 （映射nginx -s reload）
+USR1：重新打开日志文件 （映射nginx -s reopen）
+USR2：更新可执行文件，热更新，热更新无法通过提供的command实现，只能手动发送信号，
+      热更新之后，如果确定业务没问题，尽可能让旧的 master 进程退出
+WINCH：正常关闭worker进程
+ 
+worker进程也可以通过下面信号来操作：
+（事实上，操作worker进程是没有太大必要的，而且尽量不要直接向 worker 进程发送信号）
+TERM, INT：快速关闭、强制退出
+QUIT：正常关闭，优雅地关闭
+USR1：重新打开日志文件
+WINCH：异常调试时终止进程 (需要启用debug_points配置)
+       （参考：http://nginx.org/en/docs/ngx_core_module.html#debug_points）
+ 
+尝试：
+[root@jalen run]# kill -QUIT $(cat /var/run/nginx.pid)  --退出
+[root@jalen run]# kill -TERM $(cat /var/run/nginx.pid)  --强制退出
+[root@jalen run]# kill -WINCH $(cat /var/run/nginx.pid) --关闭worker进程
+ 
+ 
+ 
+3.reopen可用于日志切割
+官方叫Rotating Log-files，先rename日志文件，再发送USR1信号给master进程做响应处理
+测试：
+[root@jalen nginx]# mv access.log access.log.0
+[root@jalen nginx]# kill -USR1 $(cat /var/run/nginx.pid)
+[root@jalen nginx]# sleep 1
+[root@jalen nginx]# gzip access.log.0   # 压缩切割后的log
+sleep 1是必须的，因为从master向worker发送USR1信号，到worker真正打开新的access.log
+文件期间这段时间还是向access.log.0写入，这是为了保证log完整性，防止直接压缩导致log丢失
+ 
+ 
+ 
+4.master与worker进程之间通信
+master与worker进程之间通信不是使用 kill 函数，而是通过管道，即nginx channel，
+一端（master）写入信息（比如信号信息），另外一端（worker）收取信息，
+worker刚启动时，就会加入epoll/kqueue事件调度器，对后续数据流作出感知。
+当然，我们也可以绕过 master 进程，直接向 worker 进程发送信号。
+对nginx channel的描述网上有很多对源码的分析案例。
+ 
+ 
+ 
+5.修改配置（HUP）
+发送HUP signal给master进程，master进程先作语法校验，然后尝试应用新配置（打开日志文件
+和新的socket），失败回滚到老的配置，成功则启动新的worker进程，并通知旧的进程优雅地关
+闭，旧的进程关闭socket监听并继续为旧的client提供服务，当为所有客户端提供服务后，旧的
+工作进程将关闭。
+测试（我这里执行后没有出现xx is shutting down，可能本地没有正在执行的请求）：
+[root@jalen nginx]# ps axw -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
+  PID  PPID USER     %CPU    VSZ WCHAN  COMMAND
+30989     1 root      0.0  46508 sigsus nginx: master process nginx
+30990 30989 nginx     0.0  47040 ep_pol nginx: worker process
+30991 30989 nginx     0.0  47040 ep_pol nginx: worker process
+30994 30755 root      0.0 112828 pipe_w grep -E --color=auto (nginx|PID)
+[root@jalen nginx]# kill -HUP 30989
+[root@jalen nginx]# ps axw -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
+  PID  PPID USER     %CPU    VSZ WCHAN  COMMAND
+30989     1 root      0.0  49500 sigsus nginx: master process nginx
+30991 30989 nginx     0.0  47040 ep_pol nginx: worker process is shutting down (nginx)
+31004 30989 nginx     0.0  49504 ep_pol nginx: worker process
+31005 30989 nginx     0.0  49504 ep_pol nginx: worker process
+31007 30755 root      0.0 112828 pipe_w grep -E --color=auto (nginx|PID)
+[root@jalen nginx]# ps axw -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
+  PID  PPID USER     %CPU    VSZ WCHAN  COMMAND
+30989     1 root      0.0  49500 sigsus nginx: master process nginx
+31004 30989 nginx     0.0  49504 ep_pol nginx: worker process
+31005 30989 nginx     0.0  49504 ep_pol nginx: worker process
+31009 30755 root      0.0 112828 pipe_w grep -E --color=auto (nginx|PID)
+ 
+ 
+ 
+6.快速升级可执行文件
+首先将旧文件替换为新的可执行文件。然后发送USR2给master进程。
+master进程首先将其含有进程ID的文件重命名为带有.oldbin后缀的新文件，如nginx.pid.oldbin。
+然后启动这个新的可执行文件，产生一个新的worker进程。
+当然，所有的worker进程(old and new ones)会继续接收和处理它们的requests。
+如果此时发送WINCH信号给第一个master进程，它将会发送消息给它的worker进程并请求关闭。
+过一段时间后（old requests完成），就只会有新的worker进程在工作了。
+ 
+注意：旧的master进程不会关闭它的listen sockets，如果需要它可以再次启动它的worker进程，
+如果新的可执行文件工作不太理想，可以做下面操作（二选一）：
+（1）将HUP信号发送到旧的master进程，旧的master进程将启动新的worker进程而无需重新读取配置。
+之后，可以通过将QUIT信号发送到新的master进程来正常关闭所有新进程。
+（2）将TERM信号发送到新的主进程，然后它将向其worker进程发送一条消息，要求它们强制立即退出。
+当新的master进程退出时，旧的master进程将自动启动新的worker进程。
+ 
+如果新的master进程退出，则旧的master进程将含有进程ID的文件名中的.oldbin后缀丢弃。
+如果升级成功，则应该将QUIT信号发送到旧的master进程，即只保留新的进程：
+ 
+ 
+ 
+ 
+ 
+附录：
+1.locate命令command not found
+linux一切皆文件，
+locate使用到的数据库文件是/var/lib/mlocate/mlocate.db，
+ 
+安装：
+[root@jalen usr]# yum install mlocate
+ 
+安装后直接使用该命令会报db file不存在需要先update一下：
+[root@jalen usr]# locate nginx
+locate: can not stat () `/var/lib/mlocate/mlocate.db`: No such file or directory
+[root@jalen usr]# updatedb
+ 
+搜索限制设置
+[root@jalen log]# cat /etc/updatedb.conf
+PRUNE_BIND_MOUNTS = &quot;yes&quot;
+PRUNEFS = &quot;9p afs anon_inodefs auto ... ...fuse.glusterfs ceph fuse.ceph&quot;
+PRUNENAMES = &quot;.git .hg .svn&quot;
+PRUNEPATHS = &quot;/afs /media ... ... /var/lib/ceph&quot;
+搜索限制配置说明：
+PRUNE_BIND_MOUNTS = &quot;yes&quot; 开启搜索限制，如果为’no’则表示不开启搜索限制；
+PRUNEFS = 搜索时，不搜索的文件系统；
+PRUNENAMES = 搜索时，不搜索的文件类型；
+PRUNEPATHS = 搜索时，不搜索的路径； 
+ 
+ 
+ 
+2.linux下which、whereis、locate、find区别
+which：常用于查找可直接执行的命令。只能查找可执行文件，该命令基本只在$PATH路径中搜索，
+       查找范围最小，查找速度快。默认只返回第一个匹配的文件路径，通过选项 -a 可以返回
+       所有匹配结果。
+       [root@jalen ~]# which nginx
+whereis：不只可以查找命令，其他文件类型都可以（man中说只能查命令、源文件和man文件，实
+       际测试可以查大多数文件）。在$PATH路径基础上增加了一些系统目录的查找，查找范围
+       比which稍大，查找速度快。可以通过 -b 选项，限定只搜索二进制文件。
+       [root@jalen home]# whereis nginx
+locate：超快速查找任意文件。它会从linux内置的索引数据库查找文件的路径，索引速度超快。
+       刚刚新建的文件可能需要一定时间才能加入该索引数据库，可以通过执行updatedb命令来
+       强制更新一次索引，这样确保不会遗漏文件。该命令通常会返回大量匹配项，可以使用-r
+       选项通过正则表达式来精确匹配。
+       [root@jalen usr]# locate nginx
+find：直接搜索整个文件目录，默认直接从根目录开始搜索，建议在以上命令都无法解决问题时才
+       用它，功能最强大但速度超慢。除非你指定一个很小的搜索范围。通过 -name 选项指定要
+       查找的文件名，支持通配符。
+       [root@jalen usr]# find ./ -name nginx
+（参考：https://zhuanlan.zhihu.com/p/35727707）
+ 
+ 
+ 
+3.linux的/var/run目录作用 -- 运行时变量数据存储
+/var/run 目录中存放的是自系统启动以来描述系统信息的文件。
+比较常见的用途是daemon进程将自己的pid保存到这个目录。
+除了保存进程的pid之外也有其他的作用，比如utmp文件，就是用来记录机器的启动时间以及当前登陆用户的。
+FHS标准要求这个文件夹中的文件必须是在系统启动的时候清空（有选择地），以便建立新的文件。
+（参考：https://www.pathname.com/fhs/2.2/fhs-5.13.html）
+ 
+ 
+ 
+4.查看centos cpu相关信息：
+[root@jalen nginx]# cat /proc/cpuinfo
+[root@jalen nginx]# lscpu
+</code></pre><div class="tags"><a href="/tags/nginx/" rel="tag"><i class="ic i-tag"></i> nginx</a></div></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/middleware/nginx-document/03 Controlling nginx/" class="item leancloud_visitors" data-flag-title="(3) Controlling nginx" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/middleware/nginx-document/03%20Controlling%20nginx/" title="(3) Controlling nginx">http://mingcheng.site/learn/middleware/nginx-document/03 Controlling nginx/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/middleware/nginx-document/02%20beginner%E2%80%98s%20guide/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;oqOkxL15fMtCJed.jpg" title="(2) Beginner‘s guide"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Nginx 文档学习</span><h3>(2) Beginner‘s guide</h3></a></div><div class="item right"><a href="/learn/python/python-basic/python%E5%AE%89%E8%A3%85gutenberg%EF%BC%88windows%EF%BC%89/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;kzIBPXrbGsJt8DE.jpg" title="python安装gutenberg（windows）"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Python</span><h3>python安装gutenberg（windows）</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/middleware/nginx-document/01%20install(centos7)/" rel="bookmark" title="(1) Install(Centos7)">(1) Install(Centos7)</a></li><li><a href="/learn/middleware/nginx-document/02%20beginner%E2%80%98s%20guide/" rel="bookmark" title="(2) Beginner‘s guide">(2) Beginner‘s guide</a></li><li class="active"><a href="/learn/middleware/nginx-document/03%20Controlling%20nginx/" rel="bookmark" title="(3) Controlling nginx">(3) Controlling nginx</a></li><li><a href="/learn/middleware/nginx-document/04%20install%20nginx%20plus/" rel="bookmark" title="(4) Install nginx plus">(4) Install nginx plus</a></li><li><a href="/learn/middleware/nginx-document/07%20nginx%20live%20activity%20monitor/" rel="bookmark" title="(7) Nginx live activity monitor">(7) Nginx live activity monitor</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/middleware/nginx-document/02%20beginner%E2%80%98s%20guide/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/python/python-basic/python%E5%AE%89%E8%A3%85gutenberg%EF%BC%88windows%EF%BC%89/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/life/" title="分类于 生活">生活</a> <i class="ic i-angle-right"></i> <a href="/categories/life/%E7%94%B5%E5%BD%B1/" title="分类于 电影">电影</a></div><span><a href="/life/movies/%E7%94%B5%E5%BD%B1%E6%94%B6%E8%97%8F-%E6%82%AC%E7%96%91%E7%B1%BB/" title="电影收藏-悬疑类">电影收藏-悬疑类</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/no-title/" title="未命名">未命名</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/GoogleGuava/" title="分类于 GoogleGuava">GoogleGuava</a></div><span><a href="/learn/java/google-guava/learn-1/" title="Optional类">Optional类</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" title="分类于 计算机科学">计算机科学</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/" title="分类于 二进制杂谈">二进制杂谈</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%9D%82%E8%B0%88/Theme-Shoka-Documentation/" title="分类于 Theme Shoka Documentation">Theme Shoka Documentation</a></div><span><a href="/computer-science/note/theme-shoka-doc/config/" title="Step.2 基本配置">Step.2 基本配置</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/ExtJS/" title="分类于 ExtJS">ExtJS</a></div><span><a href="/learn/frontent/ext-js/Extjs%E5%AD%A6%E4%B9%A0%EF%BC%884%EF%BC%89%EF%BC%9A%E6%8B%96%E4%B8%8E%E6%94%BE/" title="Extjs学习（4）：拖与放">Extjs学习（4）：拖与放</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/python%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%BB%93%E5%B0%BE100%E8%A1%8C/" title="python获取服务器日志文件结尾100行">python获取服务器日志文件结尾100行</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/" title="分类于 数据库学习">数据库学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/database/Redis/" title="分类于 Redis">Redis</a></div><span><a href="/learn/database/redis/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3redis/" title="简单了解redis">简单了解redis</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/VueJS/" title="分类于 VueJS">VueJS</a></div><span><a href="/learn/frontent/vue-js/nginx%E5%92%8Cvue%E5%89%8D%E7%AB%AF%E7%AE%80%E5%8D%95%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/" title="nginx和vue前端简单部署记录">nginx和vue前端简单部署记录</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Spring/" title="分类于 Spring">Spring</a></div><span><a href="/learn/java/spring/spring%20mybatis%E5%AD%A6%E4%B9%A0,%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/" title="spring mybatis学习,简单的项目创建">spring mybatis学习,简单的项目创建</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/highcharts-vue%E5%AE%BD%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="highcharts-vue宽度自适应一种解决办法">highcharts-vue宽度自适应一种解决办法</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/middleware/nginx-document/03 Controlling nginx/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>

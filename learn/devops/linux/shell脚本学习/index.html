@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="MlAWwzcGEsG8nn2V34gojElRFcnHeEgBvIS8Ek1LQ0c"><meta name="msvalidate.01" content="8BDA269F1F25AB9AB2160E377B2334C5"><link rel="alternate" type="application/rss+xml" title="Follow your heart" href="http://mingcheng.site/rss.xml"><link rel="alternate" type="application/atom+xml" title="Follow your heart" href="http://mingcheng.site/atom.xml"><link rel="alternate" type="application/json" title="Follow your heart" href="http://mingcheng.site/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="http://mingcheng.site/learn/devops/linux/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/"><title>shell 脚本学习 - Linux - DevOPS - 学习 | Jalen's Blog = Follow your heart = A happy life</title><meta name="generator" content="Hexo 5.4.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">shell 脚本学习</h1><div class="meta"><span class="item" title="创建时间：2017-03-15 15:29:15"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2017-03-15T15:29:15+08:00">2017-03-15</time> </span><span class="item" title="本文字数"><span class="icon"><i class="ic i-pen"></i> </span><span class="text">本文字数</span> <span>6.6k</span> <span class="text">字</span> </span><span class="item" title="阅读时长"><span class="icon"><i class="ic i-clock"></i> </span><span class="text">阅读时长</span> <span>6 分钟</span></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Jalen's Blog</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://s2.loli.net/2023/01/05/BUQdKDMtu18fzwX.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/ge1GuDaMQs5mUSC.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/sBzhKCFNci5ItJw.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/jYLZn5OTalvXDhr.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/5dylJK8nkc9Qepm.jpg"></li><li class="item" data-background-image="https://s2.loli.net/2023/01/05/6AF281xXNmcJ5iW.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/" itemprop="item" rel="index" title="分类于 学习"><span itemprop="name">学习</span></a><meta itemprop="position" content="1"></span><i class="ic i-angle-right"></i> <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/devops/" itemprop="item" rel="index" title="分类于 DevOPS"><span itemprop="name">DevOPS</span></a><meta itemprop="position" content="2"></span><i class="ic i-angle-right"></i> <span class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/learn/devops/Linux/" itemprop="item" rel="index" title="分类于 Linux"><span itemprop="name">Linux</span></a><meta itemprop="position" content="3"></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="http://mingcheng.site/learn/devops/linux/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Jalen Chu"><meta itemprop="description" content="A happy life, ٩(●˙▿˙●)۶…⋆ฺ ->"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Follow your heart"></span><div class="body md" itemprop="articleBody"><p>今天学习一下 unix/Linux 下强大的脚本语言 shell。<br><span id="more"></span><br>shell 语言是 c 语言编写的程序，既是一种命令语言，又是一种程序设计语言，它调用了系统核心大部分功能来执行程序。</p><p>shell 的使用程度侧面反映用户对 Unix/Linux 使用的熟练程度。<br><span class="exturl" data-url="aHR0cDovL2MuYmlhbmNoZW5nLm5ldC9jcHAvdmlldy8yNzM2Lmh0bWw=">http://c.biancheng.net/cpp/view/2736.html</span></p><p>1.shell 两种执行命令的方式<br>交互式：用户输一个命令，shell 就解释执行一次<br>批处理：shell 脚本含多条命令，执行这个脚本，一次运行多条命令</p><p>2.shell 脚本无需编译，它是解释执行的</p><p>3. 初学者建议不要以 root 用户运行脚本，非 root 用户使用 shell 不会破坏系统</p><p>4.shell 脚本解释器</p><pre><code>bash：Linux标准默认的shell，内部命令共有40个。可以使用类似DOS下面的doskey的功能，用方向键查阅和快速输入并修改命令。自动通过查找匹配的方式给出以某字符串开头的命令。包含了自身的帮助功能，你只要在提示符下面键入help就可以得到相关的帮助。
+sh：Unix默认的shell
+ash：系统资源最少的一个小shell，它只包含24个内部命令，因而使用起来很不方便。
+csh：Linux比较大的内核，共有52个内部命令。该shell其实是指向/bin/tcsh这样的一个shell，也就是说，csh其实就是tcsh。
+ksh：共有42条内部命令。该shell最大的优点是几乎和商业发行版的ksh完全兼容，这样就可以在不用花钱购买商业版本的情况下尝试商业版本的性能了
+（注意：bash完全兼容sh，也就是说，用sh写的脚本可以不加修改的在bash中执行。）
+</code></pre><p>5. 脚本语言优点<br>解释型语言也被称作 “脚本语言”。使用脚本编程语言的好处是，它们多半运行在比编译型语言还高的层级，能够轻易处理文件与目录之类的对象；缺点是它们的效率通常不如编译型语言。<br>花一个小时写成的简单脚本，同样的功能用 C 或 C++ 来编写实现，可能需要两天。<br>一般来说，脚本执行的速度已经够快了，快到足以让人忽略它性能上的问题。<br>脚本编程语言的例子有 awk、Perl、Python、Ruby 与 Shell。</p><p>6.shell 脚本特点<br>简单性：Shell 是一个高级语言；通过它，你可以简洁地表达复杂的操作。<br>可移植性：使用 POSIX 所定义的功能，可以做到脚本无须修改就可在不同的系统上执行。<br>开发容易：可以在短时间内完成一个功能强大又妤用的脚本。</p><p>7. 第一个 shell 脚本</p><pre><code>#!/bin/bash
+echo &quot;Hello World!&quot;
+echo &quot;What is your name?&quot;
+#获取手动输入信息并输出
+read INPUT
+echo &quot;Hello,$INPUT&quot;
+</code></pre><p>8. 变量</p><pre><code>#!/bin/bash
+#定义一个变量，变量和等号之间不能有空格，且首字符必须为字母，中间不能空格，可以&gt;下划线，不能用标点，不能使用bash里关键字
+#推荐当使用变量时为其加上括号 &#123;你的变量&#125;
+name=&quot;jalen_chu&quot;
+echo $name
+echo $&#123;name&#125;
+
+#重新定义变量，重新赋值
+name=&quot;abely_liu&quot;
+echo $&#123;name&#125;
+
+#只读变量，不可更改,运行时会提示只读变量
+name=&quot;jalen_chu&quot;
+readonly name
+name=&quot;abely_liu&quot;
+echo $&#123;name&#125;
+
+#删除变量
+age=&quot;24&quot;
+unset age
+echo $&#123;age&#125;
+
+#这里遍历一个数组，并循环输出每个元素
+for skill in Ada Coffe Action Java
+do
+  echo &quot;I am good at $&#123;skill&#125; Script&quot;
+done
+</code></pre><p>运行 shell 时，会同时存在三种变量：</p><ol><li>局部变量<br>局部变量在脚本或命令中定义，仅在当前 shell 实例中有效，其他 shell 启动的程序不能访问局部变量。</li><li>环境变量<br>所有的程序，包括 shell 启动的程序，都能访问环境变量，有些程序需要环境变量来保证其正常运行。必要的时候 shell 脚本也可以定义环境变量。</li><li>shell 变量<br>shell 变量是由 shell 程序设置的特殊变量。shell 变量中有一部分是环境变量，有一部分是局部变量，这些变量保证了 shell 的正常运行</li></ol><p>9. 特殊变量</p><pre><code>#!/bin/bash
+#输出当前shell脚本进程id
+echo &quot;pid: $$&quot;
+
+#输出当前shell脚本文件名
+echo &quot;file name: $0&quot;
+
+#传递给脚本或函数的参数。n 是一个数字，表示第几个参数。例如，第一个参数是$1&gt;，第二个参数是$2
+echo &quot;first parameter: $1&quot;
+echo &quot;first parameter: $2&quot;
+
+#传递给脚本或函数的参数个数
+echo &quot;total number of parameters: $#&quot;
+
+#传递给脚本或函数的所有参数。
+echo &quot;quoted values: $*&quot;
+
+#传递给脚本或函数的所有参数。被双引号(&quot; &quot;)包含时，与 $* 稍有不同，&quot;$*&quot;将所有的参数作为一个整体，以&quot;$1 $2 … $n&quot;的形式输出，&quot;$@&quot; 会将各个参数分开，以&quot;$1&quot; &quot;$2&quot; … &quot;$n&quot; 的形式输出所有参数
+到。
+echo &quot;quoted values: $@&quot;
+
+#上个命令的退出状态，或函数的返回值。退出状态是一个数字，一般情况下，大部分命令执行成功会返回 0，失败返回 1。也有一些命令返回其他值，表示不同类型的错误。
+echo &quot;exit return: $?&quot;
+</code></pre><p>10.Shell 替换：Shell 变量替换，命令替换，转义字符</p><pre><code>#!/bin/bash
+#-e 表示对转义字符进行替换。如果不使用 -e 选项，将会原样输出
+#\\     反斜杠
+#\a     警报，响铃
+#\b     退格（删除键）
+#\f     换页(FF)，将当前位置移到下页开头
+#\n     换行
+#\r     回车
+#\t     水平制表符（tab键） 
+#\v     垂直制表符
+#可以使用 echo 命令的 -E 选项禁止转义，默认也是不转义的；使用 -n 选项可以禁止插入换行符
+a=10
+echo -e &quot;value of a is $&#123;a&#125; \n&quot;
+
+#将命令执行结果保存在变量中
+DATE=`date`
+echo &quot;Date is $DATE&quot;
+USERS=`who | wc -l`
+echo &quot;Logged in user are $USERS&quot;
+UP=`date ; uptime`
+echo &quot;Uptime is $UP&quot;
+
+#$&#123;var:-word&#125;   如果变量 var 为空或已被删除(unset)，那么返回 word，但不改变 var 的值。
+echo $&#123;var:-&quot;Variable is not set&quot;&#125;
+echo &quot;1 - Value of var is $&#123;var&#125;&quot;
+
+#$&#123;var:=word&#125;   如果变量 var 为空或已被删除(unset)，那么返回 word，并将 var 的值设置为 word。
+echo $&#123;var:=&quot;Variable is not set&quot;&#125;
+echo &quot;2 - Value of var is $&#123;var&#125;&quot;
+
+#$&#123;var:+word&#125;   如果变量 var 被定义，那么返回 word，但不改变 var 的值。
+unset var
+echo $&#123;var:+&quot;This is default value&quot;&#125;
+echo &quot;3 - Value of var is $var&quot;
+
+var=&quot;Prefix&quot;
+echo $&#123;var:+&quot;This is default value&quot;&#125;
+echo &quot;4 - Value of var is $var&quot;
+
+#$&#123;var:?message&#125; 如果变量 var 为空或已被删除(unset)，那么将消息 message 送到标准错误输出，可以用来检测变量 var 是否可以被正常赋值。
+#若此替换出现在Shell脚本中，那么脚本将停止运行。
+echo $&#123;var:?&quot;Print this message&quot;&#125;
+echo &quot;5 - Value of var is $&#123;var&#125;&quot;
+</code></pre><p>11.Shell 运算符：Shell 算数运算符、关系运算符、布尔运算符、字符串运算符等<br>原生 bash 不支持简单的数学运算，但是可以通过其他命令来实现，例如 awk 和 expr，expr 最常用。<br>expr 是一款表达式计算工具，使用它能完成表达式的求值操作。</p><p><strong>算数运算符</strong></p><pre><code>#!/bin/bash
+value=`expr 2 + 2`
+echo $&#123;value&#125;
+</code></pre><p>表达式和运算符之间要有空格，例如 2+2 是不对的，必须写成 2 + 2，这与我们熟悉的大多数编程语言不一样。<br>完整的表达式要被 <code></code> 包含，注意这个字符不是常用的单引号，在 Esc 键下边。</p><pre><code>#!/bin/sh
+a=10
+b=20
+val=`expr $a + $b`
+echo &quot;a + b : $val&quot;
+val=`expr $a - $b`
+echo &quot;a - b : $val&quot;
+val=`expr $a \* $b`
+echo &quot;a * b : $val&quot;
+val=`expr $b / $a`
+echo &quot;b / a : $val&quot;
+val=`expr $b % $a`
+echo &quot;b % a : $val&quot;
+if [ $a == $b ]
+then
+   echo &quot;a is equal to b&quot;
+fi
+if [ $a != $b ]
+then
+   echo &quot;a is not equal to b&quot;
+fi
+</code></pre><p>乘号 (*) 前边必须加反斜杠 () 才能实现乘法运算；<br>if...then...fi 是条件语句，后续将会讲解。</p><p><strong>关系运算符</strong></p><pre><code>#!/bin/sh
+a=10
+b=20
+if [ $a -eq $b ]
+then
+   echo &quot;$a -eq $b : a is equal to b&quot;
+else
+   echo &quot;$a -eq $b: a is not equal to b&quot;
+fi
+if [ $a -ne $b ]
+then
+   echo &quot;$a -ne $b: a is not equal to b&quot;
+else
+   echo &quot;$a -ne $b : a is equal to b&quot;
+fi
+if [ $a -gt $b ]
+then
+   echo &quot;$a -gt $b: a is greater than b&quot;
+else
+   echo &quot;$a -gt $b: a is not greater than b&quot;
+fi
+if [ $a -lt $b ]
+then
+   echo &quot;$a -lt $b: a is less than b&quot;
+else
+   echo &quot;$a -lt $b: a is not less than b&quot;
+fi
+if [ $a -ge $b ]
+then
+   echo &quot;$a -ge $b: a is greater or  equal to b&quot;
+else
+   echo &quot;$a -ge $b: a is not greater or equal to b&quot;
+fi
+if [ $a -le $b ]
+then
+   echo &quot;$a -le $b: a is less or  equal to b&quot;
+else
+   echo &quot;$a -le $b: a is not less or equal to b&quot;
+</code></pre><p><strong>布尔运算符</strong></p><pre><code>#!/bin/sh
+a=10
+b=20
+if [ $a != $b ]
+then
+   echo &quot;$a != $b : a is not equal to b&quot;
+else
+   echo &quot;$a != $b: a is equal to b&quot;
+fi
+if [ $a -lt 100 -a $b -gt 15 ]
+then
+   echo &quot;$a -lt 100 -a $b -gt 15 : returns true&quot;
+else
+   echo &quot;$a -lt 100 -a $b -gt 15 : returns false&quot;
+fi
+if [ $a -lt 100 -o $b -gt 100 ]
+then
+   echo &quot;$a -lt 100 -o $b -gt 100 : returns true&quot;
+else
+   echo &quot;$a -lt 100 -o $b -gt 100 : returns false&quot;
+fi
+if [ $a -lt 5 -o $b -gt 100 ]
+then
+   echo &quot;$a -lt 100 -o $b -gt 100 : returns true&quot;
+else
+   echo &quot;$a -lt 100 -o $b -gt 100 : returns false&quot;
+fi
+</code></pre><p><strong>字符串运算符</strong></p><pre><code>#!/bin/sh
+a=&quot;abc&quot;
+b=&quot;efg&quot;
+if [ $a = $b ]
+then
+   echo &quot;$a = $b : a is equal to b&quot;
+else
+   echo &quot;$a = $b: a is not equal to b&quot;
+fi
+if [ $a != $b ]
+then
+   echo &quot;$a != $b : a is not equal to b&quot;
+else
+   echo &quot;$a != $b: a is equal to b&quot;
+fi
+if [ -z $a ]
+then
+   echo &quot;-z $a : string length is zero&quot;
+else
+   echo &quot;-z $a : string length is not zero&quot;
+fi
+if [ -n $a ]
+then
+   echo &quot;-n $a : string length is not zero&quot;
+else
+   echo &quot;-n $a : string length is zero&quot;
+fi
+if [ $a ]
+then
+   echo &quot;$a : string is not empty&quot;
+else
+   echo &quot;$a : string is empty&quot;
+fi
+</code></pre><p><strong>文件测试运算符</strong></p><pre><code>#!/bin/sh
+file=&quot;/var/www/tutorialspoint/unix/test.sh&quot;
+if [ -r $file ]
+then
+   echo &quot;File has read access&quot;
+else
+   echo &quot;File does not have read access&quot;
+fi
+if [ -w $file ]
+then
+   echo &quot;File has write permission&quot;
+else
+   echo &quot;File does not have write permission&quot;
+fi
+if [ -x $file ]
+then
+   echo &quot;File has execute permission&quot;
+else
+   echo &quot;File does not have execute permission&quot;
+fi
+if [ -f $file ]
+then
+   echo &quot;File is an ordinary file&quot;
+else
+   echo &quot;This is sepcial file&quot;
+fi
+if [ -d $file ]
+then
+   echo &quot;File is a directory&quot;
+else
+   echo &quot;This is not a directory&quot;
+fi
+if [ -s $file ]
+then
+   echo &quot;File size is zero&quot;
+else
+   echo &quot;File size is not zero&quot;
+fi
+if [ -e $file ]
+then
+   echo &quot;File exists&quot;
+else
+   echo &quot;File does not exist&quot;
+fi
+</code></pre></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2025-12-05 23:27:51" itemprop="dateModified" datetime="2025-12-05T23:27:51+08:00">2025-12-05</time> </span><span id="learn/devops/linux/shell脚本学习/" class="item leancloud_visitors" data-flag-title="shell 脚本学习" title="阅读次数"><span class="icon"><i class="ic i-eye"></i> </span><span class="text">阅读次数</span> <span class="leancloud-visitors-count"></span> <span class="text">次</span></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/mywechatpay.png" alt="Jalen Chu 微信支付"><p>微信支付</p></div><div><img data-src="/images/myalipay.png" alt="Jalen Chu 支付宝"><p>支付宝</p></div><div><img data-src="/images/mywxgzh.png" alt="Jalen Chu 公众号"><p>公众号</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Jalen Chu <i class="ic i-at"><em>@</em></i>Follow your heart</li><li class="link"><strong>本文链接：</strong> <a href="http://mingcheng.site/learn/devops/linux/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/" title="shell 脚本学习">http://mingcheng.site/learn/devops/linux/shell脚本学习/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/learn/java/java-basic/java%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84%E4%B9%8BArrays/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;iGOMdHWbhu8DzsL.jpg" title="java操作数组之Arrays"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> Java</span><h3>java操作数组之Arrays</h3></a></div><div class="item right"><a href="/learn/java/eclipse/eclipse%E7%94%9F%E6%88%90javadoc/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;s2.loli.net&#x2F;2023&#x2F;01&#x2F;05&#x2F;c2Af7rxKodnCkbt.jpg" title="eclipse生成javadoc"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Eclipse</span><h3>eclipse生成javadoc</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"></div><div class="related panel pjax" data-title="系列文章"><ul><li><a href="/learn/devops/linux/linux%E9%85%8D%E7%BD%AE.bashrc%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" rel="bookmark" title="linux配置.bashrc环境变量">linux配置.bashrc环境变量</a></li><li><a href="/learn/devops/linux/Linux-bashrc-environment-setting/" rel="bookmark" title="Linux bashrc environment setting">Linux bashrc environment setting</a></li><li><a href="/learn/devops/linux/lftp%E5%91%BD%E4%BB%A4/" rel="bookmark" title="lftp命令">lftp命令</a></li><li><a href="/learn/devops/linux/%E9%A1%B9%E7%9B%AERPM%E6%89%93%E5%8C%85/" rel="bookmark" title="项目RPM打包">项目RPM打包</a></li><li><a href="/learn/devops/linux/%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3chmod%E5%91%BD%E4%BB%A4/" rel="bookmark" title="简单了解Linux chmod命令">简单了解Linux chmod命令</a></li><li class="active"><a href="/learn/devops/linux/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0/" rel="bookmark" title="shell脚本学习">shell脚本学习</a></li><li><a href="/learn/devops/linux/Linux%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/" rel="bookmark" title="Linux基本操作命令">Linux基本操作命令</a></li><li><a href="/learn/devops/linux/%E4%BD%BF%E7%94%A8vi%E7%BC%96%E8%BE%91%E6%97%B6%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3%E6%96%B9%E5%90%91%E9%94%AE%E8%A2%AB%E8%BD%AC%E5%8C%96%E4%B8%BAA%E3%80%81B%E3%80%81C%E3%80%81D%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/" rel="bookmark" title="使用vi编辑时上下左右方向键被转化为A、B、C、D怎么办？">使用vi编辑时上下左右方向键被转化为A、B、C、D怎么办？</a></li><li><a href="/learn/devops/linux/%E4%BF%AE%E6%94%B9linux%20root@%E5%90%8E%E9%9D%A2%E7%9A%84%E5%88%AB%E5%90%8D/" rel="bookmark" title="修改linux root@后面的别名">修改linux root@后面的别名</a></li><li><a href="/learn/devops/linux/virtualbox%E5%AE%89%E8%A3%85ubuntu18.04%E5%8F%8Apython2.7%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%EF%BC%88%E5%90%ABoracle%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%AE%89%E8%A3%85%EF%BC%89/" rel="bookmark" title="virtualbox安装ubuntu18.04及python2.7虚拟环境（含oracle客户端的安装）">virtualbox安装ubuntu18.04及python2.7虚拟环境（含oracle客户端的安装）</a></li><li><a href="/learn/devops/linux/virtualbox%E6%8C%82%E8%BD%BD%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" rel="bookmark" title="virtualbox挂载共享文件夹">virtualbox挂载共享文件夹</a></li><li><a href="/learn/devops/linux/xftp%E4%BC%A0%E8%BE%93unknow%20error/" rel="bookmark" title="xftp传输unknow error">xftp传输unknow error</a></li><li><a href="/learn/devops/linux/%E6%8E%92%E6%9F%A5linux%E6%9C%8D%E5%8A%A1%E5%99%A8cpu%E9%AB%98%EF%BC%88%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%89/" rel="bookmark" title="排查linux服务器cpu高（未解决）">排查linux服务器cpu高（未解决）</a></li><li><a href="/learn/devops/linux/linux%20%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E6%9F%90%E4%B8%AA%E5%89%8D%E7%BC%80%E6%96%87%E4%BB%B6/" rel="bookmark" title="linux 批量删除某个前缀文件">linux 批量删除某个前缀文件</a></li><li><a href="/learn/devops/linux/%E8%AE%B0%E4%B8%80%E6%AC%A1semaphore%E7%9A%84%E9%97%AE%E9%A2%98/" rel="bookmark" title="记一次semaphore的问题">记一次semaphore的问题</a></li><li><a href="/learn/devops/linux/tcpdump%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="bookmark" title="tcpdump简单使用">tcpdump简单使用</a></li><li><a href="/learn/devops/linux/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="bookmark" title="Linux常用命令">Linux常用命令</a></li><li><a href="/learn/devops/linux/%E6%B7%BB%E5%8A%A0linux%20systemd%E6%9C%8D%E5%8A%A1/" rel="bookmark" title="添加linux systemd服务">添加linux systemd服务</a></li></ul></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Jalen Chu" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Jalen Chu</p><div class="description" itemprop="description">٩(●˙▿˙●)۶…⋆ฺ -></div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">700</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">100</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">210</span> <span class="name">标签</span></a></div></nav><div class="social"><span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NpbmNlcmVseVVuaXF1ZQ==" title="https:&#x2F;&#x2F;github.com&#x2F;SincerelyUnique"><i class="ic i-github"></i></span> <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS9qYWxlbl9jaHU=" title="https:&#x2F;&#x2F;twitter.com&#x2F;jalen_chu"><i class="ic i-twitter"></i></span> <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9qYWxlbmNodQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;jalenchu"><i class="ic i-zhihu"></i></span> <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvbXkvbS9tdXNpYy9wbGF5bGlzdD9pZD0yMDMxOTczNDY0" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;my&#x2F;m&#x2F;music&#x2F;playlist?id&#x3D;2031973464"><i class="ic i-cloud-music"></i></span> <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span> <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS9KYWxlbkNodQ==" title="https:&#x2F;&#x2F;about.me&#x2F;JalenChu"><i class="ic i-address-card"></i></span> <span class="exturl item email" data-url="bWFpbHRvOjExNTIzNTc0NzlAcXEuY29t" title="mailto:1152357479@qq.com"><i class="ic i-envelope"></i></span> <span class="exturl item facebook" data-url="aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tL2phbGVuLmNodS43OTIv" title="https:&#x2F;&#x2F;www.facebook.com&#x2F;jalen.chu.792&#x2F;"><i class="ic i-facebook"></i></span> <span class="exturl item stackoverflow" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS91c2Vycy8xMTExNzYxOC9qYWxlbi1jaHU=" title="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;11117618&#x2F;jalen-chu"><i class="ic i-stack-overflow"></i></span> <span class="exturl item youtube" data-url="aHR0cHM6Ly93d3cueW91dHViZS5jb20vY2hhbm5lbC9VQ3FQRnVtUGpGMWVRdVJrdWp0NUR1YWc=" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCqPFumPjF1eQuRkujt5Duag"><i class="ic i-youtube"></i></span></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li><li class="item dropdown"><a href="javascript:void(0);"><i class="ic i-feather"></i>文章</a><ul class="submenu"><li class="item"><a href="/archives/" rel="section"><i class="ic i-list-alt"></i>归档</a></li><li class="item"><a href="/categories/" rel="section"><i class="ic i-th"></i>分类</a></li><li class="item"><a href="/tags/" rel="section"><i class="ic i-tags"></i>标签</a></li></ul></li><li class="item"><a href="/friends/" rel="section"><i class="ic i-heart"></i>友達</a></li><li class="item"><a href="/webstack/" rel="section"><i class="ic i-user"></i>网址</a></li><li class="item dropdown"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>玩耍</a><ul class="submenu"><li class="item"><a href="/html/%E5%9C%88%E5%B0%8F%E7%8C%AB.html" rel="section"><i class="ic i-tags"></i>圈小猫</a></li><li class="item"><a href="/html/%E6%92%95%E6%B8%94%E7%BD%91.html" rel="section"><i class="ic i-tags"></i>撕渔网</a></li><li class="item"><a href="/html/%E5%BD%A9%E8%99%B9%E9%9B%A8.html" rel="section"><i class="ic i-tags"></i>彩虹雨</a></li><li class="item"><a href="/html/%E6%96%B9%E5%9D%97%E7%A9%BF%E6%A2%AD.html" rel="section"><i class="ic i-tags"></i>方块穿梭</a></li><li class="item"><a href="/html/%E7%83%9F%E8%8A%B1%E6%95%88%E6%9E%9C.html" rel="section"><i class="ic i-tags"></i>烟花效果</a></li><li class="item"><a href="/html/%E7%A2%B0%E6%92%9E%E5%B0%8F%E7%90%83.html" rel="section"><i class="ic i-tags"></i>碰撞小球</a></li><li class="item"><a href="/html/%E7%BA%B8%E9%A3%9E%E6%9C%BA.html" rel="section"><i class="ic i-tags"></i>纸飞机</a></li><li class="item"><a href="/html/%E9%AA%87%E5%AE%A2%E5%B8%9D%E5%9B%BD.html" rel="section"><i class="ic i-tags"></i>骇客帝国</a></li><li class="item"><a href="/html/%E7%8E%AB%E7%91%B0%E8%8A%B1.html" rel="section"><i class="ic i-tags"></i>玫瑰花</a></li><li class="item"><a href="/html/%E9%97%AE%E9%97%AE%E9%A2%98.html" rel="section"><i class="ic i-tags"></i>问问题</a></li></ul></li><li class="item"><a href="/html/resume/index.html" rel="section"><i class="ic i-th"></i>简历</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/learn/java/java-basic/java%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84%E4%B9%8BArrays/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/learn/java/eclipse/eclipse%E7%94%9F%E6%88%90javadoc/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"></div><span><a href="/learn/algorithm/practise/%E6%B5%B7%E6%98%8E%E7%A0%81%E8%AE%A1%E7%AE%97%E5%8F%8A%E6%A0%A1%E9%AA%8C/" title="海明码计算及校验">海明码计算及校验</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/soap%20The%20endpoint%20reference%20(EPR)%20for%20the%20Operation%20not%20found.../" title="soap The endpoint reference (EPR) for the Operation not found...">soap The endpoint reference (EPR) for the Operation not found...</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Python-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Python 语言学习">Python 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/python/Python/" title="分类于 Python">Python</a></div><span><a href="/learn/python/python-basic/ModuleNotFoundError%20No%20module%20named%20%E2%80%98_sqlite3%E2%80%98/" title="ModuleNotFoundError No module named ‘_sqlite3‘">ModuleNotFoundError No module named ‘_sqlite3‘</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/life/" title="分类于 生活">生活</a> <i class="ic i-angle-right"></i> <a href="/categories/life/%E8%B5%84%E6%96%99/" title="分类于 资料">资料</a></div><span><a href="/life/material/%E5%8F%AF%E4%BB%A5%E5%AD%A6%E4%B9%A0%E7%BC%96%E7%A8%8B%E7%9A%84%E7%BD%91%E7%AB%99/" title="可以学习编程的网站">可以学习编程的网站</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" title="分类于 计算机科学">计算机科学</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/Java/" title="分类于 Java">Java</a> <i class="ic i-angle-right"></i> <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/Java/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%AD%A6Java%E8%AF%AD%E8%A8%80-%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6-%E7%BF%81%E6%81%BA/" title="分类于 零基础学 Java 语言 - 浙江大学 - 翁恺">零基础学 Java 语言 - 浙江大学 - 翁恺</a></div><span><a href="/computer-science/java/course-1/week-2/" title="第2周 判断">第2周 判断</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/" title="分类于 中间件学习">中间件学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/middleware/ELK/" title="分类于 ELK">ELK</a></div><span><a href="/learn/middleware/elk/%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85elasticsearch/" title="简单安装elasticsearch">简单安装elasticsearch</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/" title="分类于 DevOPS">DevOPS</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/devops/Docker/" title="分类于 Docker">Docker</a></div><span><a href="/learn/devops/docker/docker%20failed%20to%20map%20segment%20from%20shared%20object%20operation%20not%20permitted/" title="docker failed to map segment from shared object operation not permitted">docker failed to map segment from shared object operation not permitted</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/network/" title="分类于 计算机网络">计算机网络</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/network/%E5%9B%BE%E8%A7%A3HTTP/" title="分类于 图解 HTTP">图解 HTTP</a></div><span><a href="/learn/network/pic-http/%E5%9B%BE%E8%A7%A3HTTP%E5%AD%A6%E4%B9%A0%EF%BC%881%EF%BC%89%EF%BC%9AWeb%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="图解HTTP学习（1）：Web及网络基础">图解HTTP学习（1）：Web及网络基础</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/" title="分类于 前端知识学习">前端知识学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/frontent/Bootstrap/" title="分类于 Bootstrap">Bootstrap</a></div><span><a href="/learn/frontent/bootstrap/bootstrap%20modal%20iframe/" title="bootstrap modal iframe">bootstrap modal iframe</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/learn/" title="分类于 学习">学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/Java-%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/" title="分类于 Java 语言学习">Java 语言学习</a> <i class="ic i-angle-right"></i> <a href="/categories/learn/java/Java/" title="分类于 Java">Java</a></div><span><a href="/learn/java/java-basic/java%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1%E4%B8%8D%E5%8F%AF%E9%81%BF%E5%85%8D%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" title="java自动拆装箱不可避免遇到的一些问题">java自动拆装箱不可避免遇到的一些问题</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2025</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Jalen Chu @ Jalen's Blog</span></div><div class="count"><span class="post-meta-item-icon"><i class="ic i-chart-area"></i> </span><span title="站点总字数">2m 字</span> <span class="post-meta-divider">|</span> <span class="post-meta-item-icon"><i class="ic i-coffee"></i> </span><span title="站点阅读时长">29:45</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"learn/devops/linux/shell脚本学习/",favicon:{show:"（●´3｀●）復活成功",hide:"(´Д｀)瀏覽器崩潰啦"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script><script data-pjax>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?908585f2e8b845b564946752e587f4a0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/z16.model.json"},display:{position:"left",width:200,height:400},mobile:{show:!0},react:{opacity:.7}})</script></body></html>
