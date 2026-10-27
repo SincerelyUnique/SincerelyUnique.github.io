@@ -1,3 +1,13 @@
+name: Hexo Deploy
+
+on:
+  push:
+    branches:
+      - source
+
+env:
+  POST_ASSET_IMAGE_CDN: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
