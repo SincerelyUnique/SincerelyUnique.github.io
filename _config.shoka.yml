@@ -3,6 +3,10 @@ alternate: Jalen's Blog
 # Assets
 statics: / #//cdn.jsdelivr.net/gh/amehime/shoka@latest/
 
+# 第三方依赖 CDN 主机（可改为本地自建或其它镜像）
+# 可选：//fastly.jsdelivr.net  //cdn.jsdelivr.net  //gcore.jsdelivr.net  //testingcf.jsdelivr.net
+cdn: //fastly.jsdelivr.net
+
 open_graph:
   #twitter_id:
   #google_plus:

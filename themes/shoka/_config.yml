@@ -9,6 +9,7 @@ open_graph:
 
 # Assets
 statics: / #//cdn.jsdelivr.net/gh/username/RepositoryName@latest/
+cdn: //cdn.jsdelivr.net
 css: css
 js: js
 images: images
